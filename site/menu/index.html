@@ -85,6 +85,43 @@
       </div>
     </section>
 
+    <section class="section seasonal menu-seasonal" aria-labelledby="menu-seasonal-title">
+      <div class="container">
+        <div class="vhead js-reveal">
+          <span class="vhead__en">Seasonal</span>
+          <span class="vhead__ja" id="menu-seasonal-title">今宵の一杯</span>
+        </div>
+        <p class="seasonal__intro js-reveal" data-delay="1">四季で移ろう夜空になぞらえ、月替わりの季節限定うどんをご用意しています。同じ星は、二度と昇りません。</p>
+        <div class="seasonal__grid">
+          <button class="seasonal-card js-reveal" type="button" data-menu-photo="seasonal" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="七月限定、冷やし夏野菜の梅おろしうどん、920円の生成イメージを見る" data-delay="1">
+            <img class="seasonal-card__map" src="/assets/img/menu/constellation-july.svg" width="600" height="600" alt="" loading="lazy">
+            <span class="seasonal-card__month">七月</span>
+            <span class="seasonal-card__name">冷やし夏野菜の梅おろしうどん</span>
+            <span class="seasonal-card__desc">花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。</span>
+            <span class="seasonal-card__price">¥920</span>
+            <span class="seasonal-card__hint" aria-hidden="true">生成イメージを見る　—</span>
+          </button>
+          <button class="seasonal-card js-reveal" type="button" data-menu-photo="edamame" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="八月限定、枝豆と生姜の冷麦だしうどん、920円の生成イメージを見る" data-delay="2">
+            <img class="seasonal-card__map" src="/assets/img/menu/constellation-august.svg" width="600" height="600" alt="" loading="lazy">
+            <span class="seasonal-card__month">八月</span>
+            <span class="seasonal-card__name">枝豆と生姜の冷麦だしうどん</span>
+            <span class="seasonal-card__desc">すり流しにした枝豆の緑と、効かせた生姜。氷を浮かべた出汁でひと息つく一杯。</span>
+            <span class="seasonal-card__price">¥920</span>
+            <span class="seasonal-card__hint" aria-hidden="true">生成イメージを見る　—</span>
+          </button>
+          <button class="seasonal-card js-reveal" type="button" data-menu-photo="mushroom" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="九月限定、きのこと柚子胡椒の温かけうどん、950円の生成イメージを見る" data-delay="3">
+            <img class="seasonal-card__map" src="/assets/img/menu/constellation-september.svg" width="600" height="600" alt="" loading="lazy">
+            <span class="seasonal-card__month">九月</span>
+            <span class="seasonal-card__name">きのこと柚子胡椒の温かけうどん</span>
+            <span class="seasonal-card__desc">近隣の山で採れた三種のきのこを香ばしく炒め、柚子胡椒できりっと。実りの一杯です。</span>
+            <span class="seasonal-card__price">¥950</span>
+            <span class="seasonal-card__hint" aria-hidden="true">生成イメージを見る　—</span>
+          </button>
+        </div>
+        <p class="seasonal__note js-reveal" data-delay="3">※季節限定うどんは仮の献立例です。写真は架空の献立をもとに制作した生成イメージです。</p>
+      </div>
+    </section>
+
     <section class="section section--tight">
       <div class="container--narrow">
         <div class="menu-list">
@@ -143,32 +180,6 @@
           </div>
 
           <div class="menu-list__group">
-            <p class="menu-list__group-title js-reveal">今宵の一杯(季節限定・月替わり)</p>
-            <p class="js-reveal" style="font-size:14px; color:var(--color-muted); margin-bottom:16px;">四季で移ろう夜空になぞらえ、月替わりでご用意しています。下記は献立例です。数量限定・売り切れ次第終了。</p>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="seasonal" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="冷やし夏野菜の梅おろしうどん、920円のイメージ写真を見る">
-              <span class="menu-item__info">
-                <span class="menu-item__name"><span class="menu-item__num">一、</span>冷やし夏野菜の梅おろしうどん</span>
-                <span class="menu-item__desc">花巻産トマトと茄子、焼き茗荷、梅の酸味<span class="menu-item__tag">7月限定</span></span>
-              </span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥920</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="edamame" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="枝豆と生姜の冷麦だしうどん、920円のイメージ写真を見る" data-delay="1">
-              <span class="menu-item__info">
-                <span class="menu-item__name"><span class="menu-item__num">二、</span>枝豆と生姜の冷麦だしうどん</span>
-                <span class="menu-item__desc">枝豆のすり流しと生姜、氷を浮かべた出汁<span class="menu-item__tag">8月限定</span></span>
-              </span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥920</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="mushroom" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="きのこと柚子胡椒の温かけうどん、950円のイメージ写真を見る" data-delay="2">
-              <span class="menu-item__info">
-                <span class="menu-item__name"><span class="menu-item__num">三、</span>きのこと柚子胡椒の温かけうどん</span>
-                <span class="menu-item__desc">近隣の山のきのこ三種、柚子胡椒<span class="menu-item__tag">9月限定</span></span>
-              </span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥950</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
-            </button>
-          </div>
-
-          <div class="menu-list__group">
             <p class="menu-list__group-title js-reveal">サイド・お子様</p>
             <button class="menu-item js-reveal" type="button" data-menu-photo="inari" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="いなり寿司2個、250円のイメージ写真を見る">
               <span class="menu-item__info">
@@ -195,7 +206,8 @@
       <div class="menu-dialog__shell">
         <button class="menu-dialog__close" type="button" data-menu-dialog-close aria-label="写真を閉じる">閉じる</button>
         <div class="menu-dialog__visual">
-          <img id="menu-dialog-image" width="1536" height="1024" alt="" decoding="async">
+          <img class="menu-dialog__star" src="/assets/img/common/crest.svg" width="60" height="60" alt="" aria-hidden="true">
+          <img id="menu-dialog-image" src="../assets/img/common/crest.svg" width="1536" height="1024" alt="" decoding="async">
         </div>
         <div class="menu-dialog__copy" aria-live="polite">
           <p class="menu-dialog__label">イメージ写真（生成）</p>

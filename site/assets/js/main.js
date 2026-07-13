@@ -197,14 +197,14 @@ function initMenuDialog() {
     const key = trigger.dataset.menuPhoto;
     const photo = photos[key];
     if (!photo) return null;
-    const name = trigger.querySelector(".menu-item__name");
-    const desc = trigger.querySelector(".menu-item__desc");
-    const itemPrice = trigger.querySelector(".menu-item__price");
-    const itemNumber = trigger.querySelector(".menu-item__num");
+    const name = trigger.querySelector(".menu-item__name, .seasonal-card__name");
+    const desc = trigger.querySelector(".menu-item__desc, .seasonal-card__desc");
+    const itemPrice = trigger.querySelector(".menu-item__price, .seasonal-card__price");
+    const itemNumber = trigger.querySelector(".menu-item__num, .seasonal-card__month");
     return {
       ...photo,
       name: name ? name.textContent.replace(itemNumber ? itemNumber.textContent : "", "").trim() : "",
-      description: desc ? desc.childNodes[0].textContent.trim() : "",
+      description: desc ? desc.textContent.trim() : "",
       price: itemPrice ? itemPrice.textContent.trim() : "",
       number: itemNumber ? itemNumber.textContent.trim() : "",
     };

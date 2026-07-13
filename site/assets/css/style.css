@@ -419,7 +419,7 @@ h1, h2, h3 {
 .menu-item__tag::after { content: "〕"; }
 
 /* お品書きの生成イメージ写真: 一覧を保ち、料理行から拡大写真を開く */
-.menu-intro { padding-bottom: 0; }
+.menu-intro { padding-bottom: clamp(40px, 6vw, 64px); }
 .menu-intro__copy { max-width: 39em; }
 .menu-intro__title {
   font-size: clamp(24px, 4vw, 36px);
@@ -428,8 +428,15 @@ h1, h2, h3 {
 .menu-intro__copy > p:last-child { color: var(--color-muted); font-size: 14px; }
 
 /* お品書きの「今宵の一杯」へ入る境目: 夜のとばりが一度だけ落ちる。
-   スクロールは止めず、濃紺へ沈む瞬間だけをつくる。 */
-.menu-seasonal { position: relative; overflow: hidden; isolation: isolate; }
+   幕の裾を白側へ重ね、静止時にもセクションの継ぎ目を残さない。 */
+.menu-seasonal {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: -24px;
+  padding-top: calc(var(--section-pad) + 24px);
+  clip-path: polygon(0 22px, 20% 8px, 48% 18px, 76% 6px, 100% 16px, 100% 100%, 0 100%);
+}
 .menu-seasonal > .container { position: relative; z-index: 1; }
 .menu-seasonal::before {
   content: "";

@@ -428,22 +428,35 @@ h1, h2, h3 {
 .menu-intro__copy > p:last-child { color: var(--color-muted); font-size: 14px; }
 
 /* お品書きの「今宵の一杯」へ入る境目: 夜のとばりが一度だけ落ちる。
-   幕の裾を山の稜線にし、よだかが一度だけ横切る。 */
+   手前と奥の二つの稜線で山をつくり、よだかが弧を描いて飛ぶ。 */
 .menu-seasonal {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   margin-top: -24px;
   padding-top: calc(var(--section-pad) + 24px);
-  clip-path: polygon(0 38px, 15% 28px, 30% 38px, 49% 4px, 62% 34px, 79% 16px, 100% 34px, 100% 100%, 0 100%);
+  clip-path: polygon(0 60px, 18% 48px, 34% 66px, 50% 0, 66% 57px, 82% 22px, 100% 58px, 100% 100%, 0 100%);
 }
-.menu-seasonal > .container { position: relative; z-index: 1; }
+.menu-seasonal > .container { position: relative; z-index: 2; }
+.menu-seasonal::after {
+  content: "";
+  position: absolute;
+  inset: 28px 0 auto;
+  z-index: 0;
+  width: 100%;
+  height: 108px;
+  pointer-events: none;
+  background: var(--color-text);
+  opacity: 0.55;
+  clip-path: polygon(0 68px, 18% 48px, 36% 78px, 54% 16px, 71% 66px, 86% 36px, 100% 64px, 100% 100%, 0 100%);
+}
 .menu-nightfall__bird {
   position: absolute;
-  top: 20px;
+  /* 稜線に隠れず、夜空のすぐ上を横切る高さに置く。 */
+  top: clamp(108px, 8vw, 128px);
   left: 0;
-  z-index: 2;
-  width: clamp(96px, 13vw, 176px);
+  z-index: 3;
+  width: clamp(112px, 13vw, 176px);
   aspect-ratio: 8 / 5;
   pointer-events: none;
   background: var(--color-accent);
@@ -452,12 +465,12 @@ h1, h2, h3 {
   -webkit-mask: url("../img/common/bird.svg") center / contain no-repeat;
   mask: url("../img/common/bird.svg") center / contain no-repeat;
 }
-.menu-seasonal.is-nightfall .menu-nightfall__bird { animation: nightfall-bird 1.05s var(--ease-out) 0.08s both; }
+.menu-seasonal.is-nightfall .menu-nightfall__bird { animation: nightfall-bird 1.18s var(--ease-out) 0.04s both; }
 .menu-seasonal::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   background: var(--color-text);
   opacity: 0.96;
@@ -467,9 +480,15 @@ h1, h2, h3 {
 }
 .menu-seasonal.is-nightfall::before { transform: translateY(0); opacity: 0; }
 @keyframes nightfall-bird {
-  0% { opacity: 0; transform: translate3d(-14vw, 10px, 0) rotate(-5deg) scale(-0.92, 0.92); }
-  16% { opacity: 0.78; transform: translate3d(-1vw, 7px, 0) rotate(-3deg) scale(-0.95, 0.95); }
-  72% { opacity: 0.78; transform: translate3d(64vw, -5px, 0) rotate(2deg) scale(-0.99, 0.99); }
+  0% { opacity: 0; transform: translate3d(-14vw, 12px, 0) rotate(-7deg) scale(-0.92, 0.92); }
+  14% { opacity: 0.78; transform: translate3d(-1vw, 9px, 0) rotate(-4deg) scale(-0.95, 0.95); }
+  32% { opacity: 0.78; transform: translate3d(20vw, 1px, 0) rotate(-9deg) scale(-0.97, 0.97); }
+  42% { opacity: 0.8; transform: translate3d(29vw, -20px, 0) rotate(-22deg) scale(-0.99, 0.99); }
+  52% { opacity: 0.8; transform: translate3d(38vw, -28px, 0) rotate(8deg) scale(-1, 1); }
+  62% { opacity: 0.8; transform: translate3d(47vw, -7px, 0) rotate(24deg) scale(-1, 1); }
+  70% { opacity: 0.8; transform: translate3d(42vw, 10px, 0) rotate(9deg) scale(-0.99, 0.99); }
+  78% { opacity: 0.78; transform: translate3d(53vw, 0, 0) rotate(-2deg) scale(-1, 1); }
+  90% { opacity: 0.72; transform: translate3d(78vw, -4px, 0) rotate(2deg) scale(-1, 1); }
   100% { opacity: 0; transform: translate3d(calc(100vw + 220px), -10px, 0) rotate(4deg) scale(-1, 1); }
 }
 

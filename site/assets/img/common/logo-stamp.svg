@@ -1,0 +1,45 @@
+<svg viewBox="0 0 220 280" width="220" height="280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ls-t ls-d">
+  <title id="ls-t">よだかの星 手打饂飩 印</title>
+  <desc id="ls-d">手彫り風の二重枠に縦書き二列の印章ロゴ</desc>
+  <!--
+    朱肉案: 採用する場合は下の fill="#1f2d3d" を fill="#9b3a2a" に差し替えるだけで成立する。
+    (墨版が既定。朱版は採用判断用の試作扱い)
+  -->
+  <g fill="#1f2d3d">
+    <!-- 外枠: 手彫りの揺らぎを持つ太帯(外縁と内縁の間を塗る) -->
+    <path fill-rule="evenodd" d="
+      M13 15 Q60 12.5 110 14 Q164 15.5 207 13
+      Q208.5 70 206 140 Q208 210 206.5 267
+      Q152 265.5 110 267 Q62 268 14 265.5
+      Q12.5 202 15 140 Q13 76 13 15 Z
+      M21 22 Q68 20.5 110 21.5 Q158 22.5 199 20.5
+      Q198 80 200 140 Q198.5 202 199 258.5
+      Q154 257.5 110 258.5 Q66 259.5 21.5 258
+      Q22.5 196 20.5 140 Q22 80 21 22 Z"/>
+    <!-- 内側の細罫(こちらも僅かに歪ませる) -->
+    <path fill="none" stroke="#1f2d3d" stroke-width="1" d="
+      M28.5 29 Q110 27.6 191.5 28.6
+      Q192.6 140 191.8 250.8
+      Q110 252.2 28.2 251.2
+      Q27.4 140 28.5 29 Z"/>
+    <!-- 中央仕切り -->
+    <rect x="104" y="34" width="1.4" height="212" opacity="0.5"/>
+    <!-- 主列: よだかの星(縦・大) -->
+    <g font-family="'Zen Old Mincho','Yu Mincho','Hiragino Mincho ProN',serif" font-size="34" text-anchor="middle">
+      <text x="151" y="68">よ</text>
+      <text x="151" y="112">だ</text>
+      <text x="151" y="156">か</text>
+      <text x="151" y="200">の</text>
+      <text x="151" y="244">星</text>
+    </g>
+    <!-- 副列: 手打饂飩(縦・小) -->
+    <g font-family="'Zen Old Mincho','Yu Mincho','Hiragino Mincho ProN',serif" font-size="22" text-anchor="middle">
+      <text x="62" y="72">手</text>
+      <text x="62" y="110">打</text>
+      <text x="62" y="148">饂</text>
+      <text x="62" y="186">飩</text>
+    </g>
+    <!-- 副列下の星印 -->
+    <path d="M62 214 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4 Z"/>
+  </g>
+</svg>

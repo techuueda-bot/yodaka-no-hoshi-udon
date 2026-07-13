@@ -1,0 +1,15 @@
+<svg viewBox="0 0 160 100" width="480" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="bd-t bd-d">
+  <title id="bd-t">夜鷹</title>
+  <desc id="bd-d">一筆書きの夜鷹の線画</desc>
+  <g fill="none" stroke="#1f2d3d" stroke-linecap="round" stroke-linejoin="round">
+    <!-- 嘴から頭・背・尾へ、腹を返して喉まで一筆の輪郭 -->
+    <path stroke-width="1.25" d="M13 58 Q19 48 31 49 Q41 50 47 56 Q57 63 68 64 Q84 66 99 75 Q85 71 72 68 Q58 67 46 63 Q34 60 26 61 Q18 61 13 58"/>
+    <!-- 翼: 主線 -->
+    <path stroke-width="1.5" d="M45 55 C66 34 100 22 144 24"/>
+    <!-- 翼: 添え線(濃淡) -->
+    <path stroke-width="1.1" stroke-opacity="0.8" d="M47 58 C72 43 106 31 139 28"/>
+    <path stroke-width="0.7" stroke-opacity="0.5" d="M51 61 C78 51 106 41 130 33"/>
+  </g>
+  <!-- 眼 -->
+  <circle cx="27" cy="53" r="1" fill="#1f2d3d"/>
+</svg>

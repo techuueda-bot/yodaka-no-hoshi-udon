@@ -1,0 +1,9 @@
+<svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="gr-t gr-d">
+  <title id="gr-t">紙のグレイン</title>
+  <desc id="gr-d">CSS背景用のモノクロノイズテクスチャ。CSS側で opacity 0.03 程度で敷く前提</desc>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+    <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.33 0.33 0.33 0 0"/>
+  </filter>
+  <rect width="200" height="200" filter="url(#grain)"/>
+</svg>

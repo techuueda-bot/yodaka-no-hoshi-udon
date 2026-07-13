@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ | よだかの星 手打ちうどん</title>
+  <meta name="description" content="よだかの星 手打ちうどんへのお問い合わせ・ご予約フォーム。お急ぎの場合はお電話(0198-00-1123)をご利用ください。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="お問い合わせ | よだかの星 手打ちうどん">
+  <meta property="og:description" content="よだかの星 手打ちうどんへのお問い合わせ・ご予約フォーム。お急ぎの場合はお電話(0198-00-1123)をご利用ください。">
+  <meta property="og:url" content="https://example.com/contact/">
+  <meta property="og:image" content="https://example.com/assets/img/common/ogp.png">
+  <meta property="og:site_name" content="よだかの星 手打ちうどん">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://example.com/contact/">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/img/common/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500&family=Zen+Old+Mincho&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="p-contact">
+
+  <header class="site-header">
+    <a class="brandmark site-header__logo" href="/">
+      <img class="brandmark__crest" src="/assets/img/common/crest.svg" width="30" height="30" alt="">
+      <span class="brandmark__name">よだかの星</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="メニューを開く" aria-controls="global-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="global-nav" id="global-nav" aria-label="グローバルナビゲーション">
+      <ul>
+        <li><a href="/">トップ</a></li>
+        <li><a href="/menu/">メニュー</a></li>
+        <li><a href="/kodawari/">こだわり</a></li>
+        <li><a href="/access/">店舗案内</a></li>
+        <li><a href="/contact/" aria-current="page">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div class="container">
+        <p class="page-header__en js-reveal">Contact</p>
+        <h1 class="page-header__title js-reveal" data-delay="1">お問い合わせ</h1>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <div class="container">
+        <ol>
+          <li><a href="/">トップ</a></li>
+          <li aria-current="page">お問い合わせ</li>
+        </ol>
+      </div>
+    </div>
+
+    <section class="section section--tight">
+      <div class="container--narrow">
+        <p class="js-reveal" style="margin-bottom:32px">当日のご予約・お急ぎのお問い合わせはお電話が確実です。<a href="tel:0198001123" style="border-bottom:1px solid currentColor">0198-00-1123</a>(11:00-15:00 / 17:30-21:00・火曜定休)</p>
+
+        <!-- 送信手段: Netlify Forms を既定として実装(forms.md)。他手段に変える場合はaction/data-netlifyを差し替える -->
+        <form class="form js-contact-form" name="contact" method="POST" action="/contact/thanks/" data-netlify="true" novalidate>
+          <input type="hidden" name="form-name" value="contact">
+
+          <div class="form__field">
+            <label for="name">お名前<span class="required">必須</span></label>
+            <input type="text" id="name" name="name" autocomplete="name" required aria-describedby="name-error">
+            <p class="form__error" id="name-error" data-error-for="name" aria-live="polite"></p>
+          </div>
+
+          <div class="form__field">
+            <label for="email">メールアドレス<span class="required">必須</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required aria-describedby="email-error">
+            <p class="form__error" id="email-error" data-error-for="email" aria-live="polite"></p>
+          </div>
+
+          <div class="form__field">
+            <label for="tel">お電話番号</label>
+            <input type="tel" id="tel" name="tel" autocomplete="tel" inputmode="tel">
+          </div>
+
+          <div class="form__field">
+            <label for="visit-date">ご来店・ご予約希望日時</label>
+            <input type="text" id="visit-date" name="visit-date" placeholder="例: 7月20日 18:30 / 2名">
+          </div>
+
+          <div class="form__field">
+            <label for="message">お問い合わせ内容<span class="required">必須</span></label>
+            <textarea id="message" name="message" rows="7" required aria-describedby="message-error"></textarea>
+            <p class="form__error" id="message-error" data-error-for="message" aria-live="polite"></p>
+          </div>
+
+          <!-- ハニーポット: 削除禁止(スパム対策)。ラベルごと視覚外に置く -->
+          <div class="form__hp" aria-hidden="true">
+            <label>この欄は入力しないでください<input type="text" name="company_url" tabindex="-1" autocomplete="off"></label>
+          </div>
+
+          <p style="font-size:13px">ご入力いただいた個人情報は、お問い合わせ・ご予約への対応のためにのみ利用します。</p>
+
+          <div>
+            <button class="button" type="submit">送信する</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer rule-draw">
+    <div class="container">
+      <p class="footer-en" aria-hidden="true">TEUCHI UDON — YODAKA NO HOSHI — HANAMAKI, IWATE</p>
+      <div class="footer-brand">
+        <img class="footer-stamp" src="/assets/img/common/logo-stamp.svg" width="108" height="137" alt="よだかの星 手打饂飩">
+        <div class="footer-info">
+          <p class="footer-info__name">京風だし 手打ちうどん よだかの星</p>
+          <p>岩手県花巻市星空町3-12-1</p>
+          <p>11:00-15:00(L.O.14:30) / 17:30-21:00(L.O.20:30) 土日祝は通し営業</p>
+          <p><a href="tel:0198001123">0198-00-1123</a></p>
+          <p class="footer-week">
+            <span class="footer-week__band" aria-hidden="true">月 <s>火</s> 水 木 金 土 日</span>
+            <span class="footer-week__label">火曜定休</span>
+          </p>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <ul>
+          <li><a href="/">トップ</a></li>
+          <li><a href="/menu/">メニュー</a></li>
+          <li><a href="/kodawari/">こだわり</a></li>
+          <li><a href="/access/">店舗案内</a></li>
+          <li><a href="/contact/">お問い合わせ</a></li>
+        </ul>
+      </nav>
+      <p class="footer-motto">地味なことを毎日、丁寧に。</p>
+      <p class="footer-copy"><small>&copy; 2026 よだかの星 手打ちうどん</small></p>
+    </div>
+  </footer>
+
+  <button class="motion-stop">アニメーションを停止する</button>
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

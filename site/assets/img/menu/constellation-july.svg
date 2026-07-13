@@ -1,0 +1,33 @@
+<svg viewBox="0 0 600 600" width="600" height="600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cj-t cj-d">
+  <title id="cj-t">七月の星図</title>
+  <desc id="cj-d">夏の大三角を想わせる三つの星と伴星の図</desc>
+  <!-- 結線 -->
+  <g stroke="#b8863f" stroke-width="0.75" stroke-opacity="0.6" fill="none">
+    <path d="M170 150 L455 240"/>
+    <path d="M455 240 L265 470"/>
+    <path d="M265 470 L170 150"/>
+    <path d="M170 150 L120 250"/>
+    <path d="M455 240 L520 330"/>
+  </g>
+  <!-- 主星(織姫)と光芒 -->
+  <g stroke="#b8863f" stroke-width="0.75" stroke-opacity="0.85">
+    <line x1="170" y1="122" x2="170" y2="146"/>
+    <line x1="170" y1="154" x2="170" y2="178"/>
+    <line x1="142" y1="150" x2="166" y2="150"/>
+    <line x1="174" y1="150" x2="198" y2="150"/>
+  </g>
+  <g fill="#b8863f">
+    <circle cx="170" cy="150" r="3"/>
+    <circle cx="455" cy="240" r="2.4"/>
+    <circle cx="265" cy="470" r="2.4"/>
+    <circle cx="120" cy="250" r="1.6"/>
+    <circle cx="520" cy="330" r="1.6"/>
+  </g>
+  <!-- 微光星 -->
+  <g fill="#ddd0af">
+    <circle cx="330" cy="90" r="1.2"/>
+    <circle cx="80" cy="430" r="1.2"/>
+    <circle cx="500" cy="120" r="1"/>
+    <circle cx="410" cy="520" r="1"/>
+  </g>
+</svg>

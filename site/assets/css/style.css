@@ -419,7 +419,7 @@ h1, h2, h3 {
 .menu-item__tag::after { content: "〕"; }
 
 /* お品書きの生成イメージ写真: 一覧を保ち、料理行から拡大写真を開く */
-.menu-intro { padding-bottom: clamp(40px, 6vw, 64px); }
+.menu-intro { padding-bottom: clamp(64px, 6vw, 88px); }
 .menu-intro__copy { max-width: 39em; }
 .menu-intro__title {
   font-size: clamp(24px, 4vw, 36px);
@@ -433,7 +433,7 @@ h1, h2, h3 {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  margin-top: -24px;
+  margin-top: 0;
   padding-top: calc(var(--section-pad) + 24px);
   /* 遠景: 富士のように裾野を広く取り、峰だけを尖らせる。 */
   clip-path: polygon(0 76px, 10% 70px, 20% 62px, 30% 66px, 39% 55px, 47% 34px, 54% 12px, 59% 0, 64% 8px, 69% 29px, 75% 49px, 82% 64px, 90% 74px, 100% 70px, 100% 100%, 0 100%);
@@ -472,7 +472,8 @@ h1, h2, h3 {
   -webkit-mask: url("../img/common/bird.svg") center / contain no-repeat;
   mask: url("../img/common/bird.svg") center / contain no-repeat;
 }
-.menu-seasonal.is-nightfall .menu-nightfall__bird { animation: nightfall-bird 1.18s var(--ease-out) 0.04s both; }
+/* 夜鷹のみ、翼を戻す余韻を見せるため 1.7 秒を許容する。 */
+.menu-seasonal.is-nightfall .menu-nightfall__bird { animation: nightfall-bird 1.7s var(--ease-out) 0.04s both; }
 .menu-seasonal::before {
   content: "";
   position: absolute;

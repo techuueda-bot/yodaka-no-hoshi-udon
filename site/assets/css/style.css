@@ -483,8 +483,9 @@ h1, h2, h3 {
   content: ""; display: block; height: 1px; margin-top: 5px; background: var(--color-accent);
   transform: scaleX(0); transform-origin: left;
 }
-.menu-dialog.is-open .menu-dialog__close::after { animation: menu-close-underline 0.34s var(--ease-out) 0.42s both; }
+.menu-dialog__close.is-underline-drawn::after { animation: menu-close-underline 0.34s var(--ease-out) both; }
 @media (hover: hover) { .menu-dialog__close:hover::after { transform: scaleX(1); } }
+.menu-dialog__close:focus-visible::after { transform: scaleX(1); }
 .menu-dialog.is-transitioning .menu-dialog__visual,
 .menu-dialog.is-transitioning .menu-dialog__copy {
   opacity: 0; transform: translateY(4px) scale(0.96); transition-duration: 0.12s; transition-delay: 0s;
@@ -501,7 +502,7 @@ body.menu-dialog-open .fixed-cta { visibility: hidden; }
   68% { opacity: 0.46; transform: translate(-50%, -50%) scale(1.14); }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(1.22); }
 }
-@keyframes menu-close-underline { to { transform: scaleX(1); } }
+@keyframes menu-close-underline { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (min-width: 768px) {
   .menu-dialog__shell { grid-template-columns: minmax(0, 1.7fr) minmax(240px, 0.7fr); gap: clamp(32px, 6vw, 80px); padding: 28px 64px 28px 0; }
   .menu-dialog__copy { padding-bottom: 0; }

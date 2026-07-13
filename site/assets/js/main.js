@@ -194,6 +194,7 @@ function initMenuDialog() {
   let savedScrollY = 0;
   let isTransitioning = false;
   let transitionVersion = 0;
+  let closeUnderlineTimer = 0;
 
   const getItem = (trigger) => {
     const key = trigger.dataset.menuPhoto;
@@ -222,10 +223,16 @@ function initMenuDialog() {
   };
 
   const unlockScroll = () => {
+    const scrollPosition = savedScrollY;
+    const root = document.documentElement;
+    const savedScrollBehavior = root.style.scrollBehavior;
     document.body.classList.remove("menu-dialog-open");
     if (savedBodyStyle) document.body.setAttribute("style", savedBodyStyle);
     else document.body.removeAttribute("style");
-    window.scrollTo(0, savedScrollY);
+    // 通常のページ内リンク用の smooth scroll を、復帰時だけ無効化する。
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, scrollPosition);
+    root.style.scrollBehavior = savedScrollBehavior;
   };
 
   const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
@@ -253,11 +260,25 @@ function initMenuDialog() {
 
   const openDialog = (index, trigger) => {
     opener = trigger;
+    closeButton.classList.remove("is-underline-drawn");
     populate(index);
     lockScroll();
     dialog.showModal();
     requestAnimationFrame(() => dialog.classList.add("is-open"));
     closeButton.focus();
+  };
+
+  const drawCloseUnderline = () => {
+    if (!dialog.open || document.documentElement.classList.contains("is-motion-off")) return;
+    window.clearTimeout(closeUnderlineTimer);
+    closeButton.classList.remove("is-underline-drawn");
+    // 同じ操作でも毎回左から描き直す。
+    requestAnimationFrame(() => {
+      closeButton.classList.add("is-underline-drawn");
+      closeUnderlineTimer = window.setTimeout(() => {
+        closeButton.classList.remove("is-underline-drawn");
+      }, 380);
+    });
   };
 
   const closeDialog = () => {
@@ -268,7 +289,7 @@ function initMenuDialog() {
       dialog.close();
       dialog.classList.remove("is-open", "is-closing", "is-transitioning");
       unlockScroll();
-      if (opener) opener.focus();
+      if (opener) opener.focus({ preventScroll: true });
     };
     if (document.documentElement.classList.contains("is-motion-off")) {
       finish();
@@ -305,6 +326,7 @@ function initMenuDialog() {
     trigger.addEventListener("click", () => openDialog(index, trigger));
   });
   closeButton.addEventListener("click", closeDialog);
+  closeButton.addEventListener("pointerenter", drawCloseUnderline);
   prevButton.addEventListener("click", () => moveDialog(currentIndex - 1));
   nextButton.addEventListener("click", () => moveDialog(currentIndex + 1));
   dialog.addEventListener("cancel", (event) => {

@@ -5,6 +5,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   initTypeSet();
   initReveal();
+  initNightfall();
   initHeader();
   initNav();
   initForm();
@@ -75,6 +76,29 @@ function initReveal() {
       });
     },
     { rootMargin: "0px 0px -12% 0px" }
+  );
+  targets.forEach((el) => io.observe(el));
+}
+
+/* ---- お品書きの季節限定へ入る一度きりの夜のとばり ----
+   スクロール位置を固定せず、境目が視界に入った時だけ濃紺へ沈ませる。 */
+function initNightfall() {
+  const targets = document.querySelectorAll(".js-nightfall");
+  if (!targets.length) return;
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach((el) => el.classList.add("is-nightfall"));
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-nightfall");
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: "0px 0px -18% 0px" }
   );
   targets.forEach((el) => io.observe(el));
 }

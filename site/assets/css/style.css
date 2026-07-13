@@ -427,6 +427,24 @@ h1, h2, h3 {
 }
 .menu-intro__copy > p:last-child { color: var(--color-muted); font-size: 14px; }
 
+/* お品書きの「今宵の一杯」へ入る境目: 夜のとばりが一度だけ落ちる。
+   スクロールは止めず、濃紺へ沈む瞬間だけをつくる。 */
+.menu-seasonal { position: relative; overflow: hidden; isolation: isolate; }
+.menu-seasonal > .container { position: relative; z-index: 1; }
+.menu-seasonal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--color-text);
+  opacity: 0.96;
+  transform: translateY(-102%);
+  transition: transform 0.82s var(--ease-out), opacity 0.18s linear 0.82s;
+  will-change: transform, opacity;
+}
+.menu-seasonal.is-nightfall::before { transform: translateY(0); opacity: 0; }
+
 /* 料理写真の共有ダイアログ: 余白と文字を主役に、写真は拡大時だけ置く */
 .menu-dialog {
   width: min(1120px, calc(100% - 32px)); max-height: calc(100dvh - 32px);
@@ -883,3 +901,4 @@ html.is-motion-off .rule-draw--both::after { transform: scaleX(1); }
 html.is-motion-off .bg-fade { opacity: 0.45; }
 html.is-motion-off .hero__stars i { animation: none; opacity: 0.18; }
 html.is-motion-off .morelink::before { display: none; }
+html.is-motion-off .menu-seasonal::before { display: none; }

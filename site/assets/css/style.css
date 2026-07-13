@@ -388,6 +388,49 @@ h1, h2, h3 {
 .menu-item__tag::before { content: "〔"; }
 .menu-item__tag::after { content: "〕"; }
 
+/* お品書きの生成イメージ写真: 写真上に文字を重ねず、キャプションで明記する */
+.menu-gallery { padding-bottom: 0; }
+.menu-gallery__intro { max-width: 37em; }
+.menu-gallery__title {
+  font-size: clamp(24px, 4vw, 36px);
+  margin: calc(var(--space) * 2) 0 calc(var(--space) * 3);
+}
+.menu-gallery__intro > p:last-child { color: var(--color-muted); font-size: 14px; }
+.menu-gallery__grid {
+  display: grid;
+  gap: calc(var(--space) * 5);
+  margin-top: calc(var(--space) * 7);
+}
+.menu-gallery__item { border-bottom: 1px solid var(--color-line); padding-bottom: calc(var(--space) * 2); }
+.menu-gallery__photo {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  background: var(--color-surface);
+}
+.menu-gallery__caption {
+  display: grid;
+  gap: 2px;
+  margin-top: calc(var(--space) * 2);
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 0.08em;
+}
+.menu-gallery__caption span {
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+}
+@media (min-width: 768px) {
+  .menu-gallery__grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(210px, 0.75fr);
+    gap: calc(var(--space) * 4);
+  }
+  .menu-gallery__item--feature { grid-row: span 2; }
+  .menu-gallery__item--feature .menu-gallery__photo { aspect-ratio: 4 / 5; }
+}
+
 /* 「もっと見る」リンク: 文字と1本罫のみ */
 .morelink {
   display: inline-block;

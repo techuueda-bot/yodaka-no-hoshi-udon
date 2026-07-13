@@ -84,6 +84,19 @@ AI生成画像や素材サイトの代理写真で実店舗を装わず、店舗
 - 原版、撮影者、利用許諾、撮影日を記録する。過度な合成・生成拡張はしない
 - 明るさと色温度は3点で揃えるが、料理や店の実物と異なる色に改変しない
 
+### 制作例で使う生成イメージ写真
+
+`/menu/`には、料理の雰囲気を伝えるための生成イメージ写真を3点掲載しています。全ての写真に隣接するキャプションで**「イメージ写真（生成）」**と明記し、実在店舗・実在メニューの写真としては扱いません。
+
+| 料理 | 公開用ファイル | 元画像 | 掲載位置 |
+|---|---|---|---|
+| よだかの星ぶっかけ | `site/assets/img/menu/generated/signature-*.webp` | `design/photo-concepts/260714-yodaka-signature-concept.png` | `/menu/`の写真導入部 |
+| かけうどん | `site/assets/img/menu/generated/kake-*.webp` | `design/photo-concepts/260714-yodaka-kake-concept.png` | `/menu/`の写真導入部 |
+| 冷やし夏野菜の梅おろしうどん | `site/assets/img/menu/generated/seasonal-*.webp` | `design/photo-concepts/260714-yodaka-seasonal-concept.png` | `/menu/`の写真導入部 |
+
+- `design/photo-concepts/`のPNGは元画像として保全し、公開サイトではWebPの960px/1536px版だけを読み込む
+- 実写真を用意できたら、生成写真は同じ表示位置・キャプション形式で差し替えるか、生成表記を外す前に利用許諾とメニュー内容を確認する
+
 ## お問い合わせフォーム
 
 現在はGitHub Pagesで公開しており、`contact/index.html` は受付停止案内のみです。フォーム要素、架空電話番号、Netlify Forms属性は公開HTMLから外しています。

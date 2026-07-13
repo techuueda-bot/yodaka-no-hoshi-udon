@@ -86,16 +86,27 @@ AI生成画像や素材サイトの代理写真で実店舗を装わず、店舗
 
 ### 制作例で使う生成イメージ写真
 
-`/menu/`には、料理の雰囲気を伝えるための生成イメージ写真を3点掲載しています。全ての写真に隣接するキャプションで**「イメージ写真（生成）」**と明記し、実在店舗・実在メニューの写真としては扱いません。
+`/menu/`の全12品に、料理の雰囲気を伝える生成イメージ写真を用意しています。献立表の料理名・価格の行にある「写真を見る」を選ぶと、写真・料理名・価格・説明を一緒に確認できるビューアが開きます。写真は一覧に並べず、価格を比較してから気になる一杯を確かめる導線です。
 
-| 料理 | 公開用ファイル | 元画像 | 掲載位置 |
-|---|---|---|---|
-| よだかの星ぶっかけ | `site/assets/img/menu/generated/signature-*.webp` | `design/photo-concepts/260714-yodaka-signature-concept.png` | `/menu/`の写真導入部 |
-| かけうどん | `site/assets/img/menu/generated/kake-*.webp` | `design/photo-concepts/260714-yodaka-kake-concept.png` | `/menu/`の写真導入部 |
-| 冷やし夏野菜の梅おろしうどん | `site/assets/img/menu/generated/seasonal-*.webp` | `design/photo-concepts/260714-yodaka-seasonal-concept.png` | `/menu/`の写真導入部 |
+すべての料理行と写真ビューア内に**「イメージ写真（生成）」**を明記し、実在店舗・実在メニューの写真としては扱いません。ビューアは前後の料理へ移動でき、背景は180ms、内容は320ms以内で開閉します。自動送りはせず、モーション停止時は即時に切り替わります。
 
-- `design/photo-concepts/`のPNGは元画像として保全し、公開サイトではWebPの960px/1536px版だけを読み込む
-- 実写真を用意できたら、生成写真は同じ表示位置・キャプション形式で差し替えるか、生成表記を外す前に利用許諾とメニュー内容を確認する
+| 料理 | 公開用ファイル | 元画像 |
+|---|---|---|
+| かけうどん | `site/assets/img/menu/generated/kake-1536.webp` | `design/photo-concepts/260714-yodaka-kake-concept.png` |
+| ざるうどん | `site/assets/img/menu/generated/zaru-1536.webp` | `design/photo-concepts/260714-yodaka-zaru-concept.png` |
+| きつねうどん | `site/assets/img/menu/generated/kitsune-1536.webp` | `design/photo-concepts/260714-yodaka-kitsune-concept.png` |
+| 天ぷらうどん | `site/assets/img/menu/generated/tempura-1536.webp` | `design/photo-concepts/260714-yodaka-tempura-concept.png` |
+| よだかの星ぶっかけ | `site/assets/img/menu/generated/signature-1536.webp` | `design/photo-concepts/260714-yodaka-signature-concept.png` |
+| 鴨南蛮うどん | `site/assets/img/menu/generated/kamo-nanban-1536.webp` | `design/photo-concepts/260714-yodaka-kamo-nanban-concept.png` |
+| カレーうどん | `site/assets/img/menu/generated/curry-1536.webp` | `design/photo-concepts/260714-yodaka-curry-concept.png` |
+| 冷やし夏野菜の梅おろしうどん | `site/assets/img/menu/generated/seasonal-1536.webp` | `design/photo-concepts/260714-yodaka-seasonal-concept.png` |
+| 枝豆と生姜の冷麦だしうどん | `site/assets/img/menu/generated/edamame-1536.webp` | `design/photo-concepts/260714-yodaka-edamame-concept.png` |
+| きのこと柚子胡椒の温かけうどん | `site/assets/img/menu/generated/mushroom-1536.webp` | `design/photo-concepts/260714-yodaka-mushroom-concept.png` |
+| いなり寿司 | `site/assets/img/menu/generated/inari-1536.webp` | `design/photo-concepts/260714-yodaka-inari-concept.png` |
+| 小さなかけうどん | `site/assets/img/menu/generated/mini-kake-1536.webp` | `design/photo-concepts/260714-yodaka-mini-kake-concept.png` |
+
+- `design/photo-concepts/`のPNGは元画像として保全し、公開サイトでは1536pxのWebPを必要な1枚だけ読み込む
+- 実写真を用意できたら、料理ごとに生成写真を同じビューア位置・説明形式で差し替える。生成表記を外す前に、利用許諾とメニュー内容を確認する
 
 ## お問い合わせフォーム
 

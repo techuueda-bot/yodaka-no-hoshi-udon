@@ -75,29 +75,12 @@
       </div>
     </div>
 
-    <section class="section section--tight menu-gallery" aria-labelledby="menu-gallery-title">
+    <section class="section section--tight menu-intro" aria-labelledby="menu-intro-title">
       <div class="container--narrow">
-        <div class="menu-gallery__intro js-reveal">
+        <div class="menu-intro__copy js-reveal">
           <p class="section-head__en">Concept Images</p>
-          <h2 class="menu-gallery__title" id="menu-gallery-title">一杯を想像するための、三つの景色</h2>
-          <p>以下の写真は、架空店舗「よだかの星」の世界観を表現するために生成したイメージです。実際に提供する料理の写真ではありません。</p>
-        </div>
-
-        <div class="menu-gallery__grid">
-          <figure class="menu-gallery__item menu-gallery__item--feature js-reveal" data-delay="1">
-            <img class="menu-gallery__photo" src="/assets/img/menu/generated/signature-1536.webp" width="1536" height="1024" alt="半熟卵、揚げ玉、刻み葱を添えたぶっかけうどんの生成イメージ" loading="lazy" decoding="async">
-            <figcaption class="menu-gallery__caption"><span>イメージ写真（生成）</span>よだかの星ぶっかけ</figcaption>
-          </figure>
-
-          <figure class="menu-gallery__item js-reveal" data-delay="2">
-            <img class="menu-gallery__photo" src="/assets/img/menu/generated/kake-1536.webp" width="1536" height="1024" alt="澄んだ出汁と刻み葱を添えたかけうどんの生成イメージ" loading="lazy" decoding="async">
-            <figcaption class="menu-gallery__caption"><span>イメージ写真（生成）</span>かけうどん</figcaption>
-          </figure>
-
-          <figure class="menu-gallery__item js-reveal" data-delay="3">
-            <img class="menu-gallery__photo" src="/assets/img/menu/generated/seasonal-1536.webp" width="1536" height="1024" alt="夏野菜、梅おろし、茗荷を添えた冷やしうどんの生成イメージ" loading="lazy" decoding="async">
-            <figcaption class="menu-gallery__caption"><span>イメージ写真（生成）</span>冷やし夏野菜の梅おろしうどん</figcaption>
-          </figure>
+          <h2 class="menu-intro__title" id="menu-intro-title">一杯の景色を、ひらく</h2>
+          <p>料理名・価格の行を選ぶと、その一杯のイメージ写真をご覧いただけます。掲載写真はすべて架空店舗の献立をもとに制作した生成イメージであり、実際に提供された料理の記録ではありません。</p>
         </div>
       </div>
     </section>
@@ -108,103 +91,126 @@
 
           <div class="menu-list__group">
             <p class="menu-list__group-title js-reveal">定番うどん</p>
-            <div class="menu-item js-reveal">
-              <div>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="kake" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="かけうどん、580円のイメージ写真を見る">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">一、</span>かけうどん</span>
                 <span class="menu-item__desc">毎朝引く、いりこと昆布の合わせ出汁</span>
-              </div>
-              <span class="menu-item__price">¥580</span>
-            </div>
-            <div class="menu-item js-reveal" data-delay="1">
-              <div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥580</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="zaru" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="ざるうどん、630円のイメージ写真を見る" data-delay="1">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">二、</span>ざるうどん</span>
                 <span class="menu-item__desc">冷水で締めた自家製麺を、つゆで</span>
-              </div>
-              <span class="menu-item__price">¥630</span>
-            </div>
-            <div class="menu-item js-reveal" data-delay="2">
-              <div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥630</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="kitsune" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="きつねうどん、700円のイメージ写真を見る" data-delay="2">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">三、</span>きつねうどん</span>
                 <span class="menu-item__desc">甘辛く炊いた油揚げをたっぷりと</span>
-              </div>
-              <span class="menu-item__price">¥700</span>
-            </div>
-            <div class="menu-item js-reveal" data-delay="3">
-              <div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥700</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="tempura" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="天ぷらうどん、880円のイメージ写真を見る" data-delay="3">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">四、</span>天ぷらうどん</span>
                 <span class="menu-item__desc">海老天・野菜かき揚げより2種選択</span>
-              </div>
-              <span class="menu-item__price">¥880</span>
-            </div>
-            <div class="menu-item js-reveal">
-              <div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥880</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="signature" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="よだかの星ぶっかけ、780円のイメージ写真を見る">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">五、</span>よだかの星ぶっかけ</span>
                 <span class="menu-item__desc">半熟卵と揚げ玉、刻み葱をたっぷりと<span class="menu-item__tag">看板</span></span>
-              </div>
-              <span class="menu-item__price">¥780</span>
-            </div>
-            <div class="menu-item js-reveal" data-delay="1">
-              <div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥780</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="kamo-nanban" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="鴨南蛮うどん、980円のイメージ写真を見る" data-delay="1">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">六、</span>鴨南蛮うどん</span>
                 <span class="menu-item__desc">香ばしく炙った鴨と、九条葱</span>
-              </div>
-              <span class="menu-item__price">¥980</span>
-            </div>
-            <div class="menu-item js-reveal" data-delay="2">
-              <div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥980</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="curry" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="カレーうどん、850円のイメージ写真を見る" data-delay="2">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">七、</span>カレーうどん</span>
                 <span class="menu-item__desc">出汁を効かせた和風カレー、とろみ強め</span>
-              </div>
-              <span class="menu-item__price">¥850</span>
-            </div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥850</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
           </div>
 
           <div class="menu-list__group">
             <p class="menu-list__group-title js-reveal">今宵の一杯(季節限定・月替わり)</p>
             <p class="js-reveal" style="font-size:14px; color:var(--color-muted); margin-bottom:16px;">四季で移ろう夜空になぞらえ、月替わりでご用意しています。下記は献立例です。数量限定・売り切れ次第終了。</p>
-            <div class="menu-item js-reveal">
-              <div>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="seasonal" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="冷やし夏野菜の梅おろしうどん、920円のイメージ写真を見る">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">一、</span>冷やし夏野菜の梅おろしうどん</span>
                 <span class="menu-item__desc">花巻産トマトと茄子、焼き茗荷、梅の酸味<span class="menu-item__tag">7月限定</span></span>
-              </div>
-              <span class="menu-item__price">¥920</span>
-            </div>
-            <div class="menu-item js-reveal" data-delay="1">
-              <div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥920</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="edamame" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="枝豆と生姜の冷麦だしうどん、920円のイメージ写真を見る" data-delay="1">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">二、</span>枝豆と生姜の冷麦だしうどん</span>
                 <span class="menu-item__desc">枝豆のすり流しと生姜、氷を浮かべた出汁<span class="menu-item__tag">8月限定</span></span>
-              </div>
-              <span class="menu-item__price">¥920</span>
-            </div>
-            <div class="menu-item js-reveal" data-delay="2">
-              <div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥920</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="mushroom" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="きのこと柚子胡椒の温かけうどん、950円のイメージ写真を見る" data-delay="2">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">三、</span>きのこと柚子胡椒の温かけうどん</span>
                 <span class="menu-item__desc">近隣の山のきのこ三種、柚子胡椒<span class="menu-item__tag">9月限定</span></span>
-              </div>
-              <span class="menu-item__price">¥950</span>
-            </div>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥950</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
           </div>
 
           <div class="menu-list__group">
             <p class="menu-list__group-title js-reveal">サイド・お子様</p>
-            <div class="menu-item js-reveal">
-              <div>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="inari" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="いなり寿司2個、250円のイメージ写真を見る">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">一、</span>いなり寿司(2個)</span>
-              </div>
-              <span class="menu-item__price">¥250</span>
-            </div>
-            <div class="menu-item js-reveal" data-delay="1">
-              <div>
+                <span class="menu-item__desc">香ばしく炊いた油揚げを、二つ</span>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥250</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
+            <button class="menu-item js-reveal" type="button" data-menu-photo="mini-kake" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="ミニかけうどん、お子様、380円のイメージ写真を見る" data-delay="1">
+              <span class="menu-item__info">
                 <span class="menu-item__name"><span class="menu-item__num">二、</span>ミニかけうどん(お子様)</span>
-              </div>
-              <span class="menu-item__price">¥380</span>
-            </div>
+                <span class="menu-item__desc">小さな器に、やさしい合わせ出汁</span>
+              </span>
+              <span class="menu-item__meta"><span class="menu-item__price">¥380</span><span class="menu-item__hint" aria-hidden="true">写真を見る　—</span></span>
+            </button>
           </div>
 
         </div>
         <p class="js-reveal" style="font-size:13px; color:var(--color-muted); margin-top:32px;">※表示価格は税込です。仮の献立・価格例として掲載しています。実店舗の内容に合わせて差し替えてください。</p>
       </div>
     </section>
+
+    <dialog class="menu-dialog" id="menu-photo-dialog" aria-labelledby="menu-dialog-title" aria-describedby="menu-dialog-description menu-dialog-notice">
+      <div class="menu-dialog__shell">
+        <button class="menu-dialog__close" type="button" data-menu-dialog-close aria-label="写真を閉じる">閉じる</button>
+        <div class="menu-dialog__visual">
+          <img id="menu-dialog-image" width="1536" height="1024" alt="" decoding="async">
+        </div>
+        <div class="menu-dialog__copy" aria-live="polite">
+          <p class="menu-dialog__label">イメージ写真（生成）</p>
+          <p class="menu-dialog__number" id="menu-dialog-number"></p>
+          <h2 id="menu-dialog-title"></h2>
+          <p id="menu-dialog-description"></p>
+          <p class="menu-dialog__price" id="menu-dialog-price"></p>
+          <p class="menu-dialog__notice" id="menu-dialog-notice">架空店舗の献立をもとに制作した生成イメージです。実際に提供された料理の記録ではありません。</p>
+          <div class="menu-dialog__nav" aria-label="料理写真を移動">
+            <button type="button" data-menu-dialog-prev>前の一杯</button>
+            <button type="button" data-menu-dialog-next>次の一杯</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
 
     <section class="section cta-band rule-draw rule-draw--both">
       <div class="container">

@@ -371,12 +371,24 @@ h1, h2, h3 {
 }
 .menu-item {
   display: flex; justify-content: space-between; align-items: baseline; gap: calc(var(--space) * 3);
+  width: 100%; appearance: none; text-align: left; color: inherit;
+  font: inherit; letter-spacing: inherit; background: transparent; cursor: pointer;
   padding: calc(var(--space) * 3) 0;
   border-bottom: 1px solid var(--color-line);
+  transition: border-color 0.28s var(--ease-out), transform 0.22s var(--ease-out);
 }
+.menu-item__info { min-width: 0; }
 .menu-item__name { font-family: var(--font-display); font-size: 20px; letter-spacing: 0.04em; font-feature-settings: "palt"; }
 .menu-item__desc { display: block; font-size: 14px; color: var(--color-muted); margin-top: 4px; }
 .menu-item__price { font-family: var(--font-display); font-size: 18px; white-space: nowrap; }
+.menu-item__meta { display: grid; gap: 2px; flex: 0 0 auto; text-align: right; }
+.menu-item__hint { font-size: 11px; letter-spacing: 0.12em; color: var(--color-accent); white-space: nowrap; }
+.menu-item:active { transform: translateY(1px); }
+@media (hover: hover) {
+  .menu-item:hover { border-bottom-color: var(--color-text); }
+  .menu-item:hover .menu-item__name { text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 6px; text-decoration-thickness: 1px; }
+  .menu-item:hover .menu-item__hint { color: var(--color-text); }
+}
 /* タグはピルではなく括弧書きのテキスト */
 .menu-item__tag {
   display: inline-block;
@@ -388,47 +400,60 @@ h1, h2, h3 {
 .menu-item__tag::before { content: "〔"; }
 .menu-item__tag::after { content: "〕"; }
 
-/* お品書きの生成イメージ写真: 写真上に文字を重ねず、キャプションで明記する */
-.menu-gallery { padding-bottom: 0; }
-.menu-gallery__intro { max-width: 37em; }
-.menu-gallery__title {
+/* お品書きの生成イメージ写真: 一覧を保ち、料理行から拡大写真を開く */
+.menu-intro { padding-bottom: 0; }
+.menu-intro__copy { max-width: 39em; }
+.menu-intro__title {
   font-size: clamp(24px, 4vw, 36px);
   margin: calc(var(--space) * 2) 0 calc(var(--space) * 3);
 }
-.menu-gallery__intro > p:last-child { color: var(--color-muted); font-size: 14px; }
-.menu-gallery__grid {
-  display: grid;
-  gap: calc(var(--space) * 5);
-  margin-top: calc(var(--space) * 7);
+.menu-intro__copy > p:last-child { color: var(--color-muted); font-size: 14px; }
+
+/* 料理写真の共有ダイアログ: 余白と文字を主役に、写真は拡大時だけ置く */
+.menu-dialog {
+  width: min(1120px, calc(100% - 32px)); max-height: calc(100dvh - 32px);
+  margin: auto; padding: 0; border: 0; color: var(--color-bg); background: transparent;
+  overflow: visible;
 }
-.menu-gallery__item { border-bottom: 1px solid var(--color-line); padding-bottom: calc(var(--space) * 2); }
-.menu-gallery__photo {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  background: var(--color-surface);
+.menu-dialog::backdrop { background: rgba(31, 45, 61, 0); transition: background-color 0.18s var(--ease-out); }
+.menu-dialog.is-open::backdrop { background-color: rgba(31, 45, 61, 0.94); }
+.menu-dialog.is-closing::backdrop { background-color: rgba(31, 45, 61, 0); }
+.menu-dialog__shell {
+  position: relative; display: grid; gap: calc(var(--space) * 3);
+  max-height: calc(100dvh - 32px); padding: 56px 0 24px; overflow: auto;
+  overscroll-behavior: contain; opacity: 0; transform: translateY(12px) scale(0.985);
+  transition: opacity 0.18s var(--ease-out), transform 0.32s var(--ease-out);
 }
-.menu-gallery__caption {
-  display: grid;
-  gap: 2px;
-  margin-top: calc(var(--space) * 2);
-  font-family: var(--font-display);
-  font-size: 17px;
-  letter-spacing: 0.08em;
+.menu-dialog.is-open .menu-dialog__shell { opacity: 1; transform: none; }
+.menu-dialog.is-closing .menu-dialog__shell { opacity: 0; transform: translateY(8px) scale(0.99); transition-duration: 0.16s; }
+.menu-dialog__close {
+  position: absolute; top: 0; right: 0; min-width: 44px; min-height: 44px;
+  padding: 8px 0 8px 12px; border: 0; color: var(--color-bg); background: transparent;
+  font-family: var(--font-body); font-size: 12px; letter-spacing: 0.14em; cursor: pointer;
 }
-.menu-gallery__caption span {
-  font-family: var(--font-body);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  color: var(--color-accent);
+.menu-dialog__close::after { content: "　×"; color: var(--color-accent); font-size: 16px; }
+.menu-dialog__visual { border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 32%, transparent); }
+.menu-dialog__visual img { width: 100%; aspect-ratio: 3 / 2; object-fit: contain; background: rgba(247, 242, 230, 0.06); }
+.menu-dialog__copy { display: grid; align-content: center; gap: calc(var(--space) * 2); padding-bottom: calc(var(--space) * 3); }
+.menu-dialog__label, .menu-dialog__number { font-size: 12px; letter-spacing: 0.14em; color: var(--color-accent); }
+.menu-dialog__copy h2 { font-size: clamp(25px, 4vw, 40px); }
+.menu-dialog__copy > p:not(.menu-dialog__label):not(.menu-dialog__number):not(.menu-dialog__price):not(.menu-dialog__notice) { color: color-mix(in srgb, var(--color-bg) 78%, transparent); font-size: 14px; }
+.menu-dialog__price { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.08em; }
+.menu-dialog__notice { padding-top: calc(var(--space) * 2); border-top: 1px solid color-mix(in srgb, var(--color-bg) 32%, transparent); color: color-mix(in srgb, var(--color-bg) 70%, transparent); font-size: 12px; letter-spacing: 0.08em; line-height: 1.8; }
+.menu-dialog__nav { display: flex; gap: calc(var(--space) * 3); margin-top: calc(var(--space) * 2); }
+.menu-dialog__nav button {
+  padding: 8px 0; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 42%, transparent);
+  color: var(--color-bg); background: transparent; font-family: var(--font-display); font-size: 14px; letter-spacing: 0.08em; cursor: pointer;
 }
+.menu-dialog__nav button:disabled { opacity: 0.35; cursor: default; }
+.menu-dialog.is-switching .menu-dialog__visual,
+.menu-dialog.is-switching .menu-dialog__copy { opacity: 0.42; transition: opacity 0.08s linear; }
+body.menu-dialog-open .fixed-cta { visibility: hidden; }
 @media (min-width: 768px) {
-  .menu-gallery__grid {
-    grid-template-columns: minmax(0, 1.25fr) minmax(210px, 0.75fr);
-    gap: calc(var(--space) * 4);
-  }
-  .menu-gallery__item--feature { grid-row: span 2; }
-  .menu-gallery__item--feature .menu-gallery__photo { aspect-ratio: 4 / 5; }
+  .menu-dialog__shell { grid-template-columns: minmax(0, 1.7fr) minmax(240px, 0.7fr); gap: clamp(32px, 6vw, 80px); padding: 28px 64px 28px 0; }
+  .menu-dialog__visual { align-self: center; border-bottom: 0; }
+  .menu-dialog__copy { padding-bottom: 0; }
+  .menu-dialog__close { right: 0; }
 }
 
 /* 「もっと見る」リンク: 文字と1本罫のみ */

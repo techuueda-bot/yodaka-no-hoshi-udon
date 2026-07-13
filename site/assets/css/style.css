@@ -441,12 +441,7 @@ h1, h2, h3 {
   max-height: calc(100dvh - 32px); padding: 56px 0 24px; overflow: auto;
   overscroll-behavior: contain;
 }
-.menu-dialog__close {
-  position: absolute; top: 0; right: 0; min-width: 44px; min-height: 44px;
-  padding: 8px 0 8px 12px; border: 0; color: var(--color-bg); background: transparent;
-  font-family: var(--font-body); font-size: 12px; letter-spacing: 0.14em; cursor: pointer;
-}
-.menu-dialog__close::after { content: "　×"; color: var(--color-accent); font-size: 16px; }
+.menu-dialog__stage { position: relative; align-self: center; }
 .menu-dialog__visual {
   position: relative; opacity: 0; transform: translateY(8px) scale(0.92);
   transition: opacity 0.22s var(--ease-out), transform 0.42s var(--ease-out);
@@ -455,12 +450,15 @@ h1, h2, h3 {
 .menu-dialog__star {
   position: absolute; z-index: 1; top: 50%; left: 50%; width: 60px; height: 60px;
   opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.7);
+  background: var(--color-bg);
+  -webkit-mask: url("../img/common/crest.svg") center / contain no-repeat;
+  mask: url("../img/common/crest.svg") center / contain no-repeat;
 }
-.menu-dialog.is-open .menu-dialog__star { animation: menu-star-bloom 0.36s var(--ease-out) both; }
-.menu-dialog.is-open .menu-dialog__visual { opacity: 1; transform: none; }
+.menu-dialog.is-open .menu-dialog__star { animation: menu-star-bloom 0.42s var(--ease-out) both; }
+.menu-dialog.is-open .menu-dialog__visual { opacity: 1; transform: none; transition-delay: 0.18s; }
 .menu-dialog__copy {
   display: grid; align-content: center; gap: calc(var(--space) * 2); padding-bottom: calc(var(--space) * 3);
-  opacity: 0; transform: translateY(8px); transition: opacity 0.22s var(--ease-out) 0.08s, transform 0.28s var(--ease-out) 0.08s;
+  opacity: 0; transform: translateY(8px); transition: opacity 0.22s var(--ease-out) 0.22s, transform 0.28s var(--ease-out) 0.22s;
 }
 .menu-dialog.is-open .menu-dialog__copy { opacity: 1; transform: none; }
 .menu-dialog.is-closing .menu-dialog__visual,
@@ -470,25 +468,43 @@ h1, h2, h3 {
 .menu-dialog__copy > p:not(.menu-dialog__label):not(.menu-dialog__number):not(.menu-dialog__price):not(.menu-dialog__notice) { color: color-mix(in srgb, var(--color-bg) 78%, transparent); font-size: 14px; }
 .menu-dialog__price { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.08em; }
 .menu-dialog__notice { padding-top: calc(var(--space) * 2); border-top: 1px solid color-mix(in srgb, var(--color-bg) 32%, transparent); color: color-mix(in srgb, var(--color-bg) 70%, transparent); font-size: 12px; letter-spacing: 0.08em; line-height: 1.8; }
-.menu-dialog__nav { display: flex; gap: calc(var(--space) * 3); margin-top: calc(var(--space) * 2); }
+.menu-dialog__actions { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: calc(var(--space) * 3); margin-top: calc(var(--space) * 2); }
+.menu-dialog__nav { display: flex; gap: calc(var(--space) * 3); }
 .menu-dialog__nav button {
   padding: 8px 0; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 42%, transparent);
   color: var(--color-bg); background: transparent; font-family: var(--font-display); font-size: 14px; letter-spacing: 0.08em; cursor: pointer;
 }
 .menu-dialog__nav button:disabled { opacity: 0.35; cursor: default; }
-.menu-dialog.is-switching .menu-dialog__visual,
-.menu-dialog.is-switching .menu-dialog__copy { opacity: 0.42; transition: opacity 0.08s linear; }
+.menu-dialog__close {
+  min-width: 44px; min-height: 44px; padding: 8px 0; border: 0; color: var(--color-bg); background: transparent;
+  font-family: var(--font-body); font-size: 12px; letter-spacing: 0.14em; cursor: pointer;
+}
+.menu-dialog__close::after {
+  content: ""; display: block; height: 1px; margin-top: 5px; background: var(--color-accent);
+  transform: scaleX(0); transform-origin: left;
+}
+.menu-dialog.is-open .menu-dialog__close::after { animation: menu-close-underline 0.34s var(--ease-out) 0.42s both; }
+@media (hover: hover) { .menu-dialog__close:hover::after { transform: scaleX(1); } }
+.menu-dialog.is-transitioning .menu-dialog__visual,
+.menu-dialog.is-transitioning .menu-dialog__copy {
+  opacity: 0; transform: translateY(4px) scale(0.96); transition-duration: 0.12s; transition-delay: 0s;
+}
+.menu-dialog.is-transitioning .menu-dialog__star { animation: menu-star-transition 0.42s var(--ease-out) both; }
 body.menu-dialog-open .fixed-cta { visibility: hidden; }
 @keyframes menu-star-bloom {
-  0% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.7); }
-  70% { opacity: 0.28; transform: translate(-50%, -50%) scale(1.15); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.15); }
+  0% { opacity: 0.82; transform: translate(-50%, -50%) scale(0.62); }
+  68% { opacity: 0.46; transform: translate(-50%, -50%) scale(1.14); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.22); }
 }
+@keyframes menu-star-transition {
+  0% { opacity: 0.82; transform: translate(-50%, -50%) scale(0.62); }
+  68% { opacity: 0.46; transform: translate(-50%, -50%) scale(1.14); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.22); }
+}
+@keyframes menu-close-underline { to { transform: scaleX(1); } }
 @media (min-width: 768px) {
   .menu-dialog__shell { grid-template-columns: minmax(0, 1.7fr) minmax(240px, 0.7fr); gap: clamp(32px, 6vw, 80px); padding: 28px 64px 28px 0; }
-  .menu-dialog__visual { align-self: center; }
   .menu-dialog__copy { padding-bottom: 0; }
-  .menu-dialog__close { right: 0; }
 }
 
 /* 「もっと見る」リンク: 文字と1本罫のみ */

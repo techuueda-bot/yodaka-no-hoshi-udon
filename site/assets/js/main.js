@@ -192,6 +192,8 @@ function initMenuDialog() {
   let opener = null;
   let savedBodyStyle = "";
   let savedScrollY = 0;
+  let isTransitioning = false;
+  let transitionVersion = 0;
 
   const getItem = (trigger) => {
     const key = trigger.dataset.menuPhoto;
@@ -226,6 +228,15 @@ function initMenuDialog() {
     window.scrollTo(0, savedScrollY);
   };
 
+  const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+  const preloadPhoto = (src) => new Promise((resolve) => {
+    const preload = new Image();
+    preload.onload = resolve;
+    preload.onerror = resolve;
+    preload.src = src;
+    if (preload.complete) resolve();
+  });
+
   const populate = (index) => {
     const item = getItem(triggers[index]);
     if (!item) return;
@@ -251,9 +262,11 @@ function initMenuDialog() {
 
   const closeDialog = () => {
     if (!dialog.open) return;
+    transitionVersion += 1;
+    isTransitioning = false;
     const finish = () => {
       dialog.close();
-      dialog.classList.remove("is-open", "is-closing", "is-switching");
+      dialog.classList.remove("is-open", "is-closing", "is-transitioning");
       unlockScroll();
       if (opener) opener.focus();
     };
@@ -265,13 +278,27 @@ function initMenuDialog() {
     window.setTimeout(finish, 180);
   };
 
-  const moveDialog = (nextIndex) => {
-    if (nextIndex < 0 || nextIndex >= triggers.length) return;
-    dialog.classList.add("is-switching");
-    window.setTimeout(() => {
+  const moveDialog = async (nextIndex) => {
+    if (nextIndex < 0 || nextIndex >= triggers.length || isTransitioning) return;
+    const nextItem = getItem(triggers[nextIndex]);
+    if (!nextItem) return;
+    if (document.documentElement.classList.contains("is-motion-off")) {
       populate(nextIndex);
-      requestAnimationFrame(() => dialog.classList.remove("is-switching"));
-    }, document.documentElement.classList.contains("is-motion-off") ? 0 : 90);
+      return;
+    }
+    isTransitioning = true;
+    const version = ++transitionVersion;
+    dialog.classList.add("is-transitioning");
+    await Promise.all([
+      wait(340),
+      Promise.race([preloadPhoto(nextItem.src), wait(900)]),
+    ]);
+    if (version !== transitionVersion || !dialog.open) return;
+    populate(nextIndex);
+    requestAnimationFrame(() => {
+      dialog.classList.remove("is-transitioning");
+      isTransitioning = false;
+    });
   };
 
   triggers.forEach((trigger, index) => {

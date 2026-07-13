@@ -204,10 +204,11 @@
 
     <dialog class="menu-dialog" id="menu-photo-dialog" aria-labelledby="menu-dialog-title" aria-describedby="menu-dialog-description menu-dialog-notice">
       <div class="menu-dialog__shell">
-        <button class="menu-dialog__close" type="button" data-menu-dialog-close aria-label="写真を閉じる">閉じる</button>
-        <div class="menu-dialog__visual">
-          <img class="menu-dialog__star" src="/assets/img/common/crest.svg" width="60" height="60" alt="" aria-hidden="true">
-          <img id="menu-dialog-image" src="../assets/img/common/crest.svg" width="1536" height="1024" alt="" decoding="async">
+        <div class="menu-dialog__stage">
+          <span class="menu-dialog__star" aria-hidden="true"></span>
+          <div class="menu-dialog__visual">
+            <img id="menu-dialog-image" src="../assets/img/common/crest.svg" width="1536" height="1024" alt="" decoding="async">
+          </div>
         </div>
         <div class="menu-dialog__copy" aria-live="polite">
           <p class="menu-dialog__label">イメージ写真（生成）</p>
@@ -216,9 +217,12 @@
           <p id="menu-dialog-description"></p>
           <p class="menu-dialog__price" id="menu-dialog-price"></p>
           <p class="menu-dialog__notice" id="menu-dialog-notice">架空店舗の献立をもとに制作した生成イメージです。実際に提供された料理の記録ではありません。</p>
-          <div class="menu-dialog__nav" aria-label="料理写真を移動">
-            <button type="button" data-menu-dialog-prev>前の一杯</button>
-            <button type="button" data-menu-dialog-next>次の一杯</button>
+          <div class="menu-dialog__actions">
+            <div class="menu-dialog__nav" aria-label="料理写真を移動">
+              <button type="button" data-menu-dialog-prev>前の一杯</button>
+              <button type="button" data-menu-dialog-next>次の一杯</button>
+            </div>
+            <button class="menu-dialog__close" type="button" data-menu-dialog-close>写真を閉じる</button>
           </div>
         </div>
       </div>

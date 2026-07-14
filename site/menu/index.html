@@ -204,7 +204,11 @@
     </section>
 
     <dialog class="menu-dialog" id="menu-photo-dialog" aria-labelledby="menu-dialog-title" aria-describedby="menu-dialog-description menu-dialog-notice">
-      <button class="menu-dialog__close" type="button" data-menu-dialog-close>写真を閉じる</button>
+      <div class="menu-dialog__toolbar" aria-label="料理写真の操作">
+        <button type="button" data-menu-dialog-prev>前の一杯</button>
+        <button class="menu-dialog__close" type="button" data-menu-dialog-close>写真を閉じる</button>
+        <button type="button" data-menu-dialog-next>次の一杯</button>
+      </div>
       <div class="menu-dialog__shell">
         <div class="menu-dialog__stage">
           <span class="menu-dialog__star" aria-hidden="true"></span>
@@ -219,12 +223,6 @@
           <p id="menu-dialog-description"></p>
           <p class="menu-dialog__price" id="menu-dialog-price"></p>
           <p class="menu-dialog__notice" id="menu-dialog-notice">架空店舗の献立をもとに制作した生成イメージです。実際に提供された料理の記録ではありません。</p>
-          <div class="menu-dialog__actions">
-            <div class="menu-dialog__nav" aria-label="料理写真を移動">
-              <button type="button" data-menu-dialog-prev>前の一杯</button>
-              <button type="button" data-menu-dialog-next>次の一杯</button>
-            </div>
-          </div>
         </div>
       </div>
     </dialog>

@@ -2,30 +2,30 @@
   <title id="ca-t">八月の星図</title>
   <desc id="ca-d">北天の五つ星がW字に連なる図</desc>
   <!-- 結線 -->
-  <g stroke="#b8863f" stroke-width="0.75" stroke-opacity="0.6" fill="none">
+  <g stroke="#b8863f" stroke-width="1.6" stroke-opacity="0.78" fill="none">
     <path d="M100 230 L200 330 L300 210 L410 320 L510 190"/>
     <path d="M300 210 L285 105"/>
   </g>
   <!-- 主星と光芒 -->
-  <g stroke="#b8863f" stroke-width="0.75" stroke-opacity="0.85">
+  <g stroke="#b8863f" stroke-width="1.8" stroke-opacity="0.95">
     <line x1="300" y1="182" x2="300" y2="206"/>
     <line x1="300" y1="214" x2="300" y2="238"/>
     <line x1="272" y1="210" x2="296" y2="210"/>
     <line x1="304" y1="210" x2="328" y2="210"/>
   </g>
   <g fill="#b8863f">
-    <circle cx="100" cy="230" r="2"/>
-    <circle cx="200" cy="330" r="2.4"/>
-    <circle cx="300" cy="210" r="3"/>
-    <circle cx="410" cy="320" r="2.4"/>
-    <circle cx="510" cy="190" r="2"/>
-    <circle cx="285" cy="105" r="1.6"/>
+    <circle cx="100" cy="230" r="3.5"/>
+    <circle cx="200" cy="330" r="3.8"/>
+    <circle cx="300" cy="210" r="5"/>
+    <circle cx="410" cy="320" r="3.8"/>
+    <circle cx="510" cy="190" r="3.5"/>
+    <circle cx="285" cy="105" r="2.6"/>
   </g>
   <!-- 微光星 -->
-  <g fill="#ddd0af">
-    <circle cx="150" cy="480" r="1.2"/>
-    <circle cx="470" cy="470" r="1.2"/>
-    <circle cx="60" cy="90" r="1"/>
-    <circle cx="540" cy="60" r="1"/>
+  <g fill="#ddd0af" fill-opacity="0.9">
+    <circle cx="150" cy="480" r="1.8"/>
+    <circle cx="470" cy="470" r="1.8"/>
+    <circle cx="60" cy="90" r="1.5"/>
+    <circle cx="540" cy="60" r="1.5"/>
   </g>
 </svg>

@@ -13,6 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initMotionStop();
 });
 
+const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+const isMotionReduced = () =>
+  reducedMotionMedia.matches || document.documentElement.classList.contains("is-motion-off");
+
 /* ---- 活字が組まれる演出(.type-set): 1文字ずつspan化してstagger reveal ----
    シグネチャー要素。ヒーロー見出しにのみ使う(多用すると読みにくくなるため) */
 function initTypeSet() {
@@ -39,6 +43,11 @@ function initTypeSet() {
     });
   });
 
+  if (isMotionReduced()) {
+    targets.forEach((el) => el.classList.add("is-inview"));
+    return;
+  }
+
   if (!("IntersectionObserver" in window)) {
     targets.forEach((el) => el.classList.add("is-inview"));
     return;
@@ -62,6 +71,10 @@ function initTypeSet() {
 function initReveal() {
   const targets = document.querySelectorAll(".js-reveal, .rule-draw, .bg-fade");
   if (!targets.length) return;
+  if (isMotionReduced()) {
+    targets.forEach((el) => el.classList.add("is-inview"));
+    return;
+  }
   if (!("IntersectionObserver" in window)) {
     targets.forEach((el) => el.classList.add("is-inview"));
     return;
@@ -85,6 +98,10 @@ function initReveal() {
 function initNightfall() {
   const targets = document.querySelectorAll(".js-nightfall");
   if (!targets.length) return;
+  if (isMotionReduced()) {
+    targets.forEach((el) => el.classList.add("is-nightfall"));
+    return;
+  }
   if (!("IntersectionObserver" in window)) {
     targets.forEach((el) => el.classList.add("is-nightfall"));
     return;
@@ -278,8 +295,11 @@ function initMenuDialog() {
     title.textContent = item.name;
     description.textContent = item.description;
     price.textContent = item.price;
-    prevButton.disabled = index === 0;
-    nextButton.disabled = index === triggers.length - 1;
+    const group = triggers[index].closest(".menu-seasonal, .menu-list__group");
+    const groupTriggers = triggers.filter((trigger) => trigger.closest(".menu-seasonal, .menu-list__group") === group);
+    const groupIndex = groupTriggers.indexOf(triggers[index]);
+    prevButton.disabled = groupIndex <= 0;
+    nextButton.disabled = groupIndex >= groupTriggers.length - 1;
   };
 
   const openDialog = (index, trigger) => {
@@ -293,7 +313,7 @@ function initMenuDialog() {
   };
 
   const drawCloseUnderline = () => {
-    if (!dialog.open || document.documentElement.classList.contains("is-motion-off")) return;
+    if (!dialog.open || isMotionReduced()) return;
     window.clearTimeout(closeUnderlineTimer);
     closeButton.classList.remove("is-underline-drawn");
     // 同じ操作でも毎回左から描き直す。
@@ -315,7 +335,7 @@ function initMenuDialog() {
       unlockScroll();
       if (opener) opener.focus({ preventScroll: true });
     };
-    if (document.documentElement.classList.contains("is-motion-off")) {
+    if (isMotionReduced()) {
       finish();
       return;
     }
@@ -323,11 +343,18 @@ function initMenuDialog() {
     window.setTimeout(finish, 180);
   };
 
-  const moveDialog = async (nextIndex) => {
-    if (nextIndex < 0 || nextIndex >= triggers.length || isTransitioning) return;
+  const moveDialog = async (direction) => {
+    if (isTransitioning) return;
+    const currentTrigger = triggers[currentIndex];
+    const group = currentTrigger.closest(".menu-seasonal, .menu-list__group");
+    const groupTriggers = triggers.filter((trigger) => trigger.closest(".menu-seasonal, .menu-list__group") === group);
+    const groupIndex = groupTriggers.indexOf(currentTrigger);
+    const nextTrigger = groupTriggers[groupIndex + direction];
+    if (!nextTrigger) return;
+    const nextIndex = triggers.indexOf(nextTrigger);
     const nextItem = getItem(triggers[nextIndex]);
     if (!nextItem) return;
-    if (document.documentElement.classList.contains("is-motion-off")) {
+    if (isMotionReduced()) {
       populate(nextIndex);
       return;
     }
@@ -351,8 +378,8 @@ function initMenuDialog() {
   });
   closeButton.addEventListener("click", closeDialog);
   closeButton.addEventListener("pointerenter", drawCloseUnderline);
-  prevButton.addEventListener("click", () => moveDialog(currentIndex - 1));
-  nextButton.addEventListener("click", () => moveDialog(currentIndex + 1));
+  prevButton.addEventListener("click", () => moveDialog(-1));
+  nextButton.addEventListener("click", () => moveDialog(1));
   dialog.addEventListener("cancel", (event) => {
     event.preventDefault();
     closeDialog();

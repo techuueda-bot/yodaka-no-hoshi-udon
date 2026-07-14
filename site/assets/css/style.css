@@ -191,7 +191,7 @@ h1, h2, h3 {
 .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 767px) {
+@media (max-width: 899px) {
   .nav-toggle { display: block; }
   .global-nav {
     position: fixed; inset: 0; z-index: var(--z-nav);
@@ -263,7 +263,7 @@ h1, h2, h3 {
   position: absolute;
   width: 3px; height: 3px; border-radius: 50%;
   background: var(--color-navy);
-  opacity: 0.18;
+  opacity: 0.20;
 }
 .hero__stars i:nth-child(1) { top: 14%; left: 12%; }
 .hero__stars i:nth-child(2) { top: 26%; left: 34%; width: 2px; height: 2px; }
@@ -310,6 +310,7 @@ h1, h2, h3 {
   user-select: none;
   z-index: 0;
 }
+.craft-section--reverse .craft-section__bg { right: auto; left: clamp(8px, 8vw, 120px); }
 .craft-section > .container,
 .craft-section > .container--narrow { position: relative; z-index: 1; }
 
@@ -319,9 +320,9 @@ h1, h2, h3 {
   text-align: center;
   max-width: 32em;
   margin-inline: auto;
-  font-size: 15px;
+  font-size: 16px;
   letter-spacing: 0.04em;
-  opacity: 0.85;
+  opacity: 0.92;
 }
 .seasonal__grid {
   display: grid;
@@ -331,34 +332,35 @@ h1, h2, h3 {
 @media (min-width: 768px) { .seasonal__grid { grid-template-columns: repeat(3, 1fr); gap: calc(var(--space) * 6); } }
 .seasonal-card {
   display: block; width: 100%; padding: 0; border: 0; border-radius: 0;
-  color: inherit; background: transparent; text-align: center; font: inherit; cursor: pointer;
+  min-height: 44px; color: inherit; background: transparent; text-align: center; font: inherit;
 }
-.seasonal-card__map { width: min(240px, 64%); margin-inline: auto; }
+button.seasonal-card { cursor: pointer; }
+.seasonal-card__map { width: min(300px, 78%); margin-inline: auto; }
 .seasonal-card__month {
   display: block;
   margin-top: calc(var(--space) * 4);
-  font-size: 11px; letter-spacing: 0.35em;
-  color: var(--color-accent);
+  font-size: 14px; letter-spacing: 0.28em;
+  color: color-mix(in srgb, var(--color-bg) 92%, transparent);
 }
 .seasonal-card__name {
   display: block;
   writing-mode: vertical-rl;
   margin: calc(var(--space) * 3) auto 0;
-  height: 17em;
+  height: 15em;
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.1em;
   line-height: 1.8;
   font-feature-settings: "palt";
 }
 .seasonal-card__desc {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.04em;
   line-height: 2.1;
   margin: calc(var(--space) * 3) auto 0;
   max-width: 17em;
-  color: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  color: color-mix(in srgb, var(--color-bg) 88%, transparent);
 }
 .seasonal-card__price {
   display: block; margin-top: calc(var(--space) * 3);
@@ -369,15 +371,78 @@ h1, h2, h3 {
   color: var(--color-accent); font-size: 11px; letter-spacing: 0.12em;
 }
 @media (hover: hover) {
-  .seasonal-card:hover .seasonal-card__map { opacity: 0.75; }
   .seasonal-card:hover .seasonal-card__hint { color: var(--color-bg); }
+}
+@media (max-width: 767px) {
+  .seasonal__grid { gap: calc(var(--space) * 3); margin-top: calc(var(--space) * 6); }
+  .seasonal-card {
+    display: grid;
+    grid-template-columns: minmax(112px, 40%) minmax(0, 1fr);
+    grid-template-areas:
+      "map month"
+      "map name"
+      "map desc"
+      "map price"
+      "map hint";
+    min-height: 190px;
+    max-height: 220px;
+    align-content: center;
+    align-items: center;
+    column-gap: calc(var(--space) * 3);
+    padding-block: calc(var(--space) * 2);
+    text-align: left;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 24%, transparent);
+  }
+  .seasonal-card__map { grid-area: map; width: 100%; margin: 0; }
+  .seasonal-card__month { grid-area: month; margin: 0 0 4px; }
+  .seasonal-card__name {
+    grid-area: name;
+    writing-mode: horizontal-tb;
+    height: auto;
+    margin: 0;
+    line-height: 1.65;
+  }
+  .seasonal-card__desc {
+    grid-area: desc;
+    display: -webkit-box;
+    margin: 6px 0 0;
+    max-width: none;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    line-height: 1.7;
+  }
+  .seasonal-card__price { grid-area: price; margin-top: 6px; }
+  .seasonal-card__hint { grid-area: hint; margin-top: 4px; }
+
+  .menu-seasonal {
+    padding-top: 80px;
+    padding-bottom: 52px;
+  }
+  .menu-seasonal .vhead {
+    width: 130px;
+    margin: 16px auto 32px;
+  }
+  .menu-seasonal .seasonal__grid {
+    gap: calc(var(--space) * 2);
+    margin-top: calc(var(--space) * 4);
+  }
+  .menu-seasonal .seasonal-card {
+    min-height: 198px;
+    max-height: 198px;
+  }
+  .menu-seasonal .seasonal-card__name { font-size: 18px; line-height: 1.55; }
+  .menu-seasonal .seasonal__note { margin-top: calc(var(--space) * 6); }
 }
 .seasonal__note {
   text-align: center;
   margin-top: calc(var(--space) * 10);
-  font-size: 12px; letter-spacing: 0.16em;
-  opacity: 0.6;
+  font-size: 13px; letter-spacing: 0.16em;
+  opacity: 0.88;
 }
+.seasonal__note .button { color: var(--color-bg); border-color: var(--color-bg); }
+.seasonal__note .button:hover { color: var(--color-navy); background: var(--color-bg); }
 
 /* メニュー(価格リスト) */
 .menu-list { display: grid; gap: 0; margin-top: calc(var(--space) * 6); border-top: 1px solid var(--color-line); }
@@ -391,7 +456,7 @@ h1, h2, h3 {
   display: flex; justify-content: space-between; align-items: baseline; gap: calc(var(--space) * 3);
   width: 100%; -webkit-appearance: none; appearance: none; text-align: left; color: inherit;
   font: inherit; letter-spacing: inherit; background: transparent; cursor: pointer;
-  padding: calc(var(--space) * 3) 0; border: 0; border-radius: 0;
+  min-height: 44px; padding: calc(var(--space) * 3) 0; border: 0; border-radius: 0;
   border-bottom: 1px solid var(--color-line);
   transition: border-color 0.28s var(--ease-out), transform 0.22s var(--ease-out);
 }
@@ -419,7 +484,7 @@ h1, h2, h3 {
 .menu-item__tag::after { content: "〕"; }
 
 /* お品書きの生成イメージ写真: 一覧を保ち、料理行から拡大写真を開く */
-.menu-intro { padding-bottom: clamp(64px, 6vw, 88px); }
+.menu-intro { padding-bottom: clamp(40px, 5vw, 64px); }
 .menu-intro__copy { max-width: 39em; }
 .menu-intro__title {
   font-size: clamp(24px, 4vw, 36px);
@@ -427,41 +492,27 @@ h1, h2, h3 {
 }
 .menu-intro__copy > p:last-child { color: var(--color-muted); font-size: 14px; }
 
-/* お品書きの「今宵の一杯」へ入る境目: 夜のとばりが一度だけ落ちる。
-   手前と奥の二つの稜線で山をつくり、よだかが弧を描いて飛ぶ。 */
+/* お品書きの「今宵の一杯」へ入る境目: 緩い一つの稜線と、一度だけ飛ぶよだか。 */
 .menu-seasonal {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   margin-top: 0;
-  padding-top: calc(var(--section-pad) + 24px);
-  /* 遠景: 富士のように裾野を広く取り、峰だけを尖らせる。 */
-  clip-path: polygon(0 76px, 10% 70px, 20% 62px, 30% 66px, 39% 55px, 47% 34px, 54% 12px, 59% 0, 64% 8px, 69% 29px, 75% 49px, 82% 64px, 90% 74px, 100% 70px, 100% 100%, 0 100%);
+  padding-top: calc(var(--section-pad) + 12px);
+  clip-path: polygon(0 34px, 15% 28px, 30% 32px, 45% 18px, 58% 0, 70% 14px, 85% 30px, 100% 26px, 100% 100%, 0 100%);
 }
 .menu-seasonal > .container { position: relative; z-index: 2; }
-.menu-seasonal::after {
-  content: "";
-  position: absolute;
-  inset: 34px 0 auto;
-  z-index: 0;
-  width: 100%;
-  height: 116px;
-  pointer-events: none;
-  background: var(--color-text);
-  opacity: 0.55;
-  clip-path: polygon(0 82px, 12% 72px, 23% 68px, 34% 76px, 44% 63px, 54% 32px, 61% 50px, 69% 68px, 78% 75px, 89% 64px, 100% 72px, 100% 100%, 0 100%);
-}
 .menu-nightfall__bird {
   position: absolute;
   /* 稜線に隠れず、夜空のすぐ上を横切る高さに置く。 */
-  top: clamp(108px, 8vw, 128px);
-  left: 0;
+  top: clamp(76px, 8vw, 110px);
+  right: clamp(20px, 6vw, 88px);
   z-index: 3;
-  width: clamp(112px, 13vw, 176px);
+  width: clamp(92px, 10vw, 132px);
   aspect-ratio: 8 / 5;
   pointer-events: none;
   opacity: 0;
-  transform: translate3d(-14vw, 12px, 0) rotate(0deg);
+  transform: translate3d(calc(-100vw + 160px), 12px, 0) rotate(0deg);
 }
 .menu-nightfall__bird-shape {
   display: block;
@@ -472,7 +523,7 @@ h1, h2, h3 {
   -webkit-mask: url("../img/common/bird.svg") center / contain no-repeat;
   mask: url("../img/common/bird.svg") center / contain no-repeat;
 }
-/* 夜鷹のみ、翼を戻す余韻を見せるため 1.7 秒を許容する。 */
+/* 1.7秒で右上へ渡り、到着位置に静止する。 */
 .menu-seasonal.is-nightfall .menu-nightfall__bird { animation: nightfall-bird 1.7s var(--ease-out) 0.04s both; }
 .menu-seasonal::before {
   content: "";
@@ -491,27 +542,27 @@ h1, h2, h3 {
   /* 鳥は旋回の前半で内側へバンクし、頂点で翼を戻してから抜ける。 */
   0% {
     opacity: 0;
-    transform: translate3d(-14vw, 12px, 0) rotate(0deg);
+    transform: translate3d(calc(-100vw + 160px), 12px, 0) rotate(0deg);
     animation-timing-function: cubic-bezier(0.22, 0.7, 0.32, 1);
   }
   18% {
     opacity: 0.8;
-    transform: translate3d(2vw, 7px, 0) rotate(-3deg);
+    transform: translate3d(-78vw, 7px, 0) rotate(-3deg);
     animation-timing-function: cubic-bezier(0.36, 0, 0.28, 1);
   }
   54% {
     opacity: 0.8;
-    transform: translate3d(42vw, -18px, 0) rotate(-7deg);
+    transform: translate3d(-47vw, -18px, 0) rotate(-7deg);
     animation-timing-function: cubic-bezier(0.26, 0.04, 0.3, 1);
   }
   78% {
     opacity: 0.8;
-    transform: translate3d(72vw, -8px, 0) rotate(1.5deg);
+    transform: translate3d(-19vw, -8px, 0) rotate(1.5deg);
     animation-timing-function: cubic-bezier(0.38, 0, 0.64, 1);
   }
   100% {
-    opacity: 0;
-    transform: translate3d(calc(100vw + 220px), 0, 0) rotate(2deg);
+    opacity: 0.72;
+    transform: translate3d(0, 0, 0) rotate(2deg);
   }
 }
 
@@ -528,6 +579,12 @@ h1, h2, h3 {
   position: relative; display: grid; gap: calc(var(--space) * 3);
   max-height: calc(100dvh - 32px); padding: 56px 0 24px; overflow: auto;
   overscroll-behavior: contain;
+}
+.menu-dialog__close {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 5;
 }
 .menu-dialog__stage { position: relative; align-self: center; }
 .menu-dialog__visual {
@@ -559,7 +616,7 @@ h1, h2, h3 {
 .menu-dialog__actions { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: calc(var(--space) * 3); margin-top: calc(var(--space) * 2); }
 .menu-dialog__nav { display: flex; gap: calc(var(--space) * 3); }
 .menu-dialog__nav button {
-  padding: 8px 0; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 42%, transparent);
+  min-height: 44px; padding: 8px 0; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--color-bg) 42%, transparent);
   color: var(--color-bg); background: transparent; font-family: var(--font-display); font-size: 14px; letter-spacing: 0.08em; cursor: pointer;
 }
 .menu-dialog__nav button:disabled { opacity: 0.35; cursor: default; }
@@ -579,7 +636,6 @@ h1, h2, h3 {
   opacity: 0; transform: translateY(4px) scale(0.96); transition-duration: 0.12s; transition-delay: 0s;
 }
 .menu-dialog.is-transitioning .menu-dialog__star { animation: menu-star-transition 0.42s var(--ease-out) both; }
-body.menu-dialog-open .fixed-cta { visibility: hidden; }
 @keyframes menu-star-bloom {
   0% { opacity: 0.82; transform: translate(-50%, -50%) scale(0.62); }
   68% { opacity: 0.46; transform: translate(-50%, -50%) scale(1.14); }
@@ -616,6 +672,7 @@ body.menu-dialog-open .fixed-cta { visibility: hidden; }
   padding: clamp(40px, 8vw, 72px) clamp(24px, 6vw, 64px);
   text-align: center;
 }
+.owner-note__crest { width: 40px; height: 40px; margin: 0 auto calc(var(--space) * 3); }
 .owner-note__quote {
   font-family: var(--font-display);
   font-size: clamp(17px, 2.2vw, 21px);
@@ -642,23 +699,6 @@ body.menu-dialog-open .fixed-cta { visibility: hidden; }
 }
 .cta-band__lead { margin: calc(var(--space) * 3) 0 calc(var(--space) * 6); color: var(--color-muted); font-size: 15px; letter-spacing: 0.04em; }
 .cta-band .hero__cta { justify-content: center; }
-
-/* SP固定CTA(生成り地+罫線) */
-.fixed-cta {
-  display: none;
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-header);
-  padding: calc(var(--space) * 2) clamp(16px, 4vw, 24px);
-  padding-bottom: calc(var(--space) * 2 + env(safe-area-inset-bottom));
-  background: color-mix(in srgb, var(--color-bg) 92%, transparent);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid var(--color-line);
-  gap: calc(var(--space) * 2);
-}
-@media (max-width: 767px) {
-  .fixed-cta { display: flex; }
-  body { padding-bottom: 76px; }
-  .fixed-cta .button { flex: 1; text-align: center; padding-inline: 0; }
-}
 
 /* 下層ページヘッダー */
 .page-header { padding: calc(var(--section-pad) * 0.9) 0 calc(var(--section-pad) * 0.35); }
@@ -755,7 +795,7 @@ body.menu-dialog-open .fixed-cta { visibility: hidden; }
   font-feature-settings: "palt";
 }
 /* 濃紺セクション上での反転 */
-.seasonal .vhead::before { border-color: var(--color-accent); opacity: 0.5; }
+.seasonal .vhead::before { border-color: var(--color-accent); border-width: 1px; opacity: 0.58; }
 .seasonal .vhead__ja { color: var(--color-bg); }
 
 /* ---------- 4b. 賑わい指針(3体討論の裁定で追加) ----------
@@ -781,13 +821,18 @@ body.menu-dialog-open .fixed-cta { visibility: hidden; }
 
 /* 店舗案内の地図掲載待ち表示 */
 .map-embed {
-  aspect-ratio: 16 / 9;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 180px;
   border: 1px solid var(--color-line);
   margin-top: calc(var(--space) * 5);
   display: grid;
   place-content: center;
   padding: clamp(24px, 5vw, 56px);
   text-align: center;
+}
+@media (max-width: 480px) {
+  .map-embed { aspect-ratio: auto; }
 }
 .map-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
 .map-embed__label {
@@ -827,7 +872,7 @@ body.menu-dialog-open .fixed-cta { visibility: hidden; }
 /* 献番(漢数字)。純テキストで組む */
 .menu-item__num { color: var(--color-muted); margin-right: 0.3em; }
 
-/* フッター再設計: 英字行 → 紋+店舗情報+曜日帯 → ナビ → 店訓 */
+/* フッター再設計: 英字行 → 紋+架空設定情報 → ナビ → 店訓 */
 .footer-en {
   font-size: 11px; letter-spacing: 0.3em;
   color: var(--color-muted);
@@ -935,8 +980,8 @@ body.menu-dialog-open .fixed-cta { visibility: hidden; }
 .hero__stars i:nth-child(7) { top: 16%; left: 46%; width: 2px; height: 2px; animation-duration: 9.5s; animation-delay: -6s; }
 .hero__stars i:nth-child(8) { top: 28%; left: 88%; width: 2px; height: 2px; animation-duration: 12.5s; animation-delay: -1s; }
 @keyframes star-breath {
-  0%, 100% { opacity: 0.14; }
-  50%      { opacity: 0.22; }
+  0%, 100% { opacity: 0.20; }
+  50%      { opacity: 0.32; }
 }
 
 /* ---------- 6. モーション停止(削除禁止) ---------- */
@@ -948,7 +993,35 @@ body.menu-dialog-open .fixed-cta { visibility: hidden; }
   cursor: pointer;
 }
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
   .motion-stop { display: block; }
+  .js-reveal { opacity: 1; transform: none; }
+  .type-set .char { opacity: 1; }
+  .rule-draw::before,
+  .rule-draw--both::after { transform: scaleX(1); }
+  .bg-fade { opacity: 0.45; }
+  .morelink::before,
+  .menu-dialog__close::after { display: none; }
+  .hero__stars i { animation: none !important; opacity: 0.26; }
+  .menu-seasonal::before { display: none; }
+  .menu-nightfall__bird {
+    animation: none !important;
+    opacity: 0.72;
+    transform: translate3d(0, 0, 0) rotate(2deg);
+  }
+  .menu-dialog.is-open .menu-dialog__visual,
+  .menu-dialog.is-open .menu-dialog__copy {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
 }
 html.is-motion-off .js-reveal,
 html.is-motion-off *[class] {
@@ -962,7 +1035,12 @@ html.is-motion-off .type-set .char { opacity: 1; }
 html.is-motion-off .rule-draw::before,
 html.is-motion-off .rule-draw--both::after { transform: scaleX(1); }
 html.is-motion-off .bg-fade { opacity: 0.45; }
-html.is-motion-off .hero__stars i { animation: none; opacity: 0.18; }
+html.is-motion-off .hero__stars i { animation: none; opacity: 0.26; }
 html.is-motion-off .morelink::before { display: none; }
 html.is-motion-off .menu-seasonal::before { display: none; }
-html.is-motion-off .menu-nightfall__bird { display: none; }
+html.is-motion-off .menu-nightfall__bird {
+  display: block;
+  animation: none !important;
+  opacity: 0.72;
+  transform: translate3d(0, 0, 0) rotate(2deg);
+}

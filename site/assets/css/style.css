@@ -572,7 +572,7 @@ button.seasonal-card { cursor: pointer; }
   overflow: visible;
 }
 .menu-dialog::backdrop { background: rgba(31, 45, 61, 0); transition: background-color 0.18s var(--ease-out); }
-.menu-dialog.is-open::backdrop { background-color: rgba(31, 45, 61, 0.94); }
+.menu-dialog.is-open::backdrop { background-color: var(--color-navy); }
 .menu-dialog.is-closing::backdrop { background-color: rgba(31, 45, 61, 0); }
 .menu-dialog__shell {
   position: relative; display: grid; gap: calc(var(--space) * 3);
@@ -624,6 +624,16 @@ button.seasonal-card { cursor: pointer; }
   transition: opacity 0.22s var(--ease-out), transform 0.42s var(--ease-out);
 }
 .menu-dialog__visual > #menu-dialog-image { width: 100%; aspect-ratio: 3 / 2; object-fit: contain; background: rgba(247, 242, 230, 0.06); }
+.menu-dialog__media-status {
+  margin: 0;
+  padding: clamp(48px, 12vw, 96px) 24px;
+  border: 1px solid color-mix(in srgb, var(--color-bg) 32%, transparent);
+  color: color-mix(in srgb, var(--color-bg) 82%, transparent);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+  text-align: center;
+}
 .menu-dialog__star {
   position: absolute; z-index: 1; top: 50%; left: 50%; width: 60px; height: 60px;
   opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.7);
@@ -665,6 +675,10 @@ button.seasonal-card { cursor: pointer; }
   opacity: 0; transform: translateY(4px) scale(0.96); transition-duration: 0.12s; transition-delay: 0s;
 }
 .menu-dialog.is-transitioning .menu-dialog__star { animation: menu-star-transition 0.42s var(--ease-out) both; }
+.menu-dialog.is-loading .menu-dialog__visual,
+.menu-dialog.is-loading .menu-dialog__copy { opacity: 0; transform: translateY(4px) scale(0.98); transition-duration: 0.12s; transition-delay: 0s; }
+.menu-dialog.is-loading .menu-dialog__star { opacity: 0.72; transform: translate(-50%, -50%) scale(0.9); animation: none; }
+.menu-dialog.is-error .menu-dialog__visual { display: none; }
 @keyframes menu-star-bloom {
   0% { opacity: 0.82; transform: translate(-50%, -50%) scale(0.62); }
   68% { opacity: 0.46; transform: translate(-50%, -50%) scale(1.14); }

@@ -226,6 +226,7 @@ function initMenuDialog() {
   const title = dialog.querySelector("#menu-dialog-title");
   const description = dialog.querySelector("#menu-dialog-description");
   const price = dialog.querySelector("#menu-dialog-price");
+  const mediaStatus = dialog.querySelector("#menu-dialog-media-status");
   const closeButton = dialog.querySelector("[data-menu-dialog-close]");
   const prevButton = dialog.querySelector("[data-menu-dialog-prev]");
   const nextButton = dialog.querySelector("[data-menu-dialog-next]");
@@ -234,7 +235,10 @@ function initMenuDialog() {
   let savedBodyStyle = "";
   let savedScrollY = 0;
   let isTransitioning = false;
-  let transitionVersion = 0;
+  let isClosing = false;
+  let sessionVersion = 0;
+  let processingIndex = null;
+  let pendingIndexes = [];
   let closeUnderlineTimer = 0;
 
   const getItem = (trigger) => {
@@ -276,40 +280,160 @@ function initMenuDialog() {
     root.style.scrollBehavior = savedScrollBehavior;
   };
 
-  const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
   const preloadPhoto = (src) => new Promise((resolve) => {
     const preload = new Image();
-    preload.onload = resolve;
-    preload.onerror = resolve;
+    let settled = false;
+    const finish = (loaded) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeoutId);
+      resolve(loaded);
+    };
+    // モバイル回線で応答自体が止まった時も、操作全体を待たせ続けない。
+    const timeoutId = window.setTimeout(() => finish(false), 10000);
+    preload.onload = () => {
+      if (typeof preload.decode !== "function") {
+        finish(true);
+        return;
+      }
+      preload.decode().then(() => finish(true)).catch(() => finish(preload.naturalWidth > 0));
+    };
+    preload.onerror = () => finish(false);
     preload.src = src;
-    if (preload.complete) resolve();
   });
 
-  const populate = (index) => {
-    const item = getItem(triggers[index]);
-    if (!item) return;
+  const decodeImage = (target) => {
+    if (typeof target.decode !== "function") return Promise.resolve(target.naturalWidth > 0);
+    return new Promise((resolve) => {
+      let settled = false;
+      const finish = (decoded) => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timeoutId);
+        resolve(decoded);
+      };
+      // 同じ画像でもSafari側の表示デコードが返らない場合に備える。
+      const timeoutId = window.setTimeout(() => finish(false), 10000);
+      target.decode().then(() => finish(true)).catch(() => finish(target.naturalWidth > 0));
+    });
+  };
+
+  const getGroupContext = (index) => {
+    const trigger = triggers[index];
+    if (!trigger) return null;
+    const group = trigger.closest(".menu-seasonal, .menu-list__group");
+    const groupTriggers = triggers.filter((item) => item.closest(".menu-seasonal, .menu-list__group") === group);
+    return { groupTriggers, groupIndex: groupTriggers.indexOf(trigger) };
+  };
+
+  const getPlannedIndex = () => pendingIndexes.at(-1) ?? processingIndex ?? currentIndex;
+
+  const updateNavigation = () => {
+    const context = getGroupContext(getPlannedIndex());
+    if (!context) return;
+    prevButton.disabled = context.groupIndex <= 0;
+    nextButton.disabled = context.groupIndex >= context.groupTriggers.length - 1;
+  };
+
+  const clearVisibleItem = () => {
+    image.removeAttribute("src");
+    image.alt = "";
+    number.textContent = "";
+    title.textContent = "";
+    description.textContent = "";
+    price.textContent = "";
+    mediaStatus.hidden = true;
+    mediaStatus.textContent = "";
+  };
+
+  const beginLoading = () => {
+    dialog.classList.remove("is-error");
+    dialog.classList.add("is-loading", "is-transitioning");
+    dialog.setAttribute("aria-busy", "true");
+    clearVisibleItem();
+  };
+
+  const populateCopy = (index, item) => {
     currentIndex = index;
-    image.src = item.src;
-    image.alt = item.alt;
+    opener = triggers[index];
     number.textContent = item.number;
     title.textContent = item.name;
     description.textContent = item.description;
     price.textContent = item.price;
-    const group = triggers[index].closest(".menu-seasonal, .menu-list__group");
-    const groupTriggers = triggers.filter((trigger) => trigger.closest(".menu-seasonal, .menu-list__group") === group);
-    const groupIndex = groupTriggers.indexOf(triggers[index]);
-    prevButton.disabled = groupIndex <= 0;
-    nextButton.disabled = groupIndex >= groupTriggers.length - 1;
+    updateNavigation();
+  };
+
+  const commitPhoto = (index, item) => {
+    populateCopy(index, item);
+    dialog.classList.remove("is-loading", "is-transitioning", "is-error");
+    dialog.removeAttribute("aria-busy");
+  };
+
+  const commitPhotoError = (index, item) => {
+    populateCopy(index, item);
+    mediaStatus.textContent = "写真を読み込めませんでした。通信を確認して、もう一度お試しください。";
+    mediaStatus.hidden = false;
+    dialog.classList.remove("is-loading", "is-transitioning");
+    dialog.classList.add("is-error");
+    dialog.removeAttribute("aria-busy");
+  };
+
+  const loadAndCommit = async (index, version) => {
+    const item = getItem(triggers[index]);
+    if (!item) return false;
+    const loaded = await preloadPhoto(item.src);
+    if (version !== sessionVersion || !dialog.open) return false;
+    if (!loaded) {
+      commitPhotoError(index, item);
+      return true;
+    }
+    image.src = item.src;
+    image.alt = item.alt;
+    const decoded = await decodeImage(image);
+    if (version !== sessionVersion || !dialog.open) return false;
+    if (!decoded) {
+      commitPhotoError(index, item);
+      return true;
+    }
+    commitPhoto(index, item);
+    return true;
+  };
+
+  const processQueue = async (version) => {
+    if (isTransitioning && processingIndex !== null) return;
+    isTransitioning = true;
+    while (version === sessionVersion && dialog.open && pendingIndexes.length) {
+      processingIndex = pendingIndexes.shift();
+      beginLoading();
+      updateNavigation();
+      const completed = await loadAndCommit(processingIndex, version);
+      if (!completed || version !== sessionVersion || !dialog.open) break;
+      processingIndex = null;
+      updateNavigation();
+    }
+    if (version === sessionVersion) {
+      processingIndex = null;
+      isTransitioning = false;
+      updateNavigation();
+    }
   };
 
   const openDialog = (index, trigger) => {
+    if (dialog.open || isClosing) return;
+    sessionVersion += 1;
+    const version = sessionVersion;
     opener = trigger;
     closeButton.classList.remove("is-underline-drawn");
-    populate(index);
+    pendingIndexes = [index];
+    processingIndex = null;
+    isTransitioning = false;
+    beginLoading();
     lockScroll();
     dialog.showModal();
-    requestAnimationFrame(() => dialog.classList.add("is-open"));
+    dialog.classList.add("is-open");
+    updateNavigation();
     closeButton.focus();
+    void processQueue(version);
   };
 
   const drawCloseUnderline = () => {
@@ -326,14 +450,19 @@ function initMenuDialog() {
   };
 
   const closeDialog = () => {
-    if (!dialog.open) return;
-    transitionVersion += 1;
+    if (!dialog.open || isClosing) return;
+    isClosing = true;
+    sessionVersion += 1;
+    pendingIndexes = [];
+    processingIndex = null;
     isTransitioning = false;
     const finish = () => {
       dialog.close();
-      dialog.classList.remove("is-open", "is-closing", "is-transitioning");
+      dialog.classList.remove("is-open", "is-closing", "is-transitioning", "is-loading", "is-error");
+      dialog.removeAttribute("aria-busy");
       unlockScroll();
       if (opener) opener.focus({ preventScroll: true });
+      isClosing = false;
     };
     if (isMotionReduced()) {
       finish();
@@ -343,34 +472,16 @@ function initMenuDialog() {
     window.setTimeout(finish, 180);
   };
 
-  const moveDialog = async (direction) => {
-    if (isTransitioning) return;
-    const currentTrigger = triggers[currentIndex];
-    const group = currentTrigger.closest(".menu-seasonal, .menu-list__group");
-    const groupTriggers = triggers.filter((trigger) => trigger.closest(".menu-seasonal, .menu-list__group") === group);
-    const groupIndex = groupTriggers.indexOf(currentTrigger);
-    const nextTrigger = groupTriggers[groupIndex + direction];
+  const moveDialog = (direction) => {
+    if (!dialog.open || isClosing) return;
+    const context = getGroupContext(getPlannedIndex());
+    if (!context) return;
+    const nextTrigger = context.groupTriggers[context.groupIndex + direction];
     if (!nextTrigger) return;
     const nextIndex = triggers.indexOf(nextTrigger);
-    const nextItem = getItem(triggers[nextIndex]);
-    if (!nextItem) return;
-    if (isMotionReduced()) {
-      populate(nextIndex);
-      return;
-    }
-    isTransitioning = true;
-    const version = ++transitionVersion;
-    dialog.classList.add("is-transitioning");
-    await Promise.all([
-      wait(340),
-      Promise.race([preloadPhoto(nextItem.src), wait(900)]),
-    ]);
-    if (version !== transitionVersion || !dialog.open) return;
-    populate(nextIndex);
-    requestAnimationFrame(() => {
-      dialog.classList.remove("is-transitioning");
-      isTransitioning = false;
-    });
+    pendingIndexes.push(nextIndex);
+    updateNavigation();
+    void processQueue(sessionVersion);
   };
 
   triggers.forEach((trigger, index) => {

@@ -1113,16 +1113,7 @@ button.seasonal-card { cursor: pointer; }
 .star-dial[data-season-key="edamame"] .star-dial__star-button { top: 35%; left: 50%; }
 .star-dial[data-season-key="mushroom"] .star-dial__star-button { top: 26.67%; left: 30%; }
 .star-dial__star-button > span {
-  position: absolute;
-  top: 56px;
-  left: 50%;
-  width: max-content;
-  padding-top: 8px;
-  border-top: 1px solid var(--color-accent);
-  font-family: var(--font-display);
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  transform: translateX(-50%);
+  display: none;
 }
 .star-dial__star-button:focus-visible {
   outline-color: var(--color-bg);
@@ -1294,13 +1285,23 @@ button.seasonal-card { cursor: pointer; }
   .star-dial__months { margin-top: 42px; }
   .star-dial__months button { min-height: 48px; font-size: 18px; }
   .star-dial__panel { margin-top: 18px; }
-  .star-dial__constellation { width: 100%; }
+  .star-dial__constellation {
+    width: 114%;
+    margin-left: -7%;
+  }
+  .star-dial__constellation > img { opacity: 0.7; }
   .star-dial__copy {
-    width: 48%;
-    margin: 2% 0 0 5%;
+    align-self: start;
+    width: 46%;
+    margin: 30% 0 0 12%;
   }
   .star-dial__month { font-size: 12px; }
-  .star-dial__dish { height: 10.8em; margin-top: 10px; font-size: clamp(18px, 5vw, 24px); }
+  .star-dial__dish {
+    height: 11.8em;
+    margin-top: 10px;
+    font-size: clamp(18px, 5vw, 22px);
+    text-shadow: 0 0 10px var(--color-navy), 0 0 10px var(--color-navy);
+  }
   .star-dial__price { margin-top: 10px; font-size: 20px; }
   .star-dial__description {
     display: -webkit-box;
@@ -1313,7 +1314,7 @@ button.seasonal-card { cursor: pointer; }
     line-clamp: 3;
   }
   .star-dial__star-button { width: 52px; height: 52px; }
-  .star-dial__star-button > span { top: 50px; font-size: 10px; }
+  .star-dial__star-button > span { display: none; }
   .star-dial__photo { margin-top: -2px; }
   .star-dial__guide { align-items: flex-start; font-size: 15px; line-height: 1.8; }
   .star-dial__guide img { margin-top: 3px; }
@@ -1331,8 +1332,8 @@ button.seasonal-card { cursor: pointer; }
 }
 
 @media (max-width: 420px) {
-  .star-dial__copy { width: 54%; margin-left: 3%; }
-  .star-dial__dish { height: 10.3em; font-size: 18px; }
+  .star-dial__copy { width: 48%; margin-left: 10%; }
+  .star-dial__dish { height: 11.6em; font-size: 18px; }
   .star-dial__description { -webkit-line-clamp: 2; line-clamp: 2; }
   .menu-home .menu-item { grid-template-columns: 1fr; }
   .menu-home .menu-item__meta {

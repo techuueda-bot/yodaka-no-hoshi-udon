@@ -1,153 +1,90 @@
 # よだかの星 手打ちうどん — サイト一式
 
-架空のうどん店「よだかの星」を題材にしたWebサイト制作例(トップ+下層4ページ+非導線のサンクスページ)。
+架空のうどん店「よだかの星」を題材にした、静的なWebサイト制作例です。
 
 公開URL: [https://techuueda-bot.github.io/yodaka-no-hoshi-udon/](https://techuueda-bot.github.io/yodaka-no-hoshi-udon/)
 
-公開ページ内の店名・所在地・営業時間・献立・価格・人物はすべて架空の設定です。実店舗の営業案内、予約窓口、お問い合わせ窓口ではありません。
+公開ページ内の店名・所在地・営業時間・献立・価格・人物はすべて架空です。実店舗の営業案内、予約窓口、お問い合わせ窓口ではありません。
 
-## 確認方法(ローカル)
-
-```bash
-cd site
-python3 -m http.server 8000
-# http://localhost:8000/ をブラウザで開く
-```
-
-## ページ構成
+## 構成
 
 | ページ | パス | 内容 |
 |---|---|---|
-| トップ | `/` | ヒーロー・製麺の物語・季節限定・メニュー抜粋・店主紹介・CTA |
-| 写真付きお品書き | `/menu/` | 定番うどん・今宵の一杯(季節限定)・サイド |
-| こだわり | `/kodawari/` | 出汁・麺・灯り(巨大一文字を背景に敷いた3幕) |
-| 店舗案内（架空） | `/access/` | 架空の住所・営業時間・設備と、地図未掲載の明示 |
-| 制作例について | `/contact/` | 表現設計・生成写真・架空情報についての説明 |
+| トップ | `/` | 星読みの盤、全12品のお品書き、製麺の物語、架空店舗情報 |
+| 旧お品書きURL | `/menu/` | 重複画面を持たず、トップの`/#oshinagaki`へ転送 |
+| こだわり | `/kodawari/` | 出汁・麺・灯り |
+| 店舗案内（架空） | `/access/` | 架空の住所・営業時間・設備、地図未掲載の明示 |
+| 制作ノート | `/contact/` | 表現設計・生成写真・架空情報についての説明 |
 | サンクス | `/contact/thanks/` | `noindex`・非導線。正式なフォーム有効化後のみ再利用 |
 
-## デザイン方向
+主ナビは「トップ／お品書き／こだわり」の3項目です。「制作ノート」と「店舗案内（架空）」はフッターから案内します。
 
-「活字と丼 — 老舗×文学」。宮沢賢治「よだかの星」の世界観を、タイポグラフィ主導のエディトリアルデザインで表現。老舗和食店サイト「菱岩」の思想(**写真がない要素は描かず、文字と余白で語る**)に基づき、食べ物・人・建物の具象イラストは一切使っていません。
+## デザインと操作
 
-- 配色: 生成り紙 `#f7f2e6` × 墨 `#262622` × 夜の濃紺 `#1f2d3d` × 金茶 `#b8863f`(小さな記号のみ)
-- フォント: 見出し `Zen Old Mincho`(weight 400・palt詰め組み) / 本文 `Zen Kaku Gothic New`(16px・行間2.0・字間0.04em。可読性優先で調整済み)
+方向性は「活字と丼 — 老舗×文学」。生成り紙 `#f7f2e6`、墨 `#262622`、夜の濃紺 `#1f2d3d`、金茶 `#b8863f`を使った、タイポグラフィ主導のエディトリアルデザインです。
 
-### 構成要素
+- トップ冒頭の「星読みの盤」で七月・八月・九月を切り替える
+- 選択中の星図、一杯の縦書き名、価格、説明、共有3:2写真だけを表示
+- 星を選ぶと写真ビューアを開く
+- 定番7品・サイド2品は、料理名と価格の行から同じ写真ビューアを開く
+- ビューア上端に「前の一杯／写真を閉じる／次の一杯」を常設
+- 閉じると選択元へフォーカスとスクロール位置を戻す
+- 写真はすべて「イメージ写真（生成）」と明記
+- `prefers-reduced-motion`と`motion-stop`に対応
 
-- **縦書きヒーロー**: メインコピーを `writing-mode: vertical-rl` で組む(トップ)
-- **縦書き×円環の見出し**(`.vhead`): 「今宵の一杯」「定番の一杯」等
-- **星図モチーフ**(`assets/img/menu/constellation-*.svg`): 季節限定うどんを月ごとの星図(点と細線のみ)で表す
-- **巨大一文字**(`.craft-section__bg`): こだわりページの「出汁」「麺」「灯」を薄く背景に敷く
-- **印章ロゴ**(`assets/img/common/logo-stamp.svg`): 手彫り風の揺らぎを持つ枠+縦書き二列。フッターに使用
-- **一筆書きの夜鷹**(`assets/img/common/bird.svg`): サイト全体で1箇所のみ。1.7秒で滑空した後、右上に静止する
-- **紙のグレイン**(`assets/img/common/grain.svg`): body::after で全ページに薄く(opacity 0.03)
-- ボタンは透明地+1px罫線。主要導線は「写真付きお品書き」「こだわり」「制作例について」をページごとに整理
+星図・紋・印章・紙グレインは既存の意匠アセットです。料理、人、建物を代理イラストで描かず、料理の視覚情報には生成した写真だけを使っています。
 
-### 賑わい装置(3体エージェント討論の裁定で追加。守り: FV遅延0秒・一度きり1.2s以内・追加色0)
+## 生成イメージ写真
 
-- **お知らせ欄**(トップのみ・`hero-news`): 日付+一行・最大3件。**月1回の更新が運用前提**(更新が止まるくらいなら欄ごと外すこと)
-- **フッター再設計**: 英字一行+紋+架空設定の営業時間+制作例である旨+全ページ共通ナビ+店訓。営業・予約受付がないことを明記
-- **地図掲載待ち**(店舗案内): 実在地点の誤認を避けるため、制作例では外部地図を表示しない
-- **下層の巨大一文字**: menu「品」/ access「灯」(こだわりページの装置を転用)
-- **献番**: お品書きに漢数字「一、二、…」(グループごとに一から)
-- **罫線描画**(`rule-draw`): hero__foot・cta-band・footerの境界罫が視界に入った時に一度だけ描かれる(0.8s)。お品書きの罫は対象外
-- **巨大一文字のリビール**(`bg-fade`): opacity 0→0.45・1.1s・一度きり
-- **星の明滅**: ヒーローの星8個・周期9〜14s・変化幅0.08。サイト唯一の常時動作
-- すべて既存のIntersectionObserver+CSS transitionのみで実装。`motion-stop`で全停止
+`site/assets/img/menu/generated/`に公開用WebPを12点収録しています。
+
+- 季節限定: `seasonal` / `edamame` / `mushroom`
+- 定番: `kake` / `zaru` / `kitsune` / `tempura` / `signature` / `kamo-nanban` / `curry`
+- サイド: `inari` / `mini-kake`
+
+元PNGは`design/photo-concepts/`に保存しています。実店舗へ転用するときは、権利確認済みの実写真と確定した献立内容へ差し替え、生成表記を外す前に利用許諾を確認してください。
+
+## ローカル確認
+
+```bash
+cd site
+python3 -m http.server 8420
+# http://localhost:8420/
+```
+
+## QA
+
+```bash
+python3 <web-productionスキル>/scripts/qa_check.py site/
+python3 <web-productionスキル>/scripts/visual_qa.py site/
+```
+
+`visual_qa.py`は375px・768px・1440pxで全HTMLを撮影し、横スクロール、コンソールエラー、画像読み込み、見切れを検査します。実行後は`visual-qa/`の画像を目視します。
 
 ## 実店舗サイトへ転用する場合
 
-架空店のため内容はすべて仮設定です。実店舗として公開する際は実データへ差し替えてください。
+公開前に少なくとも次を確定・差し替えてください。
 
-| 項目 | 現在の内容 | 差し替え箇所 | 必須度 |
-|---|---|---|---|
-| 店舗情報(住所・電話・営業時間) | 架空設定。電話番号は非掲載 | 全ページのfooter・`access/index.html`のinfo-table | 必須 |
-| 地図 | 「地図は未掲載です」の静的表示 | `access/index.html` の`.map-embed`を、確認済みの実住所Googleマップへ差し替え | 必須 |
-| お知らせ | 仮の2件(2026年7月時点) | `index.html` の`.hero-news__list`。**月1回更新する運用**とセットで公開 | 必須 |
-| メニュー内容・価格・季節限定献立 | 仮の献立例 | `index.html`・`menu/index.html` | 必須 |
-| 店主名・プロフィール | 仮名(渡瀬 実)・テキストのみ | `index.html`の店主引用ブロック | 必須 |
-| 公開URL | GitHub PagesのURLで設定済み | 移転時は全HTMLの`canonical`・OGP・JSON-LD、`sitemap.xml`、`robots.txt`を一括更新 | 必須 |
-| 実写真 | 現在は未使用 | 下記「実写真3点の将来差し替え仕様」を参照。写真なしでも成立するレイアウトを保つ | 任意 |
-| favicon / OGP画像 | トークン色から自動生成 | OGPは`python3 scripts/generate_assets.py`で再生成。本番ロゴ決定後に再調整 | 任意 |
+- 全ページの住所、電話番号、営業時間、定休日
+- お品書き、価格、季節限定献立
+- 店主名とプロフィール
+- `access/index.html`の地図
+- 正式な送信先、個人情報の利用目的、返信目安、スパム対策
+- canonical、OGP、JSON-LD、`sitemap.xml`、`robots.txt`
 
-### 実写真3点の将来差し替え仕様
+`contact/thanks/`はフォームを実装して送信・通知テストを完了するまで非導線のまま維持します。
 
-AI生成画像や素材サイトの代理写真で実店舗を装わず、店舗から提供された権利確認済みの実写真だけを使います。
+## 公開
 
-| 写真 | 将来の配置 | 推奨構図・品質 |
-|---|---|---|
-| 看板の一杯 | トップ「今宵の一杯」冒頭 | 横位置3:2、料理全体と器の縁が切れない。長辺2400px以上、WebP quality 82前後、代替テキストに料理名 |
-| 製麺風景 | トップ「粉が舞う音だけの、朝五時。」または`/kodawari/`の「麺」 | 横位置3:2、手元と麺を主役にし、人物の顔は許諾がある場合のみ。長辺2400px以上、WebP quality 80〜85 |
-| 店構え・入口 | `/access/`の地図掲載位置の直前 | 横位置16:9、道路から見える入口と目印を含める。長辺2400px以上、WebP quality 80〜85、位置情報メタデータは公開方針に合わせて除去 |
-
-- いずれも表示幅に対して約2倍の書き出しを用意し、`width`/`height`を指定してレイアウトシフトを防ぐ
-- 原版、撮影者、利用許諾、撮影日を記録する。過度な合成・生成拡張はしない
-- 明るさと色温度は3点で揃えるが、料理や店の実物と異なる色に改変しない
-
-### 制作例で使う生成イメージ写真
-
-`/menu/`の全12品に、料理の雰囲気を伝える生成イメージ写真を用意しています。定番・サイドは献立表の料理名・価格の行にある「生成イメージを見る」を選ぶと、写真・料理名・価格・説明を一緒に確認できるビューアが開きます。季節限定の3品は濃紺の夜空、星図、縦書きの料理名で先に見せる主役表現とし、各一杯を選ぶと同じビューアを開きます。スマートフォンでは料理名の行数に応じて高さが伸びる横組みカード、デスクトップでは縦組み3列で表示します。
-
-すべての料理行・季節限定の一杯・写真ビューア内に**「イメージ写真（生成）」**を明記し、実在店舗・実在メニューの写真としては扱いません。ビューアの前後移動は「季節限定3品」「定番7品」「サイド2品」の各グループ内だけで行います。切替時は旧写真をいったん消して、濃紺の背景に星の紋を一度だけ出してから新しい写真と文字をふわっと定着させます。写真画面の上端に「前の一杯／写真を閉じる／次の一杯」を常設し、閉じる操作は常に金茶の枠で見分けられるようにします。閉じた後は選んだ献立行へフォーカスを戻します。自動送りはせず、モーション停止時は即時に切り替わります。
-
-季節限定の濃紺セクションに入る時は、スクロールを止めずに墨色の「夜のとばり」が一度だけ落ちます。山並みは高さ約36px以下の穏やかな稜線1本に絞り、夜鷹は1.7秒で滑空して右上に静止します。モーション停止時と`prefers-reduced-motion`では最初から右上に静止します。
-
-| 料理 | 公開用ファイル | 元画像 |
-|---|---|---|
-| かけうどん | `site/assets/img/menu/generated/kake-1536.webp` | `design/photo-concepts/260714-yodaka-kake-concept.png` |
-| ざるうどん | `site/assets/img/menu/generated/zaru-1536.webp` | `design/photo-concepts/260714-yodaka-zaru-concept.png` |
-| きつねうどん | `site/assets/img/menu/generated/kitsune-1536.webp` | `design/photo-concepts/260714-yodaka-kitsune-concept.png` |
-| 天ぷらうどん | `site/assets/img/menu/generated/tempura-1536.webp` | `design/photo-concepts/260714-yodaka-tempura-concept.png` |
-| よだかの星ぶっかけ | `site/assets/img/menu/generated/signature-1536.webp` | `design/photo-concepts/260714-yodaka-signature-concept.png` |
-| 鴨南蛮うどん | `site/assets/img/menu/generated/kamo-nanban-1536.webp` | `design/photo-concepts/260714-yodaka-kamo-nanban-concept.png` |
-| カレーうどん | `site/assets/img/menu/generated/curry-1536.webp` | `design/photo-concepts/260714-yodaka-curry-concept.png` |
-| 冷やし夏野菜の梅おろしうどん | `site/assets/img/menu/generated/seasonal-1536.webp` | `design/photo-concepts/260714-yodaka-seasonal-concept.png` |
-| 枝豆と生姜の冷麦だしうどん | `site/assets/img/menu/generated/edamame-1536.webp` | `design/photo-concepts/260714-yodaka-edamame-concept.png` |
-| きのこと柚子胡椒の温かけうどん | `site/assets/img/menu/generated/mushroom-1536.webp` | `design/photo-concepts/260714-yodaka-mushroom-concept.png` |
-| いなり寿司 | `site/assets/img/menu/generated/inari-1536.webp` | `design/photo-concepts/260714-yodaka-inari-concept.png` |
-| 小さなかけうどん | `site/assets/img/menu/generated/mini-kake-1536.webp` | `design/photo-concepts/260714-yodaka-mini-kake-concept.png` |
-
-- `design/photo-concepts/`のPNGは元画像として保全し、公開サイトでは1536pxのWebPを必要な1枚だけ読み込む
-- 実写真を用意できたら、料理ごとに生成写真を同じビューア位置・説明形式で差し替える。生成表記を外す前に、利用許諾とメニュー内容を確認する
-
-## 制作例について・将来のフォーム
-
-現在はGitHub Pagesで公開しており、`contact/index.html` は「制作例について」の説明ページです。表現設計、生成写真、架空の店舗・人物・住所・営業時間・価格について説明し、フォーム要素、架空電話番号、Netlify Forms属性は公開HTMLに含めていません。
-
-将来フォームを有効化する場合は、正式な送信先、個人情報の利用目的、返信目安、スパム対策を確定し、送信テストと通知確認を行ってから導線を公開してください。`contact/thanks/`はそれまで`noindex`・非導線のまま維持します。
-
-## SEO / 計測
-
-- 各ページに`title`/`description`/OGP/canonicalを個別設定済み
-- トップページに、実店舗と誤認させない`CreativeWork`のJSON-LD、下層ページに`BreadcrumbList`のJSON-LDを設置
-- `canonical` / OGP / `sitemap.xml` / `robots.txt` は公開URL基準で設定済み
-- OGPは1200×630px。全HTMLに`og:locale`と画像サイズ・代替テキストを設定済み
-- GA4/GTMは未設置です。公開後に導入する場合は各ページの`</head>`直前にタグを追加してください
-
-## 公開手順(GitHub Pages)
-
-1. 変更内容と`site/`のローカルQAを確認
-2. `main`へpush
-3. `.github/workflows/deploy-pages.yml`が`site/`をPages用成果物へ変換して公開
-4. 公開URLで全ページ、サブパス付きアセット、OGP、スマホ表示を確認
-
-HTMLのルート相対URLはワークフローが`/yodaka-no-hoshi-udon/`を付与します。CSSから参照するグレイン画像は、サブパスでも壊れない相対URLです。
+`main`へのpushで`.github/workflows/deploy-pages.yml`が`site/`をGitHub Pagesへ配信します。ワークフローがHTML内のルート相対URLへリポジトリのサブパスを付与します。
 
 ## 復元ポイント
 
-- backup: `backup/pre-professional-audit-20260714`
-- tag: `pre-professional-audit-20260714`
-- 監査前の状態へ戻す場合は、このbackupまたはtagから復元できます。通常作業ではbackupとtagを変更しません。
+- 今回の星読みの盤リデザイン直前
+  - branch: `backup/pre-star-dial-redesign-20260717`
+  - tag: `pre-star-dial-redesign-20260717`
+- プロ監査前
+  - branch: `backup/pre-professional-audit-20260714`
+  - tag: `pre-professional-audit-20260714`
 
-## QA実施済み
-
-- `qa_check.py`: FAIL 0 / WARN 0
-- `visual_qa.py`(Playwright, 6ページ×3幅=18パターン): FAIL 0 / WARN 0(横スクロール・コンソールエラー・画像読み込み失敗・拡大ぼやけ すべてなし)
-- 目視レビュー: 375px/768px/1440pxの3幅で崩れ・AI感なしを確認済み(`visual-qa/`フォルダにスクリーンショットあり)
-- ライブ確認: コンソールエラーなし、縦書き円見出しのクリップなし、横スクロールなし
-
-## 次の改善候補(3ヶ月後の見直し観点)
-
-- 実店舗化して受付導線を有効にした後、GA4で主要導線の利用状況と流入元を確認
-- ヒーローのコピーをA/Bテスト(「湯気の向こうに、一番星が見える一杯を。」の反応を見る)
-- 季節限定メニューは3ヶ月に一度、実際の献立に更新
+通常作業では、これらのbranchとtagを変更しません。

@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeader();
   initNav();
   initForm();
+  initSeasonalDial();
   initMenuDialog();
   initMotionStop();
 });
@@ -246,6 +247,129 @@ function initForm() {
   });
 }
 
+/* ---- 星読みの盤: 月の星を選ぶと、一杯と共有写真を切り替える ---- */
+function initSeasonalDial() {
+  const root = document.querySelector(".js-seasonal-dial");
+  if (!root) return;
+
+  const dishes = {
+    seasonal: {
+      tab: "season-tab-july",
+      month: "七月",
+      name: "冷やし夏野菜の梅おろしうどん",
+      description: "花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。",
+      price: "¥920",
+      map: "assets/img/menu/constellation-july.svg",
+      mapAlt: "七月の星図",
+      image: "assets/img/menu/generated/seasonal-1536.webp",
+      imageAlt: "夏野菜、梅おろし、茗荷を添えた冷やしうどんの生成イメージ",
+    },
+    edamame: {
+      tab: "season-tab-august",
+      month: "八月",
+      name: "枝豆と生姜の冷麦だしうどん",
+      description: "枝豆のすり流しと生姜、氷を浮かべた出汁でひと息つく一杯。",
+      price: "¥920",
+      map: "assets/img/menu/constellation-august.svg",
+      mapAlt: "八月の星図",
+      image: "assets/img/menu/generated/edamame-1536.webp",
+      imageAlt: "枝豆のすり流し、生姜、氷を添えた冷やしだしうどんの生成イメージ",
+    },
+    mushroom: {
+      tab: "season-tab-september",
+      month: "九月",
+      name: "きのこと柚子胡椒の温かけうどん",
+      description: "近隣の山で採れた三種のきのこを香ばしく炒め、柚子胡椒できりっと。",
+      price: "¥950",
+      map: "assets/img/menu/constellation-september.svg",
+      mapAlt: "九月の星図",
+      image: "assets/img/menu/generated/mushroom-1536.webp",
+      imageAlt: "三種のきのこと柚子胡椒を添えた温かけうどんの生成イメージ",
+    },
+  };
+
+  const tabs = Array.from(root.querySelectorAll("[data-season-key]"));
+  const panel = root.querySelector("#season-panel");
+  const map = root.querySelector("[data-season-map]");
+  const image = root.querySelector("[data-season-image]");
+  const month = root.querySelector("[data-season-month]");
+  const name = root.querySelector("[data-season-name]");
+  const price = root.querySelector("[data-season-price]");
+  const description = root.querySelector("[data-season-description]");
+  const openButton = root.querySelector(".star-dial__star-button");
+  if (!tabs.length || !panel || !map || !image || !month || !name || !price || !description || !openButton) return;
+
+  let currentKey = "seasonal";
+  let changeVersion = 0;
+
+  const preload = (src) => new Promise((resolve) => {
+    const next = new Image();
+    next.onload = () => resolve(true);
+    next.onerror = () => resolve(false);
+    next.src = src;
+  });
+
+  const commit = (key) => {
+    const dish = dishes[key];
+    if (!dish) return;
+    root.dataset.seasonKey = key;
+    map.src = dish.map;
+    map.alt = dish.mapAlt;
+    image.src = dish.image;
+    image.alt = dish.imageAlt;
+    month.textContent = dish.month;
+    name.textContent = dish.name;
+    price.textContent = dish.price;
+    description.textContent = dish.description;
+    panel.setAttribute("aria-labelledby", dish.tab);
+    openButton.dataset.menuPhoto = key;
+    openButton.dataset.menuNumber = dish.month;
+    openButton.dataset.menuName = dish.name;
+    openButton.dataset.menuDescription = dish.description;
+    openButton.dataset.menuPrice = dish.price;
+    openButton.setAttribute("aria-label", `${dish.month}限定、${dish.name}、${dish.price.replace("¥", "")}円の生成イメージを大きく見る`);
+  };
+
+  const select = async (key) => {
+    const dish = dishes[key];
+    if (!dish || key === currentKey) return;
+    currentKey = key;
+    changeVersion += 1;
+    const version = changeVersion;
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.seasonKey === key;
+      tab.setAttribute("aria-selected", String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+    });
+
+    await preload(dish.image);
+    if (version !== changeVersion) return;
+    if (!isMotionReduced()) panel.classList.add("is-changing");
+    window.setTimeout(() => {
+      if (version !== changeVersion) return;
+      commit(key);
+      panel.classList.remove("is-changing");
+    }, isMotionReduced() ? 0 : 160);
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => select(tab.dataset.seasonKey));
+    tab.addEventListener("keydown", (event) => {
+      let nextIndex = null;
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % tabs.length;
+      if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = tabs.length - 1;
+      if (nextIndex === null) return;
+      event.preventDefault();
+      tabs[nextIndex].focus();
+      void select(tabs[nextIndex].dataset.seasonKey);
+    });
+  });
+
+  root.dataset.seasonKey = currentKey;
+}
+
 /* ---- お品書き: 料理行から生成イメージ写真を開く ----
    写真は共有dialogへ必要な1枚だけ読み込む。自動送りはせず、Esc/背景/閉じるで戻る。 */
 function initMenuDialog() {
@@ -254,18 +378,18 @@ function initMenuDialog() {
   if (!dialog || !triggers.length || !("showModal" in dialog)) return;
 
   const photos = {
-    kake: { src: "../assets/img/menu/generated/kake-1536.webp", alt: "澄んだ出汁と刻み葱を添えたかけうどんの生成イメージ" },
-    zaru: { src: "../assets/img/menu/generated/zaru-1536.webp", alt: "ざるに盛った手打ちうどんとつけ汁の生成イメージ" },
-    kitsune: { src: "../assets/img/menu/generated/kitsune-1536.webp", alt: "油揚げと刻み葱を添えたきつねうどんの生成イメージ" },
-    tempura: { src: "../assets/img/menu/generated/tempura-1536.webp", alt: "海老天とかき揚げを添えた天ぷらうどんの生成イメージ" },
-    signature: { src: "../assets/img/menu/generated/signature-1536.webp", alt: "半熟卵、揚げ玉、刻み葱を添えたぶっかけうどんの生成イメージ" },
-    "kamo-nanban": { src: "../assets/img/menu/generated/kamo-nanban-1536.webp", alt: "炙った鴨と九条葱を添えた鴨南蛮うどんの生成イメージ" },
-    curry: { src: "../assets/img/menu/generated/curry-1536.webp", alt: "出汁を効かせた和風カレーうどんの生成イメージ" },
-    seasonal: { src: "../assets/img/menu/generated/seasonal-1536.webp", alt: "夏野菜、梅おろし、茗荷を添えた冷やしうどんの生成イメージ" },
-    edamame: { src: "../assets/img/menu/generated/edamame-1536.webp", alt: "枝豆のすり流し、生姜、氷を添えた冷やしだしうどんの生成イメージ" },
-    mushroom: { src: "../assets/img/menu/generated/mushroom-1536.webp", alt: "三種のきのこと柚子胡椒を添えた温かけうどんの生成イメージ" },
-    inari: { src: "../assets/img/menu/generated/inari-1536.webp", alt: "二個のいなり寿司の生成イメージ" },
-    "mini-kake": { src: "../assets/img/menu/generated/mini-kake-1536.webp", alt: "小さな器のかけうどんの生成イメージ" },
+    kake: { src: "assets/img/menu/generated/kake-1536.webp", alt: "澄んだ出汁と刻み葱を添えたかけうどんの生成イメージ" },
+    zaru: { src: "assets/img/menu/generated/zaru-1536.webp", alt: "ざるに盛った手打ちうどんとつけ汁の生成イメージ" },
+    kitsune: { src: "assets/img/menu/generated/kitsune-1536.webp", alt: "油揚げと刻み葱を添えたきつねうどんの生成イメージ" },
+    tempura: { src: "assets/img/menu/generated/tempura-1536.webp", alt: "海老天とかき揚げを添えた天ぷらうどんの生成イメージ" },
+    signature: { src: "assets/img/menu/generated/signature-1536.webp", alt: "半熟卵、揚げ玉、刻み葱を添えたぶっかけうどんの生成イメージ" },
+    "kamo-nanban": { src: "assets/img/menu/generated/kamo-nanban-1536.webp", alt: "炙った鴨と九条葱を添えた鴨南蛮うどんの生成イメージ" },
+    curry: { src: "assets/img/menu/generated/curry-1536.webp", alt: "出汁を効かせた和風カレーうどんの生成イメージ" },
+    seasonal: { src: "assets/img/menu/generated/seasonal-1536.webp", alt: "夏野菜、梅おろし、茗荷を添えた冷やしうどんの生成イメージ" },
+    edamame: { src: "assets/img/menu/generated/edamame-1536.webp", alt: "枝豆のすり流し、生姜、氷を添えた冷やしだしうどんの生成イメージ" },
+    mushroom: { src: "assets/img/menu/generated/mushroom-1536.webp", alt: "三種のきのこと柚子胡椒を添えた温かけうどんの生成イメージ" },
+    inari: { src: "assets/img/menu/generated/inari-1536.webp", alt: "二個のいなり寿司の生成イメージ" },
+    "mini-kake": { src: "assets/img/menu/generated/mini-kake-1536.webp", alt: "小さな器のかけうどんの生成イメージ" },
   };
 
   const image = dialog.querySelector("#menu-dialog-image");
@@ -298,10 +422,10 @@ function initMenuDialog() {
     const itemNumber = trigger.querySelector(".menu-item__num, .seasonal-card__month");
     return {
       ...photo,
-      name: name ? name.textContent.replace(itemNumber ? itemNumber.textContent : "", "").trim() : "",
-      description: desc ? desc.textContent.trim() : "",
-      price: itemPrice ? itemPrice.textContent.trim() : "",
-      number: itemNumber ? itemNumber.textContent.trim() : "",
+      name: trigger.dataset.menuName || (name ? name.textContent.replace(itemNumber ? itemNumber.textContent : "", "").trim() : ""),
+      description: trigger.dataset.menuDescription || (desc ? desc.textContent.trim() : ""),
+      price: trigger.dataset.menuPrice || (itemPrice ? itemPrice.textContent.trim() : ""),
+      number: trigger.dataset.menuNumber || (itemNumber ? itemNumber.textContent.trim() : ""),
     };
   };
 

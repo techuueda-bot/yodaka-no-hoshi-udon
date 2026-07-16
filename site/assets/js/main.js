@@ -133,20 +133,67 @@ function initHeader() {
 function initNav() {
   const btn = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".global-nav");
-  if (!btn || !nav) return;
+  const header = btn ? btn.closest(".site-header") : null;
+  if (!btn || !nav || !header) return;
+
+  let isOpen = false;
+  let savedBodyStyle = "";
+  let savedScrollY = 0;
+
+  const lockPage = () => {
+    savedBodyStyle = document.body.getAttribute("style") || "";
+    savedScrollY = window.scrollY;
+    document.body.classList.add("nav-open");
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+  };
+
+  const unlockPage = () => {
+    const root = document.documentElement;
+    const savedScrollBehavior = root.style.scrollBehavior;
+    document.body.classList.remove("nav-open");
+    if (savedBodyStyle) document.body.setAttribute("style", savedBodyStyle);
+    else document.body.removeAttribute("style");
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, savedScrollY);
+    root.style.scrollBehavior = savedScrollBehavior;
+  };
+
+  const openNav = () => {
+    if (isOpen) return;
+    isOpen = true;
+    lockPage();
+    header.classList.add("is-nav-open");
+    nav.classList.add("is-open");
+    btn.setAttribute("aria-expanded", "true");
+    btn.setAttribute("aria-label", "メニューを閉じる");
+  };
+
+  const closeNav = ({ restoreFocus = true } = {}) => {
+    if (!isOpen) return;
+    isOpen = false;
+    nav.classList.remove("is-open");
+    header.classList.remove("is-nav-open");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-label", "メニューを開く");
+    unlockPage();
+    if (restoreFocus) btn.focus({ preventScroll: true });
+  };
+
   btn.addEventListener("click", () => {
-    const open = nav.classList.toggle("is-open");
-    btn.setAttribute("aria-expanded", String(open));
-    btn.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
-    document.body.style.overflow = open ? "hidden" : "";
+    if (isOpen) closeNav();
+    else openNav();
   });
   nav.querySelectorAll("a").forEach((a) =>
     a.addEventListener("click", () => {
-      nav.classList.remove("is-open");
-      btn.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
+      closeNav({ restoreFocus: false });
     })
   );
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isOpen) closeNav();
+  });
 }
 
 /* ---- フォーム: 送信前検証+ハニーポット+二重送信防止 ----

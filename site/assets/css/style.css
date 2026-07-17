@@ -224,13 +224,15 @@ h1, h2, h3 {
     content: "";
     position: absolute;
     top: 50%;
-    left: 8px;
+    left: 50%;
     width: 18px;
     height: 18px;
     background: url("../img/common/crest.svg") center / contain no-repeat;
-    filter: invert(56%) sepia(43%) saturate(747%) hue-rotate(358deg) brightness(90%) contrast(87%);
-    transform: translateY(-50%);
+    filter: invert(48%) sepia(45%) saturate(906%) hue-rotate(358deg) brightness(82%) contrast(94%);
+    transform: translate(-74px, -50%);
   }
+  .global-nav a[href="/#oshinagaki"][aria-current]::before { transform: translate(-92px, -50%); }
+  .global-nav a[href="/kodawari/"][aria-current]::before { transform: translate(-88px, -50%); }
   .global-nav a[aria-current]::after {
     content: "";
     position: absolute;

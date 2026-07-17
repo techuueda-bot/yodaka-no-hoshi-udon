@@ -141,28 +141,6 @@ function initNav() {
   let savedBodyStyle = "";
   let savedScrollY = 0;
 
-  const homeLink = nav.querySelector('a[href="/"]');
-  const menuLink = nav.querySelector('a[href="/#oshinagaki"]');
-  const menuSection = document.querySelector("#oshinagaki");
-
-  const syncCurrentLocation = () => {
-    if (!homeLink || !menuLink || !menuSection) return;
-    const headerOffset = header.getBoundingClientRect().height + 24;
-    const sectionStart = menuSection.offsetTop - headerOffset;
-    const sectionEnd = sectionStart + menuSection.offsetHeight;
-    const isMenuCurrent = window.scrollY >= sectionStart && window.scrollY < sectionEnd;
-    if (isMenuCurrent) {
-      homeLink.removeAttribute("aria-current");
-      menuLink.setAttribute("aria-current", "location");
-    } else {
-      menuLink.removeAttribute("aria-current");
-      homeLink.setAttribute("aria-current", "page");
-    }
-  };
-
-  syncCurrentLocation();
-  window.addEventListener("scroll", syncCurrentLocation, { passive: true });
-
   const lockPage = () => {
     savedBodyStyle = document.body.getAttribute("style") || "";
     savedScrollY = window.scrollY;

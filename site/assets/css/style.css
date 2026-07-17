@@ -231,7 +231,7 @@ h1, h2, h3 {
     filter: invert(48%) sepia(45%) saturate(906%) hue-rotate(358deg) brightness(82%) contrast(94%);
     transform: translate(-74px, -50%);
   }
-  .global-nav a[href="/#oshinagaki"][aria-current]::before { transform: translate(-92px, -50%); }
+  .global-nav a[href="/menu/"][aria-current]::before { transform: translate(-92px, -50%); }
   .global-nav a[href="/kodawari/"][aria-current]::before { transform: translate(-88px, -50%); }
   .global-nav a[aria-current]::after {
     content: "";
@@ -243,7 +243,7 @@ h1, h2, h3 {
     background: currentColor;
     transform: translateX(-50%);
   }
-  .global-nav a[href="/#oshinagaki"] { font-size: 22px; }
+  .global-nav a[href="/menu/"] { font-size: 22px; }
   .global-nav__colophon {
     position: absolute;
     right: 24px;
@@ -609,8 +609,8 @@ button.seasonal-card { cursor: pointer; }
   -webkit-mask: url("../img/common/bird.svg") center / contain no-repeat;
   mask: url("../img/common/bird.svg") center / contain no-repeat;
 }
-/* 1.7秒で右上へ渡り、到着位置に静止する。 */
-.menu-seasonal.is-nightfall .menu-nightfall__bird { animation: nightfall-bird 1.7s var(--ease-out) 0.04s both; }
+/* 1.2秒で右上へ渡り、到着位置に静止する。 */
+.menu-seasonal.is-nightfall .menu-nightfall__bird { animation: nightfall-bird 1.2s var(--ease-out) 0.04s both; }
 .menu-seasonal::before {
   content: "";
   position: absolute;

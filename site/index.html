@@ -49,144 +49,51 @@
     <nav class="global-nav" id="global-nav" aria-label="グローバルナビゲーション">
       <ul>
         <li><a href="/" aria-current="page">トップ</a></li>
-        <li><a href="/#oshinagaki">お品書き</a></li>
+        <li><a href="/menu/">お品書き</a></li>
         <li><a href="/kodawari/">こだわり</a></li>
       </ul>
       <p class="global-nav__colophon"><span>TEUCHI UDON — YODAKA NO HOSHI</span><span>架空店舗サイト／制作例</span></p>
     </nav>
   </header>
 
+  <p class="demo-notice"><strong>架空店舗サイト／制作例</strong> — 店舗・献立・人物は架空です。</p>
+
   <main>
-    <section class="star-dial js-seasonal-dial" aria-labelledby="star-dial-title">
-      <div class="container star-dial__inner">
-        <header class="star-dial__head js-reveal">
-          <p class="star-dial__eyebrow"><span aria-hidden="true">—</span> 星読みの盤 <span aria-hidden="true">—</span></p>
-          <p class="star-dial__context">架空店舗サイト／手打ちうどん店の制作例</p>
-          <h1 class="star-dial__title" id="star-dial-title">今宵の一杯</h1>
-        </header>
-
-        <div class="star-dial__months js-reveal" role="tablist" aria-label="季節限定うどんを月で選ぶ" data-delay="1">
-          <button id="season-tab-july" type="button" role="tab" aria-selected="true" aria-controls="season-panel" tabindex="0" data-season-key="seasonal">七月</button>
-          <button id="season-tab-august" type="button" role="tab" aria-selected="false" aria-controls="season-panel" tabindex="-1" data-season-key="edamame">八月</button>
-          <button id="season-tab-september" type="button" role="tab" aria-selected="false" aria-controls="season-panel" tabindex="-1" data-season-key="mushroom">九月</button>
-        </div>
-
-        <div class="star-dial__panel" id="season-panel" role="tabpanel" aria-live="polite" aria-labelledby="season-tab-july">
-          <div class="star-dial__copy js-reveal" data-delay="2">
-            <p class="star-dial__month" data-season-month>七月</p>
-            <h2 class="star-dial__dish" data-season-name>冷やし夏野菜の梅おろしうどん</h2>
-            <p class="star-dial__price" data-season-price>¥920</p>
-            <p class="star-dial__description" data-season-description>花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。</p>
-          </div>
-
-          <div class="star-dial__experience js-reveal" data-delay="1" data-season-experience>
-            <button class="star-dial__constellation-trigger" type="button" data-season-reveal
-              aria-controls="season-photo-scene"
-              aria-expanded="false"
-              aria-label="七月限定、冷やし夏野菜の梅おろしうどん。トマト、茄子、茗荷、梅の星を結んで生成イメージを開く">
-              <span class="star-dial__map-frame">
-                <img class="star-dial__map" data-season-map src="/assets/img/menu/constellation-july.svg" width="600" height="600" alt="七月の星図">
-                <span class="star-dial__ingredient-points" aria-hidden="true">
-                  <span class="star-dial__ingredient-point"><img src="/assets/img/common/crest.svg" width="26" height="26" alt=""></span>
-                  <span class="star-dial__ingredient-point"><img src="/assets/img/common/crest.svg" width="26" height="26" alt=""></span>
-                  <span class="star-dial__ingredient-point"><img src="/assets/img/common/crest.svg" width="26" height="26" alt=""></span>
-                  <span class="star-dial__ingredient-point"><img src="/assets/img/common/crest.svg" width="26" height="26" alt=""></span>
-                </span>
-              </span>
-              <span class="star-dial__ingredients-label">この一杯を結ぶ素材</span>
-              <span class="star-dial__ingredients" aria-hidden="true">
-                <span data-season-ingredient>トマト</span>
-                <span data-season-ingredient>茄子</span>
-                <span data-season-ingredient>茗荷</span>
-                <span data-season-ingredient>梅</span>
-              </span>
-              <span class="star-dial__reveal-guide">
-                <img src="/assets/img/common/crest.svg" width="24" height="24" alt="">
-                <span>星を結んで、一杯の景色をひらく</span>
-              </span>
-            </button>
-
-            <figure class="star-dial__photo-scene" id="season-photo-scene" data-season-photo-scene hidden>
-              <p class="star-dial__photo-identity">
-                <span data-season-photo-month>七月</span>
-                <strong data-season-photo-name>冷やし夏野菜の梅おろしうどん</strong>
-              </p>
-              <button class="star-dial__photo-close" type="button" data-season-photo-close>星図へ戻る</button>
-              <span class="star-dial__photo-stage">
-                <span class="star-dial__photo-full">
-                  <img data-season-image src="/assets/img/menu/generated/seasonal-1536.webp" width="1536" height="1024" alt="夏野菜、梅おろし、茗荷を添えた冷やしうどんの生成イメージ" fetchpriority="high" decoding="async">
-                </span>
-                <span class="star-dial__photo-orbit" aria-hidden="true">
-                  <img data-season-image-orbit src="/assets/img/menu/generated/seasonal-1536.webp" width="1536" height="1024" alt="" fetchpriority="high" decoding="async">
-                </span>
-              </span>
-              <figcaption>イメージ写真（生成）</figcaption>
-            </figure>
+    <!-- ヒーロー(タイトル支配型・縦書き) -->
+    <section class="hero">
+      <div class="hero__stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="container hero__inner">
+        <p class="hero__place js-reveal">架空店舗サイト／手打ちうどん店の制作例</p>
+        <h1 class="hero__title type-set">湯気の向こうに、
+一番星が見える一杯を。</h1>
+        <p class="hero__lead js-reveal" data-delay="1">毎朝打つ自家製麺と、丁寧に引いた出汁。醜いと嗤われても燃え続けた夜鷹の物語のように、地味でも手を抜かない一杯を花巻の架空店舗に描きました。</p>
+        <div class="hero__foot js-reveal rule-draw" data-delay="2">
+          <dl class="hero__meta">
+            <div>
+              <dt>想定営業時間（架空）</dt>
+              <dd>11:00-15:00 / 17:30-21:00</dd>
+            </div>
+            <div>
+              <dt>想定定休日（架空）</dt>
+              <dd>火曜日</dd>
+            </div>
+          </dl>
+          <div class="hero__cta">
+            <a class="button" href="/menu/">お品書きを見る</a>
+            <a class="button" href="/kodawari/">こだわりを見る</a>
           </div>
         </div>
-
-        <p class="star-dial__notice js-reveal" data-delay="3">掲載写真は架空の献立をもとに制作した生成イメージであり、実際に提供された料理の記録ではありません。</p>
+        <div class="hero-news js-reveal" data-delay="3">
+          <p class="hero-news__title">お知らせ</p>
+          <ul class="hero-news__list">
+            <li><time datetime="2026-07-14">2026.7.14</time><span>七月の献立例「冷やし夏野菜の梅おろしうどん」を追加しました。</span></li>
+            <li><time datetime="2026-07-13">2026.7.13</time><span>料理写真はすべて生成イメージとして掲載しています。</span></li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section class="section menu-home" id="oshinagaki" aria-labelledby="oshinagaki-title">
-      <div class="container--narrow">
-        <header class="menu-home__head js-reveal">
-          <p class="section-head__en">Menu</p>
-          <h2 class="menu-home__title" id="oshinagaki-title">お品書き</h2>
-          <p>季節の三杯は上の星読みの盤から、定番とサイドは下の料理名から選べます。いずれも一杯ずつ、生成イメージを開いてご覧いただけます。</p>
-        </header>
-
-        <div class="menu-list">
-          <div class="menu-list__group">
-            <p class="menu-list__group-title js-reveal">定番うどん</p>
-
-            <button class="menu-item js-reveal" type="button" data-menu-photo="kake" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="かけうどん、580円の生成イメージを見る">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">一、</span>かけうどん</span><span class="menu-item__desc">毎朝引く、いりこと昆布の合わせ出汁</span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥580</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="zaru" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="ざるうどん、630円の生成イメージを見る" data-delay="1">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">二、</span>ざるうどん</span><span class="menu-item__desc">冷水で締めた自家製麺を、つゆで</span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥630</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="kitsune" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="きつねうどん、700円の生成イメージを見る" data-delay="2">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">三、</span>きつねうどん</span><span class="menu-item__desc">甘辛く炊いた油揚げをたっぷりと</span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥700</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="tempura" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="天ぷらうどん、880円の生成イメージを見る" data-delay="3">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">四、</span>天ぷらうどん</span><span class="menu-item__desc">海老天・野菜かき揚げより2種選択</span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥880</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="signature" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="よだかの星ぶっかけ、780円の生成イメージを見る">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">五、</span>よだかの星ぶっかけ</span><span class="menu-item__desc">半熟卵と揚げ玉、刻み葱をたっぷりと<span class="menu-item__tag">看板</span></span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥780</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="kamo-nanban" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="鴨南蛮うどん、980円の生成イメージを見る" data-delay="1">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">六、</span>鴨南蛮うどん</span><span class="menu-item__desc">香ばしく炙った鴨と、九条葱</span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥980</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="curry" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="カレーうどん、850円の生成イメージを見る" data-delay="2">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">七、</span>カレーうどん</span><span class="menu-item__desc">出汁を効かせた和風カレー、とろみ強め</span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥850</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-          </div>
-
-          <div class="menu-list__group">
-            <p class="menu-list__group-title js-reveal">サイド・お子様</p>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="inari" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="いなり寿司2個、250円の生成イメージを見る">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">一、</span>いなり寿司（2個）</span><span class="menu-item__desc">香ばしく炊いた油揚げを、二つ</span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥250</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-            <button class="menu-item js-reveal" type="button" data-menu-photo="mini-kake" aria-haspopup="dialog" aria-controls="menu-photo-dialog" aria-label="ミニかけうどん、お子様、380円の生成イメージを見る" data-delay="1">
-              <span class="menu-item__info"><span class="menu-item__name"><span class="menu-item__num">二、</span>ミニかけうどん（お子様）</span><span class="menu-item__desc">小さな器に、やさしい合わせ出汁</span></span>
-              <span class="menu-item__meta"><span class="menu-item__price">¥380</span><span class="menu-item__hint"><img src="/assets/img/common/crest.svg" width="22" height="22" alt="">一杯をひらく</span></span>
-            </button>
-          </div>
-        </div>
-        <p class="menu-home__tax js-reveal">※表示価格は税込です。仮の献立・価格例として掲載しています。</p>
-      </div>
-    </section>
-
+    <!-- 製麺の物語(画像なし・巨大一文字「麺」を薄く敷く) -->
     <section class="section craft-section">
       <p class="craft-section__bg bg-fade" aria-hidden="true">麺</p>
       <div class="container--narrow">
@@ -195,53 +102,101 @@
           <h2 class="section-head__title">粉が舞う音だけの、<br>朝五時。</h2>
         </div>
         <p class="js-reveal" data-delay="1">誰もまだ起きていない時間に、厨房の灯りだけが点っています。打ち粉が舞うたび、小さな星屑のように光を弾く。丹精を込めて捏ね、寝かせ、切る。地味な仕事の積み重ねが、一杯の艶と喉ごしになります。</p>
-        <p class="js-reveal craft-section__link" data-delay="2"><a class="morelink" href="/kodawari/">こだわりを詳しく見る</a></p>
+        <p class="js-reveal" data-delay="2" style="margin-top:40px">
+          <a class="morelink" href="/kodawari/">こだわりを詳しく見る</a>
+        </p>
       </div>
     </section>
 
-    <section class="section section--tight home-info">
+    <!-- 今宵の一杯(季節限定) — 破調: 濃紺フルブリード・星図 -->
+    <section class="section seasonal menu-seasonal js-nightfall">
+      <span class="menu-nightfall__bird" aria-hidden="true"><span class="menu-nightfall__bird-shape"></span></span>
+      <div class="container">
+        <div class="vhead js-reveal">
+          <span class="vhead__en">Seasonal</span>
+          <span class="vhead__ja">今宵の一杯</span>
+        </div>
+        <p class="seasonal__intro js-reveal" data-delay="1">四季で移ろう夜空になぞらえ、月替わりの季節限定うどんをご用意しています。同じ星は、二度と昇りません。</p>
+        <div class="seasonal__grid">
+          <div class="seasonal-card js-reveal" data-delay="1">
+            <img class="seasonal-card__map" src="/assets/img/menu/constellation-july.svg" width="600" height="600" alt="七月の星図" loading="lazy">
+            <p class="seasonal-card__month">七月</p>
+            <p class="seasonal-card__name">冷やし夏野菜の梅おろしうどん</p>
+          </div>
+          <div class="seasonal-card js-reveal" data-delay="2">
+            <img class="seasonal-card__map" src="/assets/img/menu/constellation-august.svg" width="600" height="600" alt="八月の星図" loading="lazy">
+            <p class="seasonal-card__month">八月</p>
+            <p class="seasonal-card__name">枝豆と生姜の冷麦だしうどん</p>
+          </div>
+          <div class="seasonal-card js-reveal" data-delay="3">
+            <img class="seasonal-card__map" src="/assets/img/menu/constellation-september.svg" width="600" height="600" alt="九月の星図" loading="lazy">
+            <p class="seasonal-card__month">九月</p>
+            <p class="seasonal-card__name">きのこと柚子胡椒の温かけうどん</p>
+          </div>
+        </div>
+        <p class="seasonal__note js-reveal" data-delay="3"><a class="button" href="/menu/#star-dial-title">季節の三杯と生成イメージを見る</a></p>
+      </div>
+    </section>
+
+    <!-- 定番の一杯(罫線区切りの価格リスト・3品) -->
+    <section class="section">
       <div class="container--narrow">
-        <div class="home-info__grid">
-          <div class="js-reveal">
-            <p class="section-head__en">Information</p>
-            <h2 class="home-info__title">灯りを目印に。</h2>
-            <p>制作例内の架空設定：岩手県花巻市星空町<br>11:00–15:00 / 17:30–21:00・火曜定休</p>
-            <p class="home-info__note">営業・予約受付はありません。</p>
-            <a class="morelink" href="/access/">店舗案内（架空）を見る</a>
+        <div class="vhead js-reveal">
+          <span class="vhead__en">Menu</span>
+          <span class="vhead__ja">定番の一杯</span>
+        </div>
+        <div class="menu-list">
+          <div class="menu-item js-reveal">
+            <div>
+              <span class="menu-item__name"><span class="menu-item__num">一、</span>かけうどん</span>
+              <span class="menu-item__desc">毎朝引く、いりこと昆布の合わせ出汁</span>
+            </div>
+            <span class="menu-item__price">¥580</span>
           </div>
-          <blockquote class="owner-note js-reveal" data-delay="1">
-            <img class="owner-note__crest" src="/assets/img/common/crest.svg" width="40" height="40" alt="">
-            <p class="owner-note__quote">派手さより、毎日変わらない一杯を。<br>今日もその一杯を打っています。</p>
-            <p class="owner-note__name">店主（人物設定） 渡瀬 実 — 開業12年 / 製麺歴20年</p>
-          </blockquote>
+          <div class="menu-item js-reveal" data-delay="1">
+            <div>
+              <span class="menu-item__name"><span class="menu-item__num">二、</span>よだかの星ぶっかけ<span class="menu-item__tag">看板</span></span>
+              <span class="menu-item__desc">半熟卵と揚げ玉、刻み葱をたっぷりと</span>
+            </div>
+            <span class="menu-item__price">¥780</span>
+          </div>
+          <div class="menu-item js-reveal" data-delay="2">
+            <div>
+              <span class="menu-item__name"><span class="menu-item__num">三、</span>鴨南蛮うどん</span>
+              <span class="menu-item__desc">香ばしく炙った鴨と、九条葱</span>
+            </div>
+            <span class="menu-item__price">¥980</span>
+          </div>
+        </div>
+        <p class="js-reveal" data-delay="3" style="text-align:center; margin-top:56px">
+          <a class="morelink" href="/menu/">お品書きを見る</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 信頼要素: 店主の言葉(写真なし・罫線囲みの引用組み) -->
+    <section class="section section--tight">
+      <div class="container--narrow">
+        <blockquote class="owner-note js-reveal">
+          <img class="owner-note__crest" src="/assets/img/common/crest.svg" width="40" height="40" alt="">
+          <p class="owner-note__quote">派手さより、毎日変わらない一杯を。<br>今日もその一杯を打っています。</p>
+          <p class="owner-note__name">店主（人物設定） 渡瀬 実 — 開業12年 / 製麺歴20年</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- 最終CTAバンド -->
+    <section class="section cta-band rule-draw rule-draw--both">
+      <div class="container">
+        <h2 class="section-head__title section-head--center js-reveal">この店の物語を、もう少し</h2>
+        <p class="cta-band__lead js-reveal" data-delay="1">架空店舗の献立と空間設計を、続きのページでご覧ください。</p>
+        <div class="hero__cta js-reveal" data-delay="2">
+          <a class="button" href="/menu/">お品書きを見る</a>
+          <a class="button" href="/kodawari/">こだわりを見る</a>
         </div>
       </div>
     </section>
 
-    <dialog class="menu-dialog" id="menu-photo-dialog" aria-labelledby="menu-dialog-title" aria-describedby="menu-dialog-description menu-dialog-notice">
-      <div class="menu-dialog__toolbar" aria-label="料理写真の操作">
-        <button type="button" data-menu-dialog-prev>前の一杯</button>
-        <button class="menu-dialog__close" type="button" data-menu-dialog-close>写真を閉じる</button>
-        <button type="button" data-menu-dialog-next>次の一杯</button>
-      </div>
-      <div class="menu-dialog__shell">
-        <div class="menu-dialog__stage">
-          <span class="menu-dialog__star" aria-hidden="true"></span>
-          <div class="menu-dialog__visual">
-            <img id="menu-dialog-image" src="/assets/img/menu/generated/seasonal-1536.webp" width="1536" height="1024" alt="" decoding="async">
-          </div>
-          <p class="menu-dialog__media-status" id="menu-dialog-media-status" role="status" hidden></p>
-        </div>
-        <div class="menu-dialog__copy" aria-live="polite">
-          <p class="menu-dialog__label">イメージ写真（生成）</p>
-          <p class="menu-dialog__number" id="menu-dialog-number"></p>
-          <h2 id="menu-dialog-title"></h2>
-          <p id="menu-dialog-description"></p>
-          <p class="menu-dialog__price" id="menu-dialog-price"></p>
-          <p class="menu-dialog__notice" id="menu-dialog-notice">架空店舗の献立をもとに制作した生成イメージです。実際に提供された料理の記録ではありません。</p>
-        </div>
-      </div>
-    </dialog>
   </main>
 
   <footer class="site-footer rule-draw">
@@ -259,7 +214,7 @@
       <nav class="footer-nav" aria-label="フッターナビゲーション">
         <ul>
           <li><a href="/">トップ</a></li>
-          <li><a href="/#oshinagaki">お品書き</a></li>
+          <li><a href="/menu/">お品書き</a></li>
           <li><a href="/kodawari/">こだわり</a></li>
           <li><a href="/contact/">制作ノート</a></li>
           <li><a href="/access/">店舗案内（架空）</a></li>

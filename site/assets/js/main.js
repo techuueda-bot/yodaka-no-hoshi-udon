@@ -18,6 +18,14 @@ const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)")
 const isMotionReduced = () =>
   reducedMotionMedia.matches || document.documentElement.classList.contains("is-motion-off");
 
+/* ---- 公開先のサブパスを含むアセットURL ----
+   main.js 自身のURLを基準にすることで、ローカル直下とGitHub Pages配下の両方に対応する。 */
+const mainScript = document.currentScript || document.querySelector('script[src$="/assets/js/main.js"]');
+const siteRootUrl = mainScript && mainScript.src
+  ? new URL("../../", mainScript.src)
+  : new URL("./", document.baseURI);
+const resolveAssetUrl = (path) => new URL(path.replace(/^\/+/, ""), siteRootUrl).href;
+
 /* ---- 活字が組まれる演出(.type-set): 1文字ずつspan化してstagger reveal ----
    シグネチャー要素。ヒーロー見出しにのみ使う(多用すると読みにくくなるため) */
 function initTypeSet() {
@@ -164,7 +172,6 @@ function initNav() {
 
   const openNav = () => {
     if (isOpen) return;
-    syncCurrentLocation();
     isOpen = true;
     lockPage();
     header.classList.add("is-nav-open");
@@ -328,11 +335,11 @@ function initSeasonalDial() {
     const dish = dishes[key];
     if (!dish) return;
     root.dataset.seasonKey = key;
-    map.src = dish.map;
+    map.src = resolveAssetUrl(dish.map);
     map.alt = dish.mapAlt;
-    image.src = dish.image;
+    image.src = resolveAssetUrl(dish.image);
     image.alt = dish.imageAlt;
-    orbitImage.src = dish.image;
+    orbitImage.src = resolveAssetUrl(dish.image);
     month.textContent = dish.month;
     name.textContent = dish.name;
     photoMonth.textContent = dish.month;
@@ -406,7 +413,7 @@ function initSeasonalDial() {
       tab.tabIndex = selected ? 0 : -1;
     });
 
-    await preload(dish.image);
+    await preload(resolveAssetUrl(dish.image));
     if (version !== changeVersion) return;
     if (!isMotionReduced()) panel.classList.add("is-changing");
     window.setTimeout(() => {
@@ -495,6 +502,7 @@ function initMenuDialog() {
     const itemNumber = trigger.querySelector(".menu-item__num, .seasonal-card__month");
     return {
       ...photo,
+      src: resolveAssetUrl(photo.src),
       name: trigger.dataset.menuName || (name ? name.textContent.replace(itemNumber ? itemNumber.textContent : "", "").trim() : ""),
       description: trigger.dataset.menuDescription || (desc ? desc.textContent.trim() : ""),
       price: trigger.dataset.menuPrice || (itemPrice ? itemPrice.textContent.trim() : ""),

@@ -141,6 +141,28 @@ function initNav() {
   let savedBodyStyle = "";
   let savedScrollY = 0;
 
+  const homeLink = nav.querySelector('a[href="/"]');
+  const menuLink = nav.querySelector('a[href="/#oshinagaki"]');
+  const menuSection = document.querySelector("#oshinagaki");
+
+  const syncCurrentLocation = () => {
+    if (!homeLink || !menuLink || !menuSection) return;
+    const headerOffset = header.getBoundingClientRect().height + 24;
+    const sectionStart = menuSection.offsetTop - headerOffset;
+    const sectionEnd = sectionStart + menuSection.offsetHeight;
+    const isMenuCurrent = window.scrollY >= sectionStart && window.scrollY < sectionEnd;
+    if (isMenuCurrent) {
+      homeLink.removeAttribute("aria-current");
+      menuLink.setAttribute("aria-current", "location");
+    } else {
+      menuLink.removeAttribute("aria-current");
+      homeLink.setAttribute("aria-current", "page");
+    }
+  };
+
+  syncCurrentLocation();
+  window.addEventListener("scroll", syncCurrentLocation, { passive: true });
+
   const lockPage = () => {
     savedBodyStyle = document.body.getAttribute("style") || "";
     savedScrollY = window.scrollY;
@@ -164,6 +186,7 @@ function initNav() {
 
   const openNav = () => {
     if (isOpen) return;
+    syncCurrentLocation();
     isOpen = true;
     lockPage();
     header.classList.add("is-nav-open");
@@ -295,9 +318,10 @@ function initSeasonalDial() {
   const month = root.querySelector("[data-season-month]");
   const name = root.querySelector("[data-season-name]");
   const price = root.querySelector("[data-season-price]");
-  const description = root.querySelector("[data-season-description]");
+  const descriptions = Array.from(root.querySelectorAll("[data-season-description]"));
   const openButton = root.querySelector(".star-dial__star-button");
-  if (!tabs.length || !panel || !map || !image || !month || !name || !price || !description || !openButton) return;
+  const photoButtons = [openButton, root.querySelector("[data-season-photo-cta]")].filter(Boolean);
+  if (!tabs.length || !panel || !map || !image || !month || !name || !price || !descriptions.length || !openButton) return;
 
   let currentKey = "seasonal";
   let changeVersion = 0;
@@ -320,14 +344,18 @@ function initSeasonalDial() {
     month.textContent = dish.month;
     name.textContent = dish.name;
     price.textContent = dish.price;
-    description.textContent = dish.description;
+    descriptions.forEach((description) => {
+      description.textContent = dish.description;
+    });
     panel.setAttribute("aria-labelledby", dish.tab);
-    openButton.dataset.menuPhoto = key;
-    openButton.dataset.menuNumber = dish.month;
-    openButton.dataset.menuName = dish.name;
-    openButton.dataset.menuDescription = dish.description;
-    openButton.dataset.menuPrice = dish.price;
-    openButton.setAttribute("aria-label", `${dish.month}限定、${dish.name}、${dish.price.replace("¥", "")}円の生成イメージを大きく見る`);
+    photoButtons.forEach((button) => {
+      button.dataset.menuPhoto = key;
+      button.dataset.menuNumber = dish.month;
+      button.dataset.menuName = dish.name;
+      button.dataset.menuDescription = dish.description;
+      button.dataset.menuPrice = dish.price;
+      button.setAttribute("aria-label", `${dish.month}限定、${dish.name}、${dish.price.replace("¥", "")}円の生成イメージを大きく見る`);
+    });
   };
 
   const select = async (key) => {
@@ -492,6 +520,9 @@ function initMenuDialog() {
   const getGroupContext = (index) => {
     const trigger = triggers[index];
     if (!trigger) return null;
+    if (trigger.closest(".star-dial")) {
+      return { groupTriggers: [trigger], groupIndex: 0 };
+    }
     const group = trigger.closest(".menu-seasonal, .menu-list__group");
     const groupTriggers = triggers.filter((item) => item.closest(".menu-seasonal, .menu-list__group") === group);
     return { groupTriggers, groupIndex: groupTriggers.indexOf(trigger) };

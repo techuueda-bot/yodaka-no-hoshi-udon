@@ -72,52 +72,59 @@
         </div>
 
         <div class="star-dial__panel" id="season-panel" role="tabpanel" aria-live="polite" aria-labelledby="season-tab-july">
-          <div class="star-dial__constellation js-reveal" data-delay="1">
-            <img data-season-map src="/assets/img/menu/constellation-july.svg" width="600" height="600" alt="七月の星図">
-            <button class="star-dial__star-button" type="button"
-              data-menu-photo="seasonal"
-              data-menu-number="七月"
-              data-menu-name="冷やし夏野菜の梅おろしうどん"
-              data-menu-description="花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。"
-              data-menu-price="¥920"
-              aria-haspopup="dialog" aria-controls="menu-photo-dialog"
-              aria-label="七月限定、冷やし夏野菜の梅おろしうどん、920円の生成イメージを大きく見る">
-              <span>選んだ一杯を大きく見る</span>
-            </button>
-          </div>
-
           <div class="star-dial__copy js-reveal" data-delay="2">
             <p class="star-dial__month" data-season-month>七月</p>
             <h2 class="star-dial__dish" data-season-name>冷やし夏野菜の梅おろしうどん</h2>
             <p class="star-dial__price" data-season-price>¥920</p>
-            <p class="star-dial__description star-dial__description--desktop" data-season-description>花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。</p>
+            <p class="star-dial__description" data-season-description>花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。</p>
           </div>
 
-          <button class="star-dial__photo-cta" type="button"
-            data-season-photo-cta
-            data-menu-photo="seasonal"
-            data-menu-number="七月"
-            data-menu-name="冷やし夏野菜の梅おろしうどん"
-            data-menu-description="花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。"
-            data-menu-price="¥920"
-            aria-haspopup="dialog" aria-controls="menu-photo-dialog"
-            aria-label="七月限定、冷やし夏野菜の梅おろしうどん、920円の生成イメージを大きく見る">
-            <img src="/assets/img/common/crest.svg" width="22" height="22" alt="">
-            <span>写真を大きく見る <small>（生成）</small></span>
-          </button>
+          <div class="star-dial__experience js-reveal" data-delay="1" data-season-experience>
+            <button class="star-dial__constellation-trigger" type="button" data-season-reveal
+              aria-controls="season-photo-scene"
+              aria-expanded="false"
+              aria-label="七月限定、冷やし夏野菜の梅おろしうどん。トマト、茄子、茗荷、梅の星を結んで生成イメージを開く">
+              <span class="star-dial__map-frame">
+                <img class="star-dial__map" data-season-map src="/assets/img/menu/constellation-july.svg" width="600" height="600" alt="七月の星図">
+                <span class="star-dial__ingredient-points" aria-hidden="true">
+                  <span class="star-dial__ingredient-point"><img src="/assets/img/common/crest.svg" width="26" height="26" alt=""></span>
+                  <span class="star-dial__ingredient-point"><img src="/assets/img/common/crest.svg" width="26" height="26" alt=""></span>
+                  <span class="star-dial__ingredient-point"><img src="/assets/img/common/crest.svg" width="26" height="26" alt=""></span>
+                  <span class="star-dial__ingredient-point"><img src="/assets/img/common/crest.svg" width="26" height="26" alt=""></span>
+                </span>
+              </span>
+              <span class="star-dial__ingredients-label">この一杯を結ぶ素材</span>
+              <span class="star-dial__ingredients" aria-hidden="true">
+                <span data-season-ingredient>トマト</span>
+                <span data-season-ingredient>茄子</span>
+                <span data-season-ingredient>茗荷</span>
+                <span data-season-ingredient>梅</span>
+              </span>
+              <span class="star-dial__reveal-guide">
+                <img src="/assets/img/common/crest.svg" width="24" height="24" alt="">
+                <span>星を結んで、一杯の景色をひらく</span>
+              </span>
+            </button>
 
-          <figure class="star-dial__photo js-reveal" data-delay="2">
-            <img data-season-image src="/assets/img/menu/generated/seasonal-1536.webp" width="1536" height="1024" alt="夏野菜、梅おろし、茗荷を添えた冷やしうどんの生成イメージ" fetchpriority="high" decoding="async">
-            <figcaption>イメージ写真（生成）</figcaption>
-          </figure>
-
-          <p class="star-dial__description star-dial__description--mobile" data-season-description>花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。</p>
+            <figure class="star-dial__photo-scene" id="season-photo-scene" data-season-photo-scene hidden>
+              <p class="star-dial__photo-identity">
+                <span data-season-photo-month>七月</span>
+                <strong data-season-photo-name>冷やし夏野菜の梅おろしうどん</strong>
+              </p>
+              <button class="star-dial__photo-close" type="button" data-season-photo-close>星図へ戻る</button>
+              <span class="star-dial__photo-stage">
+                <span class="star-dial__photo-full">
+                  <img data-season-image src="/assets/img/menu/generated/seasonal-1536.webp" width="1536" height="1024" alt="夏野菜、梅おろし、茗荷を添えた冷やしうどんの生成イメージ" fetchpriority="high" decoding="async">
+                </span>
+                <span class="star-dial__photo-orbit" aria-hidden="true">
+                  <img data-season-image-orbit src="/assets/img/menu/generated/seasonal-1536.webp" width="1536" height="1024" alt="" fetchpriority="high" decoding="async">
+                </span>
+              </span>
+              <figcaption>イメージ写真（生成）</figcaption>
+            </figure>
+          </div>
         </div>
 
-        <p class="star-dial__guide js-reveal" data-delay="3">
-          <img src="/assets/img/common/crest.svg" width="28" height="28" alt="">
-          星を選ぶと、一杯の景色がひらきます
-        </p>
         <p class="star-dial__notice js-reveal" data-delay="3">掲載写真は架空の献立をもとに制作した生成イメージであり、実際に提供された料理の記録ではありません。</p>
       </div>
     </section>

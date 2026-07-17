@@ -282,6 +282,7 @@ function initSeasonalDial() {
       name: "冷やし夏野菜の梅おろしうどん",
       description: "花巻産トマトと茄子、香ばしい焼き茗荷。梅の酸味で夜の暑さをほどきます。",
       price: "¥920",
+      ingredients: ["トマト", "茄子", "茗荷", "梅"],
       map: "assets/img/menu/constellation-july.svg",
       mapAlt: "七月の星図",
       image: "assets/img/menu/generated/seasonal-1536.webp",
@@ -293,6 +294,7 @@ function initSeasonalDial() {
       name: "枝豆と生姜の冷麦だしうどん",
       description: "枝豆のすり流しと生姜、氷を浮かべた出汁でひと息つく一杯。",
       price: "¥920",
+      ingredients: ["枝豆", "生姜", "冷麦だし", "氷"],
       map: "assets/img/menu/constellation-august.svg",
       mapAlt: "八月の星図",
       image: "assets/img/menu/generated/edamame-1536.webp",
@@ -304,6 +306,7 @@ function initSeasonalDial() {
       name: "きのこと柚子胡椒の温かけうどん",
       description: "近隣の山で採れた三種のきのこを香ばしく炒め、柚子胡椒できりっと。",
       price: "¥950",
+      ingredients: ["きのこ", "柚子胡椒", "だし", "うどん"],
       map: "assets/img/menu/constellation-september.svg",
       mapAlt: "九月の星図",
       image: "assets/img/menu/generated/mushroom-1536.webp",
@@ -315,16 +318,26 @@ function initSeasonalDial() {
   const panel = root.querySelector("#season-panel");
   const map = root.querySelector("[data-season-map]");
   const image = root.querySelector("[data-season-image]");
+  const orbitImage = root.querySelector("[data-season-image-orbit]");
   const month = root.querySelector("[data-season-month]");
   const name = root.querySelector("[data-season-name]");
   const price = root.querySelector("[data-season-price]");
   const descriptions = Array.from(root.querySelectorAll("[data-season-description]"));
-  const openButton = root.querySelector(".star-dial__star-button");
-  const photoButtons = [openButton, root.querySelector("[data-season-photo-cta]")].filter(Boolean);
-  if (!tabs.length || !panel || !map || !image || !month || !name || !price || !descriptions.length || !openButton) return;
+  const ingredientLabels = Array.from(root.querySelectorAll("[data-season-ingredient]"));
+  const experience = root.querySelector("[data-season-experience]");
+  const revealButton = root.querySelector("[data-season-reveal]");
+  const photoScene = root.querySelector("[data-season-photo-scene]");
+  const photoMonth = root.querySelector("[data-season-photo-month]");
+  const photoName = root.querySelector("[data-season-photo-name]");
+  const photoCloseButton = root.querySelector("[data-season-photo-close]");
+  if (!tabs.length || !panel || !map || !image || !orbitImage || !month || !name || !price || !descriptions.length || !ingredientLabels.length || !experience || !revealButton || !photoScene || !photoMonth || !photoName || !photoCloseButton) return;
 
   let currentKey = "seasonal";
   let changeVersion = 0;
+  let connectTimer = 0;
+  let closeTimer = 0;
+  let isPhotoOpen = false;
+  let photoScrollY = 0;
 
   const preload = (src) => new Promise((resolve) => {
     const next = new Image();
@@ -341,29 +354,74 @@ function initSeasonalDial() {
     map.alt = dish.mapAlt;
     image.src = dish.image;
     image.alt = dish.imageAlt;
+    orbitImage.src = dish.image;
     month.textContent = dish.month;
     name.textContent = dish.name;
+    photoMonth.textContent = dish.month;
+    photoName.textContent = dish.name;
     price.textContent = dish.price;
     descriptions.forEach((description) => {
       description.textContent = dish.description;
     });
-    panel.setAttribute("aria-labelledby", dish.tab);
-    photoButtons.forEach((button) => {
-      button.dataset.menuPhoto = key;
-      button.dataset.menuNumber = dish.month;
-      button.dataset.menuName = dish.name;
-      button.dataset.menuDescription = dish.description;
-      button.dataset.menuPrice = dish.price;
-      button.setAttribute("aria-label", `${dish.month}限定、${dish.name}、${dish.price.replace("¥", "")}円の生成イメージを大きく見る`);
+    ingredientLabels.forEach((label, index) => {
+      label.textContent = dish.ingredients[index] || "";
     });
+    panel.setAttribute("aria-labelledby", dish.tab);
+    revealButton.setAttribute("aria-label", `${dish.month}限定、${dish.name}。${dish.ingredients.join("、")}の星を結んで生成イメージを開く`);
+  };
+
+  const closePhoto = ({ restoreFocus = true, restoreScroll = true, immediate = false } = {}) => {
+    window.clearTimeout(connectTimer);
+    window.clearTimeout(closeTimer);
+    isPhotoOpen = false;
+    experience.classList.remove("is-connecting", "is-photo-open", "is-photo-settled");
+    revealButton.setAttribute("aria-expanded", "false");
+    revealButton.removeAttribute("aria-hidden");
+    revealButton.tabIndex = 0;
+
+    const finish = () => {
+      photoScene.hidden = true;
+      if (restoreScroll) {
+        const pageRoot = document.documentElement;
+        const savedScrollBehavior = pageRoot.style.scrollBehavior;
+        pageRoot.style.scrollBehavior = "auto";
+        window.scrollTo(0, photoScrollY);
+        pageRoot.style.scrollBehavior = savedScrollBehavior;
+      }
+      if (restoreFocus) revealButton.focus({ preventScroll: true });
+    };
+    if (immediate || isMotionReduced()) finish();
+    else closeTimer = window.setTimeout(finish, 260);
+  };
+
+  const openPhoto = () => {
+    if (isPhotoOpen || experience.classList.contains("is-connecting")) return;
+    window.clearTimeout(closeTimer);
+    isPhotoOpen = true;
+    photoScrollY = window.scrollY;
+    photoScene.hidden = false;
+    revealButton.setAttribute("aria-expanded", "true");
+    experience.classList.add("is-connecting");
+
+    const reveal = () => {
+      experience.classList.remove("is-connecting");
+      experience.classList.add("is-photo-open", "is-photo-settled");
+      revealButton.setAttribute("aria-hidden", "true");
+      revealButton.tabIndex = -1;
+      photoCloseButton.focus({ preventScroll: true });
+    };
+    if (isMotionReduced()) reveal();
+    else connectTimer = window.setTimeout(reveal, 520);
   };
 
   const select = async (key) => {
     const dish = dishes[key];
     if (!dish || key === currentKey) return;
+    closePhoto({ restoreFocus: false, restoreScroll: false, immediate: true });
     currentKey = key;
     changeVersion += 1;
     const version = changeVersion;
+    revealButton.disabled = true;
     tabs.forEach((tab) => {
       const selected = tab.dataset.seasonKey === key;
       tab.setAttribute("aria-selected", String(selected));
@@ -377,6 +435,7 @@ function initSeasonalDial() {
       if (version !== changeVersion) return;
       commit(key);
       panel.classList.remove("is-changing");
+      revealButton.disabled = false;
     }, isMotionReduced() ? 0 : 160);
   };
 
@@ -393,6 +452,14 @@ function initSeasonalDial() {
       tabs[nextIndex].focus();
       void select(tabs[nextIndex].dataset.seasonKey);
     });
+  });
+
+  revealButton.addEventListener("click", openPhoto);
+  photoCloseButton.addEventListener("click", () => closePhoto());
+  root.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || (!isPhotoOpen && !experience.classList.contains("is-connecting"))) return;
+    event.preventDefault();
+    closePhoto();
   });
 
   root.dataset.seasonKey = currentKey;

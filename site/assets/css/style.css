@@ -1142,52 +1142,14 @@ button.seasonal-card { cursor: pointer; }
 
 .star-dial__panel {
   display: grid;
-  grid-template-areas:
-    "sky"
-    "photo";
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
+  grid-template-areas: "copy experience";
+  align-items: center;
+  gap: clamp(36px, 6vw, 82px);
   margin-top: clamp(28px, 6vw, 56px);
 }
-.star-dial__constellation {
-  position: relative;
-  grid-area: sky;
-  width: min(660px, 96%);
-  margin-inline: auto;
-}
-.star-dial__constellation > img {
-  width: 100%;
-  opacity: 0.92;
-  transition: opacity 0.18s var(--ease-out), transform 0.28s var(--ease-out);
-}
-.star-dial__star-button {
-  position: absolute;
-  z-index: 3;
-  width: 58px;
-  height: 58px;
-  border: 0;
-  border-radius: 50%;
-  color: var(--color-bg);
-  background: transparent;
-  cursor: pointer;
-  transform: translate(-50%, -50%);
-}
-.star-dial[data-season-key="seasonal"] .star-dial__star-button { top: 25%; left: 28.33%; }
-.star-dial[data-season-key="edamame"] .star-dial__star-button { top: 35%; left: 50%; }
-.star-dial[data-season-key="mushroom"] .star-dial__star-button { top: 26.67%; left: 30%; }
-.star-dial__star-button > span {
-  display: none;
-}
-.star-dial__star-button:focus-visible {
-  outline-color: var(--color-bg);
-  outline-offset: 4px;
-}
 .star-dial__copy {
-  z-index: 2;
-  grid-area: sky;
-  align-self: center;
-  justify-self: start;
-  width: min(320px, 44%);
-  margin: 5% 0 0 7%;
-  pointer-events: none;
+  grid-area: copy;
   transition: opacity 0.18s var(--ease-out), transform 0.28s var(--ease-out);
 }
 .star-dial__month {
@@ -1196,13 +1158,13 @@ button.seasonal-card { cursor: pointer; }
   letter-spacing: 0.24em;
 }
 .star-dial__dish {
-  height: 12em;
-  margin-top: 16px;
+  max-width: 14em;
+  margin-top: 12px;
   color: var(--color-bg);
-  font-size: clamp(22px, 4.4vw, 34px);
-  line-height: 1.65;
-  letter-spacing: 0.1em;
-  writing-mode: vertical-rl;
+  font-size: clamp(24px, 3.6vw, 36px);
+  line-height: 1.55;
+  letter-spacing: 0.08em;
+  text-wrap: balance;
 }
 .star-dial__price {
   margin-top: 18px;
@@ -1216,52 +1178,237 @@ button.seasonal-card { cursor: pointer; }
   font-size: 14px;
   line-height: 1.9;
 }
-.star-dial__description--mobile,
-.star-dial__photo-cta { display: none; }
-.star-dial__photo {
-  grid-area: photo;
-  width: min(900px, 100%);
-  margin: 6px auto 0;
+.star-dial__experience {
+  position: relative;
+  grid-area: experience;
+  min-height: clamp(470px, 56vw, 590px);
   transition: opacity 0.18s var(--ease-out), transform 0.28s var(--ease-out);
 }
-.star-dial__photo img {
+.star-dial__constellation-trigger {
+  display: flex;
   width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  background: color-mix(in srgb, var(--color-bg) 6%, transparent);
+  min-height: inherit;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.28s var(--ease-out), transform 0.44s var(--ease-out);
 }
-.star-dial__photo figcaption {
-  margin-top: 10px;
-  color: color-mix(in srgb, var(--color-bg) 70%, transparent);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-align: right;
+.star-dial__constellation-trigger:focus-visible {
+  outline: 0;
 }
-.star-dial__panel.is-changing .star-dial__constellation > img,
-.star-dial__panel.is-changing .star-dial__copy,
-.star-dial__panel.is-changing .star-dial__photo {
+.star-dial__map-frame {
+  position: relative;
+  display: block;
+  width: min(500px, 100%);
+  aspect-ratio: 1;
+}
+.star-dial__map {
+  width: 100%;
+  opacity: 0.88;
+  transition: opacity 0.22s var(--ease-out), transform 0.44s var(--ease-out);
+}
+.star-dial__ingredient-points {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+.star-dial__ingredient-point {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  opacity: 0.16;
+  transform: translate(-50%, -50%) scale(0.72);
+}
+.star-dial__ingredient-point img {
+  width: 100%;
+  filter: invert(56%) sepia(43%) saturate(747%) hue-rotate(358deg) brightness(90%) contrast(87%);
+}
+.star-dial[data-season-key="seasonal"] .star-dial__ingredient-point:nth-child(1) { top: 25%; left: 28.33%; }
+.star-dial[data-season-key="seasonal"] .star-dial__ingredient-point:nth-child(2) { top: 40%; left: 75.83%; }
+.star-dial[data-season-key="seasonal"] .star-dial__ingredient-point:nth-child(3) { top: 78.33%; left: 44.17%; }
+.star-dial[data-season-key="seasonal"] .star-dial__ingredient-point:nth-child(4) { top: 41.67%; left: 20%; }
+.star-dial[data-season-key="edamame"] .star-dial__ingredient-point:nth-child(1) { top: 38.33%; left: 16.67%; }
+.star-dial[data-season-key="edamame"] .star-dial__ingredient-point:nth-child(2) { top: 55%; left: 33.33%; }
+.star-dial[data-season-key="edamame"] .star-dial__ingredient-point:nth-child(3) { top: 35%; left: 50%; }
+.star-dial[data-season-key="edamame"] .star-dial__ingredient-point:nth-child(4) { top: 53.33%; left: 68.33%; }
+.star-dial[data-season-key="mushroom"] .star-dial__ingredient-point:nth-child(1) { top: 26.67%; left: 30%; }
+.star-dial[data-season-key="mushroom"] .star-dial__ingredient-point:nth-child(2) { top: 31.67%; left: 71.67%; }
+.star-dial[data-season-key="mushroom"] .star-dial__ingredient-point:nth-child(3) { top: 70%; left: 66.67%; }
+.star-dial[data-season-key="mushroom"] .star-dial__ingredient-point:nth-child(4) { top: 65%; left: 26.67%; }
+.star-dial__ingredients-label {
+  margin-top: -18px;
+  color: color-mix(in srgb, var(--color-bg) 62%, transparent);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+.star-dial__ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  margin-top: 12px;
+  color: color-mix(in srgb, var(--color-bg) 84%, transparent);
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+}
+.star-dial__ingredients > span {
+  padding-bottom: 4px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 34%, transparent);
+}
+.star-dial__reveal-guide {
+  order: -1;
   opacity: 0;
-  transform: translateY(6px) scale(0.99);
-}
-.star-dial__guide {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-top: 30px;
-  color: var(--color-bg);
+  margin: 0 0 16px;
+  color: var(--color-accent);
   font-family: var(--font-display);
-  font-size: clamp(15px, 2.4vw, 19px);
+  font-size: clamp(14px, 2vw, 17px);
   letter-spacing: 0.12em;
   text-align: center;
+  transform: translateY(5px);
+  transition: opacity 0.38s var(--ease-out), transform 0.38s var(--ease-out);
 }
-.star-dial__guide img,
+.star-dial__constellation-trigger:hover .star-dial__reveal-guide,
+.star-dial__constellation-trigger:focus-visible .star-dial__reveal-guide {
+  opacity: 1;
+  transform: none;
+}
+.star-dial__constellation-trigger:focus-visible .star-dial__reveal-guide {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+}
+.star-dial__reveal-guide img,
 .menu-item__hint img {
   filter: invert(56%) sepia(43%) saturate(747%) hue-rotate(358deg) brightness(90%) contrast(87%);
 }
+.star-dial__photo-scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s var(--ease-out);
+}
+.star-dial__photo-identity { display: none; }
+.star-dial__photo-close {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  min-height: 48px;
+  padding: 0 0 4px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 62%, transparent);
+  color: var(--color-bg);
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+}
+.star-dial__photo-close:focus-visible {
+  outline: 0;
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+}
+.star-dial__photo-stage {
+  position: relative;
+  display: block;
+  width: min(520px, 52vw);
+  aspect-ratio: 3 / 2;
+}
+.star-dial__photo-full,
+.star-dial__photo-orbit {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+}
+.star-dial__photo-full {
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.38s var(--ease-out);
+}
+.star-dial__photo-orbit {
+  display: none;
+}
+.star-dial__photo-full img,
+.star-dial__photo-orbit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.star-dial__photo-scene figcaption {
+  margin-top: 14px;
+  color: color-mix(in srgb, var(--color-bg) 70%, transparent);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+}
+.star-dial__experience.is-photo-open .star-dial__constellation-trigger {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.92);
+}
+.star-dial__experience.is-photo-open .star-dial__photo-scene {
+  opacity: 1;
+  pointer-events: auto;
+}
+.star-dial__experience.is-photo-settled .star-dial__photo-full {
+  opacity: 1;
+}
+.star-dial__experience.is-connecting .star-dial__map {
+  animation: star-map-gather 0.52s var(--ease-out) both;
+}
+.star-dial__experience.is-connecting .star-dial__ingredient-point {
+  animation: ingredient-star-light 0.22s var(--ease-out) both;
+}
+.star-dial__experience.is-connecting .star-dial__ingredient-point:nth-child(2),
+.star-dial__experience.is-connecting .star-dial__ingredients > span:nth-child(2) { animation-delay: 0.08s; }
+.star-dial__experience.is-connecting .star-dial__ingredient-point:nth-child(3),
+.star-dial__experience.is-connecting .star-dial__ingredients > span:nth-child(3) { animation-delay: 0.16s; }
+.star-dial__experience.is-connecting .star-dial__ingredient-point:nth-child(4),
+.star-dial__experience.is-connecting .star-dial__ingredients > span:nth-child(4) { animation-delay: 0.24s; }
+.star-dial__experience.is-connecting .star-dial__ingredients > span {
+  animation: ingredient-name-light 0.22s var(--ease-out) both;
+}
+.star-dial__experience.is-connecting .star-dial__ingredients > span:nth-child(2) { animation-delay: 0.08s; }
+.star-dial__experience.is-connecting .star-dial__ingredients > span:nth-child(3) { animation-delay: 0.16s; }
+.star-dial__experience.is-connecting .star-dial__ingredients > span:nth-child(4) { animation-delay: 0.24s; }
+@keyframes ingredient-star-light {
+  0% { opacity: 0.18; transform: translate(-50%, -50%) scale(0.72); }
+  55% { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+  100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes ingredient-name-light {
+  0% { color: color-mix(in srgb, var(--color-bg) 84%, transparent); opacity: 0.72; transform: translateY(0); }
+  55% { color: var(--color-accent); opacity: 1; transform: translateY(-3px); }
+  100% { color: var(--color-bg); opacity: 1; transform: translateY(0); }
+}
+@keyframes star-map-gather {
+  0%, 100% { opacity: 0.88; transform: scale(1); }
+  58% { opacity: 1; transform: scale(1.025); }
+}
+.star-dial__panel.is-changing .star-dial__copy,
+.star-dial__panel.is-changing .star-dial__experience {
+  opacity: 0;
+  transform: translateY(6px) scale(0.99);
+}
 .star-dial__notice {
   max-width: 54em;
-  margin: 24px auto 0;
+  margin: 36px auto 0;
   color: color-mix(in srgb, var(--color-bg) 72%, transparent);
   font-size: 12px;
   letter-spacing: 0.08em;
@@ -1325,16 +1472,7 @@ button.seasonal-card { cursor: pointer; }
 .menu-redirect .button { margin-inline: auto; }
 
 @media (min-width: 768px) {
-  .star-dial__panel {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
-    grid-template-areas: "sky photo";
-    align-items: center;
-    column-gap: clamp(40px, 7vw, 96px);
-  }
-  .star-dial__constellation { width: 100%; }
-  .star-dial__copy { width: 42%; margin-left: 3%; }
-  .star-dial__dish { font-size: clamp(20px, 2.4vw, 30px); }
-  .star-dial__photo { margin-top: 0; }
+  .star-dial__reveal-guide { opacity: 0.72; }
   .home-info__grid { grid-template-columns: 1fr 1.15fr; align-items: start; }
 }
 
@@ -1348,87 +1486,67 @@ button.seasonal-card { cursor: pointer; }
   .star-dial__months { margin-top: 42px; }
   .star-dial__months button { min-height: 48px; font-size: 18px; }
   .star-dial__panel {
+    grid-template-columns: 1fr;
     grid-template-areas:
       "copy"
-      "action"
-      "photo"
-      "description"
-      "sky";
+      "experience";
+    gap: 32px;
     margin-top: 28px;
   }
-  .star-dial__constellation {
-    grid-area: sky;
-    width: min(180px, 46vw);
-    margin: 36px auto 0;
-  }
-  .star-dial__constellation > img { opacity: 0.58; }
   .star-dial__copy {
-    grid-area: copy;
-    align-self: start;
-    justify-self: stretch;
-    width: 100%;
-    margin: 0;
+    max-width: 34em;
   }
   .star-dial__month { font-size: 12px; }
   .star-dial__dish {
     max-width: 17em;
-    height: auto;
     margin-top: 8px;
     font-size: clamp(24px, 7vw, 30px);
     line-height: 1.55;
     letter-spacing: 0.08em;
-    writing-mode: horizontal-tb;
-    text-wrap: balance;
   }
   .star-dial__price { margin-top: 14px; font-size: 22px; }
-  .star-dial__description--desktop { display: none; }
-  .star-dial__description--mobile {
-    display: block;
-    grid-area: description;
-    width: 100%;
-    margin-top: 28px;
+  .star-dial__description {
+    margin-top: 20px;
     color: color-mix(in srgb, var(--color-bg) 82%, transparent);
     font-size: 15px;
     line-height: 1.95;
-    transition: opacity 0.18s var(--ease-out), transform 0.28s var(--ease-out);
   }
-  .star-dial__photo-cta {
-    grid-area: action;
-    display: inline-flex;
-    align-items: center;
-    justify-self: start;
-    gap: 10px;
-    min-height: 56px;
-    margin-top: 14px;
-    padding: 0 0 2px;
-    border: 0;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  .star-dial__experience { min-height: min(132vw, 520px); }
+  .star-dial__map-frame { width: min(380px, 100%); }
+  .star-dial__ingredients-label { margin-top: -12px; }
+  .star-dial__ingredients { font-size: 13px; }
+  .star-dial__reveal-guide {
+    max-width: 18em;
+    margin-bottom: 14px;
+    opacity: 1;
+    line-height: 1.8;
+  }
+  .star-dial__photo-close { top: 0; right: 2px; }
+  .star-dial__photo-identity {
+    position: absolute;
+    top: 0;
+    left: 2px;
+    display: block;
+    max-width: calc(100% - 128px);
+    color: var(--color-bg);
+    line-height: 1.65;
+  }
+  .star-dial__photo-identity span {
+    display: block;
     color: var(--color-accent);
-    background: transparent;
-    font: inherit;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+  .star-dial__photo-identity strong {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--font-display);
     font-size: 14px;
-    letter-spacing: 0.12em;
-    cursor: pointer;
-    transition: opacity 0.18s var(--ease-out), transform 0.28s var(--ease-out);
+    font-weight: 400;
+    letter-spacing: 0.08em;
   }
-  .star-dial__photo-cta img {
-    flex: 0 0 auto;
-    filter: invert(56%) sepia(43%) saturate(747%) hue-rotate(358deg) brightness(90%) contrast(87%);
-  }
-  .star-dial__photo-cta small { font-size: 0.84em; }
-  .star-dial__photo-cta:focus-visible { outline-color: var(--color-bg); }
-  .star-dial__star-button { display: none; }
-  .star-dial__photo {
-    grid-area: photo;
-    margin-top: 18px;
-  }
-  .star-dial__guide { display: none; }
+  .star-dial__photo-stage { width: min(520px, calc(100vw - 32px)); }
   .star-dial__notice { margin-top: 34px; text-align: left; }
-  .star-dial__panel.is-changing .star-dial__description--mobile,
-  .star-dial__panel.is-changing .star-dial__photo-cta {
-    opacity: 0;
-    transform: translateY(6px);
-  }
   .menu-home .menu-item {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -1444,6 +1562,10 @@ button.seasonal-card { cursor: pointer; }
 
 @media (max-width: 420px) {
   .star-dial__dish { font-size: 24px; }
+  .star-dial__experience { min-height: 470px; }
+  .star-dial__ingredient-point { width: 24px; height: 24px; }
+  .star-dial__ingredients { gap: 7px 12px; }
+  .star-dial__reveal-guide { font-size: 13px; }
   .menu-home .menu-item { grid-template-columns: 1fr; }
   .menu-home .menu-item__meta {
     grid-template-columns: auto 1fr;
@@ -1563,12 +1685,14 @@ button.seasonal-card { cursor: pointer; }
     transform: none;
     transition-delay: 0s;
   }
-  .star-dial__panel.is-changing .star-dial__constellation > img,
   .star-dial__panel.is-changing .star-dial__copy,
-  .star-dial__panel.is-changing .star-dial__photo {
+  .star-dial__panel.is-changing .star-dial__experience {
     opacity: 1;
     transform: none;
   }
+  .star-dial__experience.is-connecting .star-dial__map,
+  .star-dial__experience.is-connecting .star-dial__ingredient-point,
+  .star-dial__experience.is-connecting .star-dial__ingredients > span { animation: none; }
 }
 html.is-motion-off .js-reveal,
 html.is-motion-off *[class] {
@@ -1591,9 +1715,11 @@ html.is-motion-off .menu-nightfall__bird {
   opacity: 0.72;
   transform: translate3d(0, 0, 0) rotate(2deg);
 }
-html.is-motion-off .star-dial__panel.is-changing .star-dial__constellation > img,
 html.is-motion-off .star-dial__panel.is-changing .star-dial__copy,
-html.is-motion-off .star-dial__panel.is-changing .star-dial__photo {
+html.is-motion-off .star-dial__panel.is-changing .star-dial__experience {
   opacity: 1;
   transform: none;
 }
+html.is-motion-off .star-dial__experience.is-connecting .star-dial__map,
+html.is-motion-off .star-dial__experience.is-connecting .star-dial__ingredient-point,
+html.is-motion-off .star-dial__experience.is-connecting .star-dial__ingredients > span { animation: none; }

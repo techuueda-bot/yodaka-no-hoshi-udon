@@ -1,44 +1,50 @@
 **Comparison Target**
-- source visual truth path (seasonal dial): `/private/var/folders/n2/ns_m3cz52d77g3n6g5js03k40000gn/T/TemporaryItems/com.apple.Photos.NSItemProvider/uuid=A5CAD1C4-0322-4BD3-9617-F6417B9D6109&code=001&library=1&type=1&mode=1&loc=true&cap=true.png/IMG_5878.png`
-- source visual truth path (navigation): `/private/var/folders/n2/ns_m3cz52d77g3n6g5js03k40000gn/T/TemporaryItems/com.apple.Photos.NSItemProvider/uuid=3D5FF8C5-29D5-4B66-91DE-80F7D78D5EDA&code=001&library=1&type=1&mode=1&loc=true&cap=true.png/IMG_5881.png`
-- implementation screenshot path: unavailable (local `file://` navigation was rejected by the in-app browser security policy; local HTTP server binding is not permitted in this workspace)
-- viewport: 375 x 812 px requested; implementation capture unavailable
-- state: mobile, July selected; mobile global navigation open
+- source visual truth path: `/tmp/codex-remote-attachments/019f5b2e-175e-79d1-8550-f2d0f0103251/94FC4F9D-F3EF-42F2-80EE-C02AD4BEFDA2/1-写真1.jpg`
+- implementation screenshot path: `/private/tmp/20260717_yodaka-nav-marker-after.png`
+- full-view comparison path: `/private/tmp/20260717_yodaka-nav-marker-full-compare.png`
+- focused comparison path: `/private/tmp/20260717_yodaka-nav-marker-focus-compare.png`
+- viewport: implementation 375 x 812 px; source is a 588 x 1280 px device screenshot including browser chrome
+- state: home page, mobile global navigation open, `トップ` current
 
 **Full-view Comparison Evidence**
-- Source evidence was inspected before implementation. The seasonal screen showed an oversized constellation, vertically set dish copy, an image placed too late, and no explicit photo affordance. The navigation screen showed a large unstructured blank area with three links and a close control.
-- The implementation could not be browser-rendered in the current environment, so no valid source-and-implementation combined comparison input could be produced.
+- The approved minimal composition remains unchanged: brandmark at top-left, close control at top-right, three centered navigation items, and a bottom colophon.
+- The screen has no horizontal overflow at 375 px.
+- The source includes Safari chrome while the implementation capture is an unframed browser viewport; the comparison therefore judges the page surface rather than browser chrome.
 
 **Focused Region Comparison Evidence**
-- Not performed. The required browser-rendered implementation screenshot is unavailable, so typography, spacing, image crop, marker balance, and interaction states cannot be judged from visible evidence.
+- Before: the crest sat far to the left of `トップ` and read as a detached decoration.
+- After: the crest is positioned immediately before the current label with an approximately 28 px visible gap, preserving the centered label and underline.
+- The crest filter is darker and more saturated, strengthening the current-location cue without introducing a new asset or surface.
 
 **Findings**
-- [P1] Browser-rendered implementation evidence is missing
-  Location: mobile seasonal dial and mobile global navigation.
-  Evidence: source screenshots are available, but a same-viewport implementation screenshot could not be captured.
-  Impact: overlap, wrapping, vertical rhythm, image crop, and mobile safe-area behavior cannot be signed off visually.
-  Fix: publish or otherwise expose the changed build at an allowed HTTP(S) URL, capture the July dial and open navigation at 375 x 812 px, then compare each source/implementation pair in one combined visual input.
+- No actionable P0, P1, or P2 differences remain for the requested marker correction.
 
-**Open Questions**
-- Whether the 375 px rendering needs a small final spacing adjustment after the first allowed browser capture.
+**Required Fidelity Surfaces**
+- Fonts and typography: existing Zen Old Mincho and established sizes, line heights, and tracking are unchanged.
+- Spacing and layout rhythm: marker-to-label distance is corrected; navigation spacing, tap-target height, and colophon position are unchanged.
+- Colors and visual tokens: the existing gold accent remains the only state color; the crest is now visibly closer to that tone.
+- Image quality and asset fidelity: the existing crest file is reused at 18 px; no replacement or generated asset was introduced.
+- Copy and content: unchanged.
 
-**Implementation Checklist**
-- [x] Change the mobile seasonal dish name from vertical to horizontal composition.
-- [x] Add an explicit 56 px-tall photo CTA using the existing crest asset.
-- [x] Move the food image above the full mobile description and restore the description without truncation.
-- [x] Reduce the constellation to a secondary visual accent on mobile.
-- [x] Preserve the existing desktop vertical composition.
-- [x] Add the existing brandmark, current-location crest/line, and bottom colophon to the full-screen mobile navigation.
-- [x] Keep current-location state synchronized between Top and Menu on the home page.
-- [x] Pass JavaScript syntax, diff whitespace, and static site QA checks.
-- [ ] Capture browser-rendered mobile evidence and repeat visual comparison until no P0/P1/P2 findings remain.
+**Primary Interactions Tested**
+- Opened the mobile navigation from the hamburger control.
+- Confirmed the current-page marker and underline in the open state.
+- Closed the navigation and confirmed the control returned to `メニューを開く`.
+- Browser console warnings/errors checked: none.
 
 **Comparison History**
-- Iteration 1 earlier findings: oversized constellation, vertical title collision, unclear photo action, compressed description/image spacing, and under-composed navigation.
-- Fixes made: mobile content reordered to copy -> CTA -> photo -> full description -> reduced constellation; navigation gained brand context, active marker, larger tap targets, and colophon while preserving the minimal editorial style.
-- Post-fix visual evidence: unavailable because the local implementation cannot be opened by the permitted browser surface.
+- Iteration 1 finding: current crest was visually detached from `トップ` and too pale.
+- Fix: moved the marker from the far edge of the 276 px tap target to a label-relative offset and strengthened its gold filter. Added tailored offsets for `お品書き` and `こだわり` so all current states keep a natural gap.
+- Post-fix evidence: full-view and focused comparisons listed above; no overflow and open/close behavior verified.
+
+**Implementation Checklist**
+- [x] Move the current crest next to the active label.
+- [x] Increase the crest's gold contrast.
+- [x] Preserve the underline, navigation spacing, and 56 px tap target.
+- [x] Verify 375 px rendering and no horizontal overflow.
+- [x] Verify menu open/close behavior and console errors.
 
 **Follow-up Polish**
-- Re-evaluate only after a same-viewport browser capture; do not add decorative assets before that comparison.
+- P3: actual iPhone font rasterization may differ slightly from the in-app browser capture; no layout change is warranted without another device screenshot.
 
-final result: blocked
+final result: passed
